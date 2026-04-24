@@ -114,13 +114,17 @@ USE_I18N = True
 USE_TZ = True
 
 # Internationalization: available languages
+USE_I18N = True
+
+LANGUAGE_CODE = 'en'
+
 LANGUAGES = [
     ('en', 'English'),
-    ('hi', 'Hindi'),
-    ('ta', 'Tamil'),
     ('te', 'Telugu'),
-    ('kn', 'Kannada'),
+    ('ta', 'Tamil'),
+    ('hi', 'Hindi'),
     ('ml', 'Malayalam'),
+    ('kn', 'Kannada'),
 ]
 
 from pathlib import Path as _Path  # ensure Path available
