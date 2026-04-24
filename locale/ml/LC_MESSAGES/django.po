@@ -1,0 +1,567 @@
+# Malayalam translations for Gram Connect project.
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Gram Connect\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-10-13 18:00+0530\n"
+"PO-Revision-Date: 2025-10-13 19:15+0530\n"
+"Last-Translator: Gemini Assistant\n"
+"Language-Team: Malayalam <ml@example.com>\n"
+"Language: ml\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Gram Connect"
+msgstr "ഗ്രാം കണക്ട്"
+
+msgid "One platform for shopkeepers, customers and delivery partners"
+msgstr "കടയുടമകൾക്കും ഉപഭോക്താക്കൾക്കും ഡെലിവറി പങ്കാളികൾക്കുമുള്ള ഒരൊറ്റ പ്ലാറ്റ്ഫോം"
+
+msgid "Language"
+msgstr "ഭാഷ"
+
+msgid "Select Your Location"
+msgstr "നിങ്ങളുടെ സ്ഥലം തിരഞ്ഞെടുക്കുക"
+
+msgid "State"
+msgstr "സംസ്ഥാനം"
+
+msgid "Select State"
+msgstr "സംസ്ഥാനം തിരഞ്ഞെടുക്കുക"
+
+msgid "District"
+msgstr "ജില്ല"
+
+msgid "Select District"
+msgstr "ജില്ല തിരഞ്ഞെടുക്കുക"
+
+msgid "City/Town"
+msgstr "നഗരം/പട്ടണം"
+
+msgid "Select City/Town"
+msgstr "നഗരം/പട്ടണം തിരഞ്ഞെടുക്കുക"
+
+msgid "Pincode"
+msgstr "പിൻകോഡ്"
+
+msgid "Select Pincode"
+msgstr "പിൻകോഡ് തിരഞ്ഞെടുക്കുക"
+
+msgid "Confirm Location"
+msgstr "സ്ഥലം സ്ഥിരീകരിക്കുക"
+
+msgid "Shopkeeper"
+msgstr "കടയുടമ"
+
+msgid "Manage your products, inventory, and view incoming orders from customers."
+msgstr "നിങ്ങളുടെ ഉൽപ്പന്നങ്ങൾ, ഇൻവെന്ററി എന്നിവ നിയന്ത്രിക്കുക, ഉപഭോക്താക്കളിൽ നിന്നുള്ള ഓർഡറുകൾ കാണുക."
+
+msgid "Login as Shopkeeper"
+msgstr "കടയുടമയായി ലോഗിൻ ചെയ്യുക"
+
+msgid "Register Shop"
+msgstr "കട രജിസ്റ്റർ ചെയ്യുക"
+
+msgid "Customer"
+msgstr "ഉപഭോക്താവ്"
+
+msgid "Browse products, add to cart, and place orders with your preferred delivery time."
+msgstr "ഉൽപ്പന്നങ്ങൾ ബ്രൗസ് ചെയ്യുക, കാർട്ടിലേക്ക് ചേർക്കുക, നിങ്ങൾക്ക് ഇഷ്ടമുള്ള ഡെലിവറി സമയത്ത് ഓർഡർ ചെയ്യുക."
+
+msgid "Login as Customer"
+msgstr "ഉപഭോക്താവായി ലോഗിൻ ചെയ്യുക"
+
+msgid "Register Account"
+msgstr "അക്കൗണ്ട് രജിസ്റ്റർ ചെയ്യുക"
+
+msgid "Delivery Partner"
+msgstr "ഡെലിവറി പങ്കാളി"
+
+msgid "View assigned orders, customer details, and update delivery status."
+msgstr "അസൈൻ ചെയ്ത ഓർഡറുകൾ, ഉപഭോക്തൃ വിശദാംശങ്ങൾ കാണുക, ഡെലിവറി നില അപ്‌ഡേറ്റ് ചെയ്യുക."
+
+msgid "Login as Partner"
+msgstr "പങ്കാളിയായി ലോഗിನ್ ചെയ്യുക"
+
+msgid "Apply as Partner"
+msgstr "പങ്കാളിയായി അപേക്ഷിക്കുക"
+
+msgid "Shopkeeper Login"
+msgstr "കടയുടമയുടെ ലോഗിൻ"
+
+msgid "Welcome back! Access your shop dashboard"
+msgstr "വീണ്ടും സ്വാഗതം! നിങ്ങളുടെ ഷോപ്പ് ഡാഷ്‌ബോർഡ് ആക്‌സസ് ചെയ്യുക"
+
+msgid "Shop Email Address"
+msgstr "കടയുടെ ഇമെയിൽ വിലാസം"
+
+msgid "Enter your shop email"
+msgstr "നിങ്ങളുടെ കടയുടെ ഇമെയിൽ നൽകുക"
+
+msgid "Password"
+msgstr "പാസ്വേഡ്"
+
+msgid "Enter your password"
+msgstr "നിങ്ങളുടെ പാസ്വേഡ് നൽകുക"
+
+msgid "Login"
+msgstr "ലോഗിൻ"
+
+msgid "Don't have an account?"
+msgstr "അക്കൗണ്ട് ഇല്ലേ?"
+
+msgid "Register here"
+msgstr "ഇവിടെ രജിസ്റ്റർ ചെയ്യുക"
+
+msgid "Shop Registration"
+msgstr "കടയുടെ രജിസ്ട്രേഷൻ"
+
+msgid "Register your shop to start selling"
+msgstr "വിൽപ്പന ആരംഭിക്കാൻ നിങ്ങളുടെ കട രജിസ്റ്റർ ചെയ്യുക"
+
+msgid "Shop Name"
+msgstr "കടയുടെ പേര്"
+
+msgid "Enter your shop name"
+msgstr "നിങ്ങളുടെ കടയുടെ പേര് നൽകുക"
+
+msgid "Confirm Password"
+msgstr "പാസ്‌വേഡ് സ്ഥിരീകരിക്കുക"
+
+msgid "Re-enter your password"
+msgstr "നിങ്ങളുടെ പാസ്‌വേഡ് വീണ്ടും നൽകുക"
+
+msgid "Address"
+msgstr "വിലാസം"
+
+msgid "Enter shop address"
+msgstr "കടയുടെ വിലാസം നൽകുക"
+
+msgid "Register"
+msgstr "രജിസ്റ്റർ ചെയ്യുക"
+
+msgid "Already have an account?"
+msgstr "ഇതിനകം അക്കൗണ്ട് ഉണ്ടോ?"
+
+msgid "Login here"
+msgstr "ഇവിടെ ലോഗിൻ ചെയ്യുക"
+
+msgid "Shopkeeper Dashboard"
+msgstr "കടയുടമയുടെ ഡാഷ്‌ബോർഡ്"
+
+msgid "Welcome"
+msgstr "സ്വാഗതം"
+
+msgid "Products"
+msgstr "ഉൽപ്പന്നങ്ങൾ"
+
+msgid "Orders"
+msgstr "ഓർഡറുകൾ"
+
+msgid "Requests"
+msgstr "അഭ്യർത്ഥനകൾ"
+
+msgid "Shop Status"
+msgstr "കടയുടെ നില"
+
+msgid "Close Shop"
+msgstr "കട അടയ്ക്കുക"
+
+msgid "Reopen Shop"
+msgstr "കട വീണ്ടും തുറക്കുക"
+
+msgid "Logout"
+msgstr "ലോഗ് ഔട്ട്"
+
+msgid "Pending Orders"
+msgstr "തീർച്ചപ്പെടുത്താത്ത ഓർഡറുകൾ"
+
+msgid "Order ID"
+msgstr "ഓർഡർ ഐഡി"
+
+msgid "Customer Name"
+msgstr "ഉപഭോക്താവിൻ്റെ പേര്"
+
+msgid "Total Amount"
+msgstr "ആകെ തുക"
+
+msgid "Status"
+msgstr "നില"
+
+msgid "Mark as Ready for Pickup"
+msgstr "പിക്കപ്പിനായി തയ്യാറാണെന്ന് അടയാളപ്പെടുത്തുക"
+
+msgid "No pending orders."
+msgstr "തീർച്ചപ്പെടുത്താത്ത ഓർഡറുകളൊന്നുമില്ല."
+
+msgid "Your Products"
+msgstr "നിങ്ങളുടെ ഉൽപ്പന്നങ്ങൾ"
+
+msgid "Product Name"
+msgstr "ഉൽപ്പന്നത്തിൻ്റെ പേര്"
+
+msgid "Price"
+msgstr "വില"
+
+msgid "Actions"
+msgstr "പ്രവർത്തനങ്ങൾ"
+
+msgid "Edit"
+msgstr "എഡിറ്റുചെയ്യുക"
+
+msgid "No products found."
+msgstr "ഉൽപ്പന്നങ്ങളൊന്നും കണ്ടെത്തിയില്ല."
+
+msgid "Your Cart"
+msgstr "നിങ്ങളുടെ കാർട്ട്"
+
+msgid "Back to Dashboard"
+msgstr "ഡാഷ്‌ബോർഡിലേക്ക് മടങ്ങുക"
+
+msgid "Checkout"
+msgstr "ചെക്ക് ഔട്ട്"
+
+msgid "Full Name"
+msgstr "മുഴുവൻ പേര്"
+
+msgid "Phone"
+msgstr "ഫോൺ"
+
+msgid "Delivery Address"
+msgstr "ഡെലിവറി വിലാസം"
+
+msg-id "Preferred Delivery Date"
+msgstr "ഇഷ്ടപ്പെട്ട ഡെലിവറി തീയതി"
+
+msgid "Payment Method"
+msgstr "പണമടയ്ക്കാനുള്ള രീതി"
+
+msgid "Cash on Delivery"
+msgstr "കാഷ് ഓൺ ഡെലിവറി"
+
+msgid "Online Payment (Coming Soon)"
+msgstr "ഓൺലൈൻ പേയ്‌മെന്റ് (ഉടൻ വരുന്നു)"
+
+msgid "Place Order"
+msgstr "ഓർഡർ നൽകുക"
+
+msgid "Your Orders"
+msgstr "നിങ്ങളുടെ ഓർഡറുകൾ"
+
+msgid "Order"
+msgstr "ഓർഡർ"
+
+msgid "Date"
+msgstr "തീയതി"
+
+msgid "Total"
+msgstr "ആകെ"
+
+msgid "Items"
+msgstr "ഇനങ്ങൾ"
+
+msgid "Product"
+msgstr "ഉൽപ്പന്നം"
+
+msgid "Quantity"
+msgstr "അളവ്"
+
+msgid "Subtotal"
+msgstr "ഉപമൊത്തം"
+
+msgid "[Deleted Product]"
+msgstr "[ഇല്ലാതാക്കിയ ഉൽപ്പന്നം]"
+
+msgid "Re-Order"
+msgstr "വീണ്ടും ഓർഡർ ചെയ്യുക"
+
+msgid "You have no orders."
+msgstr "നിങ്ങൾക്ക് ഓർഡറുകളൊന്നുമില്ല."
+
+msgid "Edit Product"
+msgstr "ഉൽപ്പന്നം എഡിറ്റുചെയ്യുക"
+
+msgid "Image"
+msgstr "ചിത്രം"
+
+msgid "Leave empty to keep current image"
+msgstr "നിലവിലെ ചിത്രം നിലനിർത്താൻ ശൂന്യമായി വിടുക"
+
+msgid "Description"
+msgstr "വിവരണം"
+
+msgid "Cancel"
+msgstr "റദ്ദാക്കുക"
+
+msgid "Save Changes"
+msgstr "മാറ്റങ്ങൾ സംരക്ഷിക്കുക"
+
+msgid "View ready orders, pick up packages, and deliver to customers efficiently."
+msgstr "തയ്യാറായ ഓർഡറുകൾ കാണുക, പാക്കേജുകൾ എടുക്കുക, ഉപഭോക്താക്കൾക്ക് കാര്യക്ഷമമായി എത്തിക്കുക."
+
+msgid "Login as delivery partner."
+msgstr "ഡെലിവറി പങ്കാളിയായി ലോഗിൻ ചെയ്യുക."
+
+msgid "Don't have a shop account? Register your shop"
+msgstr "കടയുടെ അക്കൗണ്ട് ഇല്ലേ? നിങ്ങളുടെ കട രജിസ്റ്റർ ചെയ്യുക"
+
+msgid "← Back to Home"
+msgstr "← ഹോമിലേക്ക് മടങ്ങുക"
+
+msgid "Shop Address"
+msgstr "കടയുടെ വിലാസം"
+
+msgid "Already have a shop account? Login here"
+msgstr "ഇതിനകം കടയുടെ അക്കൗണ്ട് ഉണ്ടോ? ഇവിടെ ലോഗിൻ ചെയ്യുക"
+
+msgid "Email Address"
+msgstr "ഇമെയിൽ വിലാസം"
+
+msgid "Vehicle Type"
+msgstr "വാഹനത്തിൻ്റെ തരം"
+
+msgid "Mandal"
+msgstr "മണ്ഡലം"
+
+msgid "Village"
+msgstr "ഗ്രാമം"
+
+msgid "Apply now"
+msgstr "ഇപ്പോൾ അപേക്ഷിക്കുക"
+
+msgid "Already a delivery partner? Login here"
+msgstr "ഇതിനകം ഡെലിവറി പങ്കാളിയാണോ? ഇവിടെ ലോഗിൻ ചെയ്യുക"
+
+msgid "create an account"
+msgstr "ഒരു അക്കൗണ്ട് ഉണ്ടാക്കുക"
+
+msgid "phone number"
+msgstr "ഫോൺ നമ്പർ"
+
+msgid "Search District"
+msgstr "ജില്ല തിരയുക"
+
+msgid "Search Mandal"
+msgstr "മണ്ഡലം തിരയുക"
+
+msgid "Search Village"
+msgstr "ഗ്രാമം തിരയുക"
+
+msgid "Create Account"
+msgstr "അക്കൗണ്ട് ഉണ്ടാക്കുക"
+
+msgid "Welcome back! Please login to your account"
+msgstr "വീണ്ടും സ്വാഗതം! ദയവായി നിങ്ങളുടെ അക്കൗണ്ടിലേക്ക് ലോഗിൻ ചെയ്യുക"
+
+msgid "Delivery Partner Login"
+msgstr "ഡെലിവറി പങ്കാളിയുടെ ലോഗിൻ"
+
+msgid "Customer Dashboard"
+msgstr "ഉപഭോക്തൃ ഡാഷ്‌ബോർഡ്"
+
+msgid "Login successful!"
+msgstr "ലോഗിൻ വിജയകരം!"
+
+msgid "2 Available Products"
+msgstr "2 ഉൽപ്പന്നങ്ങൾ ലഭ്യമാണ്"
+
+msgid "All Products (A–Z)"
+msgstr "എല്ലാ ഉൽപ്പന്നങ്ങളും (A–Z)"
+
+msgid "Shop-wise"
+msgstr "കട തിരിച്ച്"
+
+msgid "Search products by name..."
+msgstr "പേര് ഉപയോഗിച്ച് ഉൽപ്പന്നങ്ങൾ തിരയുക..."
+
+msgid "Milk"
+msgstr "പാൽ"
+
+msgid "Rice"
+msgstr "അരി"
+
+msgid "Shop"
+msgstr "കട"
+
+msgid "Add to Cart"
+msgstr "കാർട്ടിലേക്ക് ചേർക്കുക"
+
+msgid "Buy Now"
+msgstr "ഇപ്പോൾ വാങ്ങുക"
+
+msgid "Price History"
+msgstr "വില ചരിത്രം"
+
+msgid "Request Product"
+msgstr "ഉൽപ്പന്നം അഭ്യർത്ഥിക്കുക"
+
+msgid "All rights reserved"
+msgstr "എല്ലാ അവകാശങ്ങളും നിക്ഷിപ്തം"
+
+msgid "Your cart is empty!"
+msgstr "നിങ്ങളുടെ കാർട്ട് ശൂന്യമാണ്!"
+
+msgid "Cart"
+msgstr "കാർട്ട്"
+
+msgid "Pending"
+msgstr "തീർച്ചപ്പെടുത്തിയിട്ടില്ല"
+
+msgid "Order Date"
+msgstr "ഓർഡർ തീയതി"
+
+msgid "Delivered"
+msgstr "വിതരണം ചെയ്തു"
+
+msgid "Request a Product from"
+msgstr "നിന്ന് ഒരു ഉൽപ്പന്നം അഭ്യർത്ഥിക്കുക"
+
+msgid "Product name"
+msgstr "ഉൽപ്പന്നത്തിൻ്റെ പേര്"
+
+msgid "Details (optional)"
+msgstr "വിശദാംശങ്ങൾ (ഓപ്ഷണൽ)"
+
+msgid "Send Request"
+msgstr "അഭ്യർത്ഥന അയയ്‌ക്കുക"
+
+msgid "Your recent requests to this shop"
+msgstr "ഈ കടയിലേക്കുള്ള നിങ്ങളുടെ സമീപകാല അഭ്യർത്ഥനകൾ"
+
+msgid "Requested"
+msgstr "അഭ്യർത്ഥിച്ചു"
+
+msgid "At"
+msgstr "ൽ"
+
+msgid "Product Details"
+msgstr "ഉൽപ്പന്നത്തിൻ്റെ വിശദാംശങ്ങൾ"
+
+msgid "shirt"
+msgstr "ഷർട്ട്"
+
+msgid "M-38"
+msgstr "M-38"
+
+msgid "Open"
+msgstr "തുറക്കുക"
+
+msgid "Delivery Partner Dashboard"
+msgstr "ഡെലിവറി പങ്കാളി ഡാഷ്‌ബോർഡ്"
+
+msgid "Available Orders for Delivery"
+msgstr "ഡെലിവറിക്കായി ലഭ്യമായ ഓർഡറുകൾ"
+
+msgid "Your Assigned Deliveries"
+msgstr "നിങ്ങൾക്ക് നൽകിയിട്ടുള്ള ഡെലിവറികൾ"
+
+msgid "No orders available for delivery."
+msgstr "ഡെലിവറിക്ക് ഓർഡറുകളൊന്നും ലഭ്യമല്ല."
+
+msgid "Orders will appear here when they are ready for delivery."
+msgstr "ഡെലിവറിക്ക് തയ്യാറാകുമ്പോൾ ഓർഡറുകൾ ഇവിടെ ദൃശ്യമാകും."
+
+msgid "Payment"
+msgstr "പണമടയ്ക്കൽ"
+
+msgid "Cash_On_Delivery"
+msgstr "കാഷ് ഓൺ ഡെലിവറി"
+
+msgid "Remove"
+msgstr "നീക്കം ചെയ്യുക"
+
+msgid "Enter your phone"
+msgstr "നിങ്ങളുടെ ഫോൺ നമ്പർ നൽകുക"
+
+msgid "Enter your delivery address"
+msgstr "നിങ്ങളുടെ ഡെലിവറി വിലാസം നൽകുക"
+
+msgid "Select payment method"
+msgstr "പേയ്‌മെന്റ് രീതി തിരഞ്ഞെടുക്കുക"
+
+msgid "Special Instructions (optional)"
+msgstr "പ്രത്യേക നിർദ്ദേശങ്ങൾ (ഓപ്ഷണൽ)"
+
+msgid "Assigned"
+msgstr "അസൈൻ ചെയ്തു"
+
+msgid "Online Payment"
+msgstr "ഓൺലൈൻ പേയ്‌മെന്റ്"
+
+msgid "Product Image"
+msgstr "ഉൽപ്പന്നത്തിൻ്റെ ചിത്രം"
+
+msgid "Recent Product Requests"
+msgstr "സമീപകാല ഉൽപ്പന്ന അഭ്യർത്ഥനകൾ"
+
+msgid "Customer Product Requests"
+msgstr "ഉപഭോക്തൃ ഉൽപ്പന്ന അഭ്യർത്ഥനകൾ"
+
+msgid "Requested At"
+msgstr "അഭ്യർത്ഥിച്ച സമയം"
+
+msgid "Add Product"
+msgstr "ഉൽപ്പന്നം ചേർക്കുക"
+
+msgid "Current Price"
+msgstr "നിലവിലെ വില"
+
+msgid "Price Analysis"
+msgstr "വില വിശകലനം"
+
+msgid "Lowest Price"
+msgstr "ഏറ്റവും കുറഞ്ഞ വില"
+
+msgid "Highest Price"
+msgstr "ഏറ്റവും കൂടിയ വില"
+
+msgid "Average Price"
+msgstr "ശരാശരി വില"
+
+msgid "Price Range"
+msgstr "വില പരിധി"
+
+msgid "Buying Recommendation"
+msgstr "വാങ്ങാനുള്ള ശുപാർശ"
+
+msgid "Excellent time to buy! Current price is at or near the lowest it has ever been."
+msgstr "വാങ്ങാൻ പറ്റിയ സമയം! നിലവിലെ വില എക്കാലത്തെയും കുറഞ്ഞ വിലയിലോ അതിനടുത്തോ ആണ്."
+
+msgid "Up to"
+msgstr "വരെ"
+
+msgid "saved compared to highest price"
+msgstr "ഏറ്റവും കൂടിയ വിലയുമായി താരതമ്യപ്പെടുത്തുമ്പോൾ ലാഭിച്ചു"
+
+msgid "Confidence"
+msgstr "ആത്മവിശ്വാസം"
+
+msgid "HIGH"
+msgstr "ഉയർന്ന"
+
+msgid "MEDIUM"
+msgstr "ഇടത്തരം"
+
+msgid "LOW"
+msgstr "കുറഞ്ഞ"
+
+msgid "Old Price"
+msgstr "പഴയ വില"
+
+msgid "New Price"
+msgstr "പുതിയ വില"
+
+msgid "Reason"
+msgstr "കാരണം"
+
+msgid "Price updated"
+msgstr "വില പുതുക്കി"
+
+msgid "Price Trend"
+msgstr "വില പ്രവണത"
+
+msgid "Current"
+msgstr "നിലവിൽ"
