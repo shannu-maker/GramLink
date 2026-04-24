@@ -1,0 +1,567 @@
+# Kannada translations for Gram Connect project.
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Gram Connect\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-10-13 18:00+0530\n"
+"PO-Revision-Date: 2025-10-13 19:15+0530\n"
+"Last-Translator: Gemini Assistant\n"
+"Language-Team: Kannada <kn@example.com>\n"
+"Language: kn\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Gram Connect"
+msgstr "ಗ್ರಾಮ್ ಕನೆಕ್ಟ್"
+
+msgid "One platform for shopkeepers, customers and delivery partners"
+msgstr "ಅಂಗಡಿಯವರು, ಗ್ರಾಹಕರು ಮತ್ತು ಡೆಲಿವರಿ ಪಾಲುದಾರರಿಗಾಗಿ ಒಂದು ವೇದಿಕೆ"
+
+msgid "Language"
+msgstr "ಭಾಷೆ"
+
+msgid "Select Your Location"
+msgstr "ನಿಮ್ಮ ಸ್ಥಳವನ್ನು ಆಯ್ಕೆಮಾಡಿ"
+
+msgid "State"
+msgstr "ರಾಜ್ಯ"
+
+msgid "Select State"
+msgstr "ರಾಜ್ಯವನ್ನು ಆಯ್ಕೆಮಾಡಿ"
+
+msgid "District"
+msgstr "ಜಿಲ್ಲೆ"
+
+msgid "Select District"
+msgstr "ಜಿಲ್ಲೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ"
+
+msgid "City/Town"
+msgstr "ನಗರ/ಪಟ್ಟಣ"
+
+msgid "Select City/Town"
+msgstr "ನಗರ/ಪಟ್ಟಣವನ್ನು ಆಯ್ಕೆಮಾಡಿ"
+
+msgid "Pincode"
+msgstr "ಪಿನ್ ಕೋಡ್"
+
+msgid "Select Pincode"
+msgstr "ಪಿನ್ ಕೋಡ್ ಆಯ್ಕೆಮಾಡಿ"
+
+msgid "Confirm Location"
+msgstr "ಸ್ಥಳವನ್ನು ದೃಢೀಕರಿಸಿ"
+
+msgid "Shopkeeper"
+msgstr "ಅಂಗಡಿಯವ"
+
+msgid "Manage your products, inventory, and view incoming orders from customers."
+msgstr "ನಿಮ್ಮ ಉತ್ಪನ್ನಗಳು, ದಾಸ್ತಾನುಗಳನ್ನು ನಿರ್ವಹಿಸಿ ಮತ್ತು ಗ್ರಾಹಕರಿಂದ ಬರುವ ಆದೇಶಗಳನ್ನು ವೀಕ್ಷಿಸಿ."
+
+msgid "Login as Shopkeeper"
+msgstr "ಅಂಗಡಿಯವರಾಗಿ ಲಾಗಿನ್ ಮಾಡಿ"
+
+msgid "Register Shop"
+msgstr "ಅಂಗಡಿಯನ್ನು ನೋಂದಾಯಿಸಿ"
+
+msgid "Customer"
+msgstr "ಗ್ರಾಹಕ"
+
+msgid "Browse products, add to cart, and place orders with your preferred delivery time."
+msgstr "ಉತ್ಪನ್ನಗಳನ್ನು ಬ್ರೌಸ್ ಮಾಡಿ, ಕಾರ್ಟ್‌ಗೆ ಸೇರಿಸಿ ಮತ್ತು ನಿಮ್ಮ ಆದ್ಯತೆಯ ವಿತರಣಾ ಸಮಯದೊಂದಿಗೆ ಆದೇಶಗಳನ್ನು ನೀಡಿ."
+
+msgid "Login as Customer"
+msgstr "ಗ್ರಾಹಕರಾಗಿ ಲಾಗಿನ್ ಮಾಡಿ"
+
+msgid "Register Account"
+msgstr "ಖಾತೆಯನ್ನು ನೋಂದಾಯಿಸಿ"
+
+msgid "Delivery Partner"
+msgstr "ಡೆಲಿವರಿ ಪಾಲುದಾರ"
+
+msgid "View assigned orders, customer details, and update delivery status."
+msgstr "ನಿಯೋಜಿತ ಆದೇಶಗಳು, ಗ್ರಾಹಕರ ವಿವರಗಳನ್ನು ವೀಕ್ಷಿಸಿ ಮತ್ತು ವಿತರಣಾ ಸ್ಥಿತಿಯನ್ನು ನವೀಕರಿಸಿ."
+
+msgid "Login as Partner"
+msgstr "ಪಾಲುದಾರರಾಗಿ ಲಾಗಿನ್ ಮಾಡಿ"
+
+msgid "Apply as Partner"
+msgstr "ಪಾಲುದಾರರಾಗಿ ಅನ್ವಯಿಸಿ"
+
+msgid "Shopkeeper Login"
+msgstr "ಅಂಗಡಿಯವರ ಲಾಗಿನ್"
+
+msgid "Welcome back! Access your shop dashboard"
+msgstr "ಮತ್ತೆ ಸ್ವಾಗತ! ನಿಮ್ಮ ಅಂಗಡಿ ಡ್ಯಾಶ್‌ಬೋರ್ಡ್ ಪ್ರವೇಶಿಸಿ"
+
+msgid "Shop Email Address"
+msgstr "ಅಂಗಡಿ ಇಮೇಲ್ ವಿಳಾಸ"
+
+msgid "Enter your shop email"
+msgstr "ನಿಮ್ಮ ಅಂಗಡಿ ಇಮೇಲ್ ನಮೂದಿಸಿ"
+
+msgid "Password"
+msgstr "ಗುಪ್ತಪದ"
+
+msgid "Enter your password"
+msgstr "ನಿಮ್ಮ ಗುಪ್ತಪದವನ್ನು ನಮೂದಿಸಿ"
+
+msgid "Login"
+msgstr "ಲಾಗಿನ್"
+
+msgid "Don't have an account?"
+msgstr "ಖಾತೆ ಇಲ್ಲವೇ?"
+
+msgid "Register here"
+msgstr "ಇಲ್ಲಿ ನೋಂದಾಯಿಸಿ"
+
+msgid "Shop Registration"
+msgstr "ಅಂಗಡಿ ನೋಂದಣಿ"
+
+msgid "Register your shop to start selling"
+msgstr "ಮಾರಾಟವನ್ನು ಪ್ರಾರಂಭಿಸಲು ನಿಮ್ಮ ಅಂಗಡಿಯನ್ನು ನೋಂದಾಯಿಸಿ"
+
+msgid "Shop Name"
+msgstr "ಅಂಗಡಿಯ ಹೆಸರು"
+
+msgid "Enter your shop name"
+msgstr "ನಿಮ್ಮ ಅಂಗಡಿಯ ಹೆಸರನ್ನು ನಮೂದಿಸಿ"
+
+msgid "Confirm Password"
+msgstr "ಗುಪ್ತಪದವನ್ನು ಖಚಿತಪಡಿಸಿ"
+
+msgid "Re-enter your password"
+msgstr "ನಿಮ್ಮ ಗುಪ್ತಪದವನ್ನು ಮರು-ನಮೂದಿಸಿ"
+
+msgid "Address"
+msgstr "ವಿಳಾಸ"
+
+msgid "Enter shop address"
+msgstr "ಅಂಗಡಿ ವಿಳಾಸವನ್ನು ನಮೂದಿಸಿ"
+
+msgid "Register"
+msgstr "ನೋಂದಾಯಿಸಿ"
+
+msgid "Already have an account?"
+msgstr "ಈಗಾಗಲೇ ಖಾತೆ ಇದೆಯೇ?"
+
+msgid "Login here"
+msgstr "ಇಲ್ಲಿ ಲಾಗಿನ್ ಮಾಡಿ"
+
+msgid "Shopkeeper Dashboard"
+msgstr "ಅಂಗಡಿಯವರ ಡ್ಯಾಶ್‌ಬೋರ್ಡ್"
+
+msgid "Welcome"
+msgstr "ಸ್ವಾಗತ"
+
+msgid "Products"
+msgstr "ಉತ್ಪನ್ನಗಳು"
+
+msgid "Orders"
+msgstr "ಆದೇಶಗಳು"
+
+msgid "Requests"
+msgstr "ವಿನಂತಿಗಳು"
+
+msgid "Shop Status"
+msgstr "ಅಂಗಡಿ ಸ್ಥಿತಿ"
+
+msgid "Close Shop"
+msgstr "ಅಂಗಡಿ ಮುಚ್ಚಿ"
+
+msgid "Reopen Shop"
+msgstr "ಅಂಗಡಿಯನ್ನು ಪುನಃ ತೆರೆಯಿರಿ"
+
+msgid "Logout"
+msgstr "ಲಾಗ್ ಔಟ್"
+
+msgid "Pending Orders"
+msgstr "ಬಾಕಿ ಇರುವ ಆದೇಶಗಳು"
+
+msgid "Order ID"
+msgstr "ಆರ್ಡರ್ ಐಡಿ"
+
+msgid "Customer Name"
+msgstr "ಗ್ರಾಹಕರ ಹೆಸರು"
+
+msgid "Total Amount"
+msgstr "ಒಟ್ಟು ಮೊತ್ತ"
+
+msgid "Status"
+msgstr "ಸ್ಥಿತಿ"
+
+msgid "Mark as Ready for Pickup"
+msgstr "ಪಿಕಪ್‌ಗೆ ಸಿದ್ಧ ಎಂದು ಗುರುತಿಸಿ"
+
+msgid "No pending orders."
+msgstr "ಯಾವುದೇ ಬಾಕಿ ಆದೇಶಗಳಿಲ್ಲ."
+
+msgid "Your Products"
+msgstr "ನಿಮ್ಮ ಉತ್ಪನ್ನಗಳು"
+
+msgid "Product Name"
+msgstr "ಉತ್ಪನ್ನದ ಹೆಸರು"
+
+msgid "Price"
+msgstr "ಬೆಲೆ"
+
+msgid "Actions"
+msgstr "ಕ್ರಿಯೆಗಳು"
+
+msgid "Edit"
+msgstr "ಸಂಪಾದಿಸಿ"
+
+msgid "No products found."
+msgstr "ಯಾವುದೇ ಉತ್ಪನ್ನಗಳು ಕಂಡುಬಂದಿಲ್ಲ."
+
+msgid "Your Cart"
+msgstr "ನಿಮ್ಮ ಕಾರ್ಟ್"
+
+msgid "Back to Dashboard"
+msgstr "ಡ್ಯಾಶ್‌ಬೋರ್ಡ್‌ಗೆ ಹಿಂತಿರುಗಿ"
+
+msgid "Checkout"
+msgstr "ಚೆಕ್ಔಟ್"
+
+msgid "Full Name"
+msgstr "ಪೂರ್ಣ ಹೆಸರು"
+
+msgid "Phone"
+msgstr "ಫೋನ್"
+
+msgid "Delivery Address"
+msgstr "ವಿತರಣಾ ವಿಳಾಸ"
+
+msgid "Preferred Delivery Date"
+msgstr "ಆದ್ಯತೆಯ ವಿತರಣಾ ದಿನಾಂಕ"
+
+msgid "Payment Method"
+msgstr "ಪಾವತಿ ವಿಧಾನ"
+
+msgid "Cash on Delivery"
+msgstr "ಕ್ಯಾಶ್ ಆನ್ ಡೆಲಿವರಿ"
+
+msgid "Online Payment (Coming Soon)"
+msgstr "ಆನ್‌ಲೈನ್ ಪಾವತಿ (ಶೀಘ್ರದಲ್ಲೇ ಬರಲಿದೆ)"
+
+msgid "Place Order"
+msgstr "ಆದೇಶ ನೀಡಿ"
+
+msgid "Your Orders"
+msgstr "ನಿಮ್ಮ ಆದೇಶಗಳು"
+
+msgid "Order"
+msgstr "ಆದೇಶ"
+
+msgid "Date"
+msgstr "ದಿನಾಂಕ"
+
+msgid "Total"
+msgstr "ಒಟ್ಟು"
+
+msgid "Items"
+msgstr "ವಸ್ತುಗಳು"
+
+msgid "Product"
+msgstr "ಉತ್ಪನ್ನ"
+
+msgid "Quantity"
+msgstr "ಪ್ರಮಾಣ"
+
+msgid "Subtotal"
+msgstr "ಉಪಮೊತ್ತ"
+
+msgid "[Deleted Product]"
+msgstr "[ಅಳಿಸಲಾದ ಉತ್ಪನ್ನ]"
+
+msgid "Re-Order"
+msgstr "ಮರು-ಆದೇಶ"
+
+msgid "You have no orders."
+msgstr "ನಿಮಗೆ ಯಾವುದೇ ಆದೇಶಗಳಿಲ್ಲ."
+
+msgid "Edit Product"
+msgstr "ಉತ್ಪನ್ನವನ್ನು ಸಂಪಾದಿಸಿ"
+
+msgid "Image"
+msgstr "ಚಿತ್ರ"
+
+msgid "Leave empty to keep current image"
+msgstr "ಪ್ರಸ್ತುತ ಚಿತ್ರವನ್ನು ಉಳಿಸಿಕೊಳ್ಳಲು ಖಾಲಿ ಬಿಡಿ"
+
+msgid "Description"
+msgstr "ವಿವರಣೆ"
+
+msgid "Cancel"
+msgstr "ರದ್ದುಮಾಡಿ"
+
+msgid "Save Changes"
+msgstr "ಬದಲಾವಣೆಗಳನ್ನು ಉಳಿಸಿ"
+
+msgid "View ready orders, pick up packages, and deliver to customers efficiently."
+msgstr "ಸಿದ್ಧ ಆದೇಶಗಳನ್ನು ವೀಕ್ಷಿಸಿ, ಪ್ಯಾಕೇಜ್‌ಗಳನ್ನು ತೆಗೆದುಕೊಳ್ಳಿ ಮತ್ತು ಗ್ರಾಹಕರಿಗೆ ಸಮರ್ಥವಾಗಿ ತಲುಪಿಸಿ."
+
+msgid "Login as delivery partner."
+msgstr "ಡೆಲಿವರಿ ಪಾಲುದಾರರಾಗಿ ಲಾಗಿನ್ ಮಾಡಿ."
+
+msgid "Don't have a shop account? Register your shop"
+msgstr "ಅಂಗಡಿ ಖಾತೆ ಇಲ್ಲವೇ? ನಿಮ್ಮ ಅಂಗಡಿಯನ್ನು ನೋಂದಾಯಿಸಿ"
+
+msgid "← Back to Home"
+msgstr "← ಮುಖಪುಟಕ್ಕೆ ಹಿಂತಿರುಗಿ"
+
+msgid "Shop Address"
+msgstr "ಅಂಗಡಿ ವಿಳಾಸ"
+
+msgid "Already have a shop account? Login here"
+msgstr "ಈಗಾಗಲೇ ಅಂಗಡಿ ಖಾತೆ ಇದೆಯೇ? ಇಲ್ಲಿ ಲಾಗಿನ್ ಮಾಡಿ"
+
+msgid "Email Address"
+msgstr "ಇಮೇಲ್ ವಿಳಾಸ"
+
+msgid "Vehicle Type"
+msgstr "ವಾಹನ ಪ್ರಕಾರ"
+
+msgid "Mandal"
+msgstr "ಮಂಡಲ"
+
+msgid "Village"
+msgstr "ಗ್ರಾಮ"
+
+msgid "Apply now"
+msgstr "ಈಗ ಅನ್ವಯಿಸಿ"
+
+msgid "Already a delivery partner? Login here"
+msgstr "ಈಗಾಗಲೇ ಡೆಲಿವರಿ ಪಾಲುದಾರರಾಗಿದ್ದೀರಾ? ಇಲ್ಲಿ ಲಾಗಿನ್ ಮಾಡಿ"
+
+msgid "create an account"
+msgstr "ಖಾತೆ ತೆರೆಯಿರಿ"
+
+msgid "phone number"
+msgstr "ದೂರವಾಣಿ ಸಂಖ್ಯೆ"
+
+msgid "Search District"
+msgstr "ಜಿಲ್ಲೆಯನ್ನು ಹುಡುಕಿ"
+
+msgid "Search Mandal"
+msgstr "ಮಂಡಲವನ್ನು ಹುಡುಕಿ"
+
+msgid "Search Village"
+msgstr "ಗ್ರಾಮವನ್ನು ಹುಡುಕಿ"
+
+msgid "Create Account"
+msgstr "ಖಾತೆ ರಚಿಸಿ"
+
+msgid "Welcome back! Please login to your account"
+msgstr "ಮತ್ತೆ ಸ್ವಾಗತ! ದಯವಿಟ್ಟು ನಿಮ್ಮ ಖಾತೆಗೆ ಲಾಗಿನ್ ಮಾಡಿ"
+
+msgid "Delivery Partner Login"
+msgstr "ಡೆಲಿವರಿ ಪಾಲುದಾರ ಲಾಗಿನ್"
+
+msgid "Customer Dashboard"
+msgstr "ಗ್ರಾಹಕ ಡ್ಯಾಶ್‌ಬೋರ್ಡ್"
+
+msgid "Login successful!"
+msgstr "ಲಾಗಿನ್ ಯಶಸ್ವಿಯಾಗಿದೆ!"
+
+msgid "2 Available Products"
+msgstr "2 ಲಭ್ಯವಿರುವ ಉತ್ಪನ್ನಗಳು"
+
+msgid "All Products (A–Z)"
+msgstr "ಎಲ್ಲಾ ಉತ್ಪನ್ನಗಳು (A–Z)"
+
+msgid "Shop-wise"
+msgstr "ಅಂಗಡಿ-ವಾರು"
+
+msgid "Search products by name..."
+msgstr "ಹೆಸರಿನಿಂದ ಉತ್ಪನ್ನಗಳನ್ನು ಹುಡುಕಿ..."
+
+msgid "Milk"
+msgstr "ಹಾಲು"
+
+msgid "Rice"
+msgstr "ಅಕ್ಕಿ"
+
+msgid "Shop"
+msgstr "ಅಂಗಡಿ"
+
+msgid "Add to Cart"
+msgstr "ಕಾರ್ಟ್‌ಗೆ ಸೇರಿಸಿ"
+
+msgid "Buy Now"
+msgstr "ಈಗ ಖರೀದಿಸು"
+
+msgid "Price History"
+msgstr "ಬೆಲೆ ಇತಿಹಾಸ"
+
+msgid "Request Product"
+msgstr "ಉತ್ಪನ್ನವನ್ನು ವಿನಂತಿಸಿ"
+
+msgid "All rights reserved"
+msgstr "ಎಲ್ಲ ಹಕ್ಕುಗಳನ್ನು ಕಾಯ್ದಿರಿಸಲಾಗಿದೆ"
+
+msgid "Your cart is empty!"
+msgstr "ನಿಮ್ಮ ಕಾರ್ಟ್ ಖಾಲಿಯಾಗಿದೆ!"
+
+msgid "Cart"
+msgstr "ಕಾರ್ಟ್"
+
+msgid "Pending"
+msgstr "ಬಾಕಿ ಉಳಿದಿದೆ"
+
+msgid "Order Date"
+msgstr "ಆದೇಶ ದಿನಾಂಕ"
+
+msgid "Delivered"
+msgstr "ತಲುಪಿಸಲಾಗಿದೆ"
+
+msgid "Request a Product from"
+msgstr "ಇವರಿಂದ ಉತ್ಪನ್ನವನ್ನು ವಿನಂತಿಸಿ"
+
+msgid "Product name"
+msgstr "ಉತ್ಪನ್ನದ ಹೆಸರು"
+
+msgid "Details (optional)"
+msgstr "ವಿವರಗಳು (ಐಚ್ಛಿಕ)"
+
+msgid "Send Request"
+msgstr "ವಿನಂತಿಯನ್ನು ಕಳುಹಿಸಿ"
+
+msgid "Your recent requests to this shop"
+msgstr "ಈ ಅಂಗಡಿಗೆ ನಿಮ್ಮ ಇತ್ತೀಚಿನ ವಿನಂತಿಗಳು"
+
+msgid "Requested"
+msgstr "ವಿನಂತಿಸಲಾಗಿದೆ"
+
+msgid "At"
+msgstr "ನಲ್ಲಿ"
+
+msgid "Product Details"
+msgstr "ಉತ್ಪನ್ನದ ವಿವರಗಳು"
+
+msgid "shirt"
+msgstr "ಶರ್ಟ್"
+
+msgid "M-38"
+msgstr "M-38"
+
+msgid "Open"
+msgstr "ತೆರೆಯಿರಿ"
+
+msgid "Delivery Partner Dashboard"
+msgstr "ಡೆಲಿವರಿ ಪಾಲುದಾರ ಡ್ಯಾಶ್‌ಬೋರ್ಡ್"
+
+msgid "Available Orders for Delivery"
+msgstr "ವಿತರಣೆಗೆ ಲಭ್ಯವಿರುವ ಆದೇಶಗಳು"
+
+msgid "Your Assigned Deliveries"
+msgstr "ನಿಮಗೆ ನಿಯೋಜಿಸಲಾದ ವಿತರಣೆಗಳು"
+
+msgid "No orders available for delivery."
+msgstr "ವಿತರಣೆಗೆ ಯಾವುದೇ ಆದೇಶಗಳು ಲಭ್ಯವಿಲ್ಲ."
+
+msgid "Orders will appear here when they are ready for delivery."
+msgstr "ವಿತರಣೆಗೆ ಸಿದ್ಧವಾದಾಗ ಆದೇಶಗಳು ಇಲ್ಲಿ ಕಾಣಿಸಿಕೊಳ್ಳುತ್ತವೆ."
+
+msgid "Payment"
+msgstr "ಪಾವತಿ"
+
+msgid "Cash_On_Delivery"
+msgstr "ಕ್ಯಾಶ್ ಆನ್ ಡೆಲಿವರಿ"
+
+msgid "Remove"
+msgstr "ತೆಗೆದುಹಾಕಿ"
+
+msgid "Enter your phone"
+msgstr "ನಿಮ್ಮ ದೂರವಾಣಿ ಸಂಖ್ಯೆ ನಮೂದಿಸಿ"
+
+msgid "Enter your delivery address"
+msgstr "ನಿಮ್ಮ ವಿತರಣಾ ವಿಳಾಸವನ್ನು ನಮೂದಿಸಿ"
+
+msgid "Select payment method"
+msgstr "ಪಾವತಿ ವಿಧಾನವನ್ನು ಆಯ್ಕೆಮಾಡಿ"
+
+msgid "Special Instructions (optional)"
+msgstr "ವಿಶೇಷ ಸೂಚನೆಗಳು (ಐಚ್ಛಿಕ)"
+
+msgid "Assigned"
+msgstr "ನಿಯೋಜಿಸಲಾಗಿದೆ"
+
+msgid "Online Payment"
+msgstr "ಆನ್‌ಲೈನ್ ಪಾವತಿ"
+
+msgid "Product Image"
+msgstr "ಉತ್ಪನ್ನದ ಚಿತ್ರ"
+
+msgid "Recent Product Requests"
+msgstr "ಇತ್ತೀಚಿನ ಉತ್ಪನ್ನ ವಿನಂತಿಗಳು"
+
+msgid "Customer Product Requests"
+msgstr "ಗ್ರಾಹಕ ಉತ್ಪನ್ನ ವಿನಂತಿಗಳು"
+
+msgid "Requested At"
+msgstr "ವಿನಂತಿಸಿದ ಸಮಯ"
+
+msgid "Add Product"
+msgstr "ಉತ್ಪನ್ನವನ್ನು ಸೇರಿಸಿ"
+
+msgid "Current Price"
+msgstr "ಪ್ರಸ್ತುತ ಬೆಲೆ"
+
+msgid "Price Analysis"
+msgstr "ಬೆಲೆ ವಿಶ್ಲೇಷಣೆ"
+
+msgid "Lowest Price"
+msgstr "ಅತಿ ಕಡಿಮೆ ಬೆಲೆ"
+
+msgid "Highest Price"
+msgstr "ಅತಿ ಹೆಚ್ಚಿನ ಬೆಲೆ"
+
+msgid "Average Price"
+msgstr "ಸರಾಸರಿ ಬೆಲೆ"
+
+msgid "Price Range"
+msgstr "ಬೆಲೆ ವ್ಯಾಪ್ತಿ"
+
+msgid "Buying Recommendation"
+msgstr "ಖರೀದಿ ಶಿಫಾರಸು"
+
+msgid "Excellent time to buy! Current price is at or near the lowest it has ever been."
+msgstr "ಖರೀದಿಸಲು ઉત્તમ ಸಮಯ! ಪ್ರಸ್ತುತ ಬೆಲೆಯು ಇದುವರೆಗೆ ಇದ್ದುದರಲ್ಲಿ ಅತಿ ಕಡಿಮೆಯಲ್ಲಿದೆ ಅಥವಾ ಅದರ ಸಮೀಪದಲ್ಲಿದೆ."
+
+msgid "Up to"
+msgstr "ವರೆಗೆ"
+
+msgid "saved compared to highest price"
+msgstr "ಅತಿ ಹೆಚ್ಚಿನ ಬೆಲೆಗೆ ಹೋಲಿಸಿದರೆ ಉಳಿತಾಯ"
+
+msgid "Confidence"
+msgstr "ವಿಶ್ವಾಸ"
+
+msgid "HIGH"
+msgstr "ಹೆಚ್ಚು"
+
+msgid "MEDIUM"
+msgstr "ಮಧ್ಯಮ"
+
+msgid "LOW"
+msgstr "ಕಡಿಮೆ"
+
+msgid "Old Price"
+msgstr "ಹಳೆಯ ಬೆಲೆ"
+
+msgid "New Price"
+msgstr "ಹೊಸ ಬೆಲೆ"
+
+msgid "Reason"
+msgstr "ಕಾರಣ"
+
+msgid "Price updated"
+msgstr "ಬೆಲೆ ನವೀಕರಿಸಲಾಗಿದೆ"
+
+msgid "Price Trend"
+msgstr "ಬೆಲೆ ಪ್ರವೃತ್ತಿ"
+
+msgid "Current"
+msgstr "ಪ್ರಸ್ತುತ"
