@@ -9,14 +9,14 @@
     <link rel="stylesheet" href="{% static 'gram.css' %}">
     {% block extra_css %}{% endblock %}
 </head>
-<body>
+<body data-url-name="{{ request.resolver_match.url_name|default:'' }}">
     {% block header %}
     <header>
         <div class="container">
             <h1>{% trans "Gram Connect" %}</h1>
             <p>{% trans "One platform for shopkeepers, customers and delivery partners" %}</p>
             {% if request.resolver_match.url_name == 'home' %}
-            <button id="open-lang" class="btn" style="float:right;">🌐 {% trans "Language" %}</button>
+            <button type="button" class="btn js-open-lang" style="float:right;">🌐 {% trans "Language" %}</button>
             {% endif %}
         </div>
     </header>
@@ -93,11 +93,11 @@
         <div style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); background:#fff; padding:20px; border-radius:8px; width:90%; max-width:420px;">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
                 <h3 style="margin:0;">{% trans "Choose Language" %}</h3>
-                <button id="close-lang" style="background:#dc3545; color:#fff; border:none; border-radius:50%; width:28px; height:28px; cursor:pointer;">×</button>
+                <button type="button" id="close-lang" style="background:#dc3545; color:#fff; border:none; border-radius:50%; width:28px; height:28px; cursor:pointer;">×</button>
             </div>
             <form id="lang-form" method="post" action="{% url 'set_language' %}" style="display:grid; gap:12px;">
                 {% csrf_token %}
-                <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                <input type="hidden" name="next" value="/">
                 <label>
                     <span>{% trans "Language" %}</span>
                     <select name="language" style="width:100%; padding:10px; border:1px solid #ddd; border-radius:6px;">
@@ -114,7 +114,7 @@
     </div>
 
     <!-- Floating language button available on all pages -->
-    <button id="open-lang" title="{% trans 'Change language' %}" style="position:fixed; right:16px; bottom:16px; z-index:1999; background:#343a40; color:#fff; border:none; border-radius:24px; padding:10px 12px; cursor:pointer; box-shadow:0 2px 8px rgba(0,0,0,0.2);">🌐</button>
+    <button type="button" class="js-open-lang" title="{% trans 'Change language' %}" style="position:fixed; right:16px; bottom:16px; z-index:1999; background:#343a40; color:#fff; border:none; border-radius:24px; padding:10px 12px; cursor:pointer; box-shadow:0 2px 8px rgba(0,0,0,0.2);">🌐</button>
 
     <script>
         // Use a simple stub for gettext if not provided by Django's i18n js, to mark strings for extraction
@@ -122,16 +122,33 @@
             function gettext(text) { return text; }
         }
         
-        // Make language switch available on every page
+        // Make language switch available on every page.
         document.addEventListener('DOMContentLoaded', function() {
-            var openBtn = document.getElementById('open-lang');
+            var openBtns = document.querySelectorAll('.js-open-lang');
             var closeBtn = document.getElementById('close-lang');
             var modal = document.getElementById('lang-modal');
-            if (openBtn && modal) {
-                openBtn.addEventListener('click', function() { modal.style.display = 'block'; });
+            var langForm = document.getElementById('lang-form');
+
+            if (openBtns && modal) {
+                openBtns.forEach(function(openBtn) {
+                    openBtn.addEventListener('click', function() { modal.style.display = 'block'; });
+                });
             }
             if (closeBtn && modal) {
                 closeBtn.addEventListener('click', function() { modal.style.display = 'none'; });
+            }
+            if (modal) {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === modal) modal.style.display = 'none';
+                });
+            }
+            if (langForm) {
+                langForm.addEventListener('submit', function() {
+                    var nextInput = langForm.querySelector('input[name="next"]');
+                    if (nextInput) {
+                        nextInput.value = window.location.pathname + window.location.search;
+                    }
+                });
             }
             // Auto-hide success messages after ~2.5s
             var successMsgs = document.querySelectorAll('.django-message-item.success');
@@ -324,17 +341,8 @@
         // Language modal behavior (open on first visit) - home page only
         (function(){
             try {
-                if ((window.location.pathname === '/' || document.body.getAttribute('data-url-name') === 'home')) {
-                    var openBtn = document.getElementById('open-lang');
+                if (document.body.getAttribute('data-url-name') === 'home') {
                     var modal = document.getElementById('lang-modal');
-                    var closeBtn = document.getElementById('close-lang');
-                    if(openBtn && modal){
-                        openBtn.addEventListener('click', function(){ modal.style.display = 'block'; });
-                    }
-                    if(closeBtn && modal){
-                        closeBtn.addEventListener('click', function(){ modal.style.display = 'none'; });
-                        modal.addEventListener('click', function(e){ if(e.target === modal) modal.style.display = 'none'; });
-                    }
                     if(!localStorage.getItem('langPrompted')){
                         modal && (modal.style.display = 'block');
                         localStorage.setItem('langPrompted', '1');
