@@ -1,0 +1,567 @@
+# Telugu translations for Gram Connect project.
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Gram Connect\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-10-13 18:00+0530\n"
+"PO-Revision-Date: 2025-10-13 19:15+0530\n"
+"Last-Translator: Gemini Assistant\n"
+"Language-Team: Telugu <te@example.com>\n"
+"Language: te\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Gram Connect"
+msgstr "గ్రామ్ కనెక్ట్"
+
+msgid "One platform for shopkeepers, customers and delivery partners"
+msgstr "దుకాణదారులు, వినియోగదారులు మరియు డెలివరీ భాగస్వాముల కోసం ఒకే వేదిక"
+
+msgid "Language"
+msgstr "భాష"
+
+msgid "Select Your Location"
+msgstr "మీ స్థానాన్ని ఎంచుకోండి"
+
+msgid "State"
+msgstr "రాష్ట్రం"
+
+msgid "Select State"
+msgstr "రాష్ట్రాన్ని ఎంచుకోండి"
+
+msgid "District"
+msgstr "జిల్లా"
+
+msgid "Select District"
+msgstr "జిల్లాను ఎంచుకోండి"
+
+msgid "City/Town"
+msgstr "నగరం/పట్టణం"
+
+msgid "Select City/Town"
+msgstr "నగరం/పట్టణాన్ని ఎంచుకోండి"
+
+msgid "Pincode"
+msgstr "పిన్ కోడ్"
+
+msgid "Select Pincode"
+msgstr "పిన్ కోడ్ ఎంచుకోండి"
+
+msgid "Confirm Location"
+msgstr "స్థానాన్ని నిర్ధారించండి"
+
+msgid "Shopkeeper"
+msgstr "దుకాణదారుడు"
+
+msgid "Manage your products, inventory, and view incoming orders from customers."
+msgstr "మీ ఉత్పత్తులు, ఇన్వెంటరీని నిర్వహించండి మరియు వినియోగదారుల నుండి వచ్చే ఆర్డర్‌లను వీక్షించండి."
+
+msgid "Login as Shopkeeper"
+msgstr "దుకాణదారుడిగా లాగిన్ అవ్వండి"
+
+msgid "Register Shop"
+msgstr "దుకాణాన్ని నమోదు చేయండి"
+
+msgid "Customer"
+msgstr "వినియోగదారుడు"
+
+msgid "Browse products, add to cart, and place orders with your preferred delivery time."
+msgstr "ఉత్పత్తులను బ్రౌజ్ చేయండి, కార్ట్‌లో జోడించండి మరియు మీకు ఇష్టమైన డెలివరీ సమయంలో ఆర్డర్‌లు చేయండి."
+
+msgid "Login as Customer"
+msgstr "వినియోగదారుడిగా లాగిన్ అవ్వండి"
+
+msgid "Register Account"
+msgstr "ఖాతాను నమోదు చేసుకోండి"
+
+msgid "Delivery Partner"
+msgstr "డెలివరీ భాగస్వామి"
+
+msgid "View assigned orders, customer details, and update delivery status."
+msgstr "కేటాయించిన ఆర్డర్‌లు, కస్టమర్ వివరాలను వీక్షించండి మరియు డెలివరీ స్థితిని నవీకరించండి."
+
+msgid "Login as Partner"
+msgstr "భాగస్వామిగా లాగిన్ అవ్వండి"
+
+msgid "Apply as Partner"
+msgstr "భాగస్వామిగా దరఖాస్తు చేసుకోండి"
+
+msgid "Shopkeeper Login"
+msgstr "దుకాణదారుడి లాగిన్"
+
+msgid "Welcome back! Access your shop dashboard"
+msgstr "తిరిగి స్వాగతం! మీ షాప్ డాష్‌బోర్డ్‌ను యాక్సెస్ చేయండి"
+
+msgid "Shop Email Address"
+msgstr "దుకాణం ఇమెయిల్ చిరునామా"
+
+msgid "Enter your shop email"
+msgstr "మీ దుకాణం ఇమెయిల్‌ను నమోదు చేయండి"
+
+msgid "Password"
+msgstr "పాస్‌వర్డ్"
+
+msgid "Enter your password"
+msgstr "మీ పాస్‌వర్డ్‌ను నమోదు చేయండి"
+
+msgid "Login"
+msgstr "లాగిన్"
+
+msgid "Don't have an account?"
+msgstr "ఖాతా లేదా?"
+
+msgid "Register here"
+msgstr "ఇక్కడ నమోదు చేసుకోండి"
+
+msgid "Shop Registration"
+msgstr "దుకాణం నమోదు"
+
+msgid "Register your shop to start selling"
+msgstr "అమ్మకం ప్రారంభించడానికి మీ దుకాణాన్ని నమోదు చేసుకోండి"
+
+msgid "Shop Name"
+msgstr "దుకాణం పేరు"
+
+msgid "Enter your shop name"
+msgstr "మీ దుకాణం పేరును నమోదు చేయండి"
+
+msgid "Confirm Password"
+msgstr "పాస్‌వర్డ్‌ను నిర్ధారించండి"
+
+msgid "Re-enter your password"
+msgstr "మీ పాస్‌వర్డ్‌ను మళ్లీ నమోదు చేయండి"
+
+msgid "Address"
+msgstr "చిరునామా"
+
+msgid "Enter shop address"
+msgstr "దుకాణం చిరునామాను నమోదు చేయండి"
+
+msgid "Register"
+msgstr "నమోదు చేయండి"
+
+msgid "Already have an account?"
+msgstr "ఇప్పటికే ఖాతా ఉందా?"
+
+msgid "Login here"
+msgstr "ఇక్కడ లాగిన్ అవ్వండి"
+
+msgid "Shopkeeper Dashboard"
+msgstr "దుకాణదారుడి డాష్‌బోర్డ్"
+
+msgid "Welcome"
+msgstr "స్వాగతం"
+
+msgid "Products"
+msgstr "ఉత్పత్తులు"
+
+msgid "Orders"
+msgstr "ఆర్డర్లు"
+
+msgid "Requests"
+msgstr "అభ్యర్థనలు"
+
+msgid "Shop Status"
+msgstr "దుకాణం స్థితి"
+
+msgid "Close Shop"
+msgstr "దుకాణం మూసివేయండి"
+
+msgid "Reopen Shop"
+msgstr "దుకాణాన్ని తిరిగి తెరవండి"
+
+msgid "Logout"
+msgstr "లాగ్అవుట్"
+
+msgid "Pending Orders"
+msgstr "పెండింగ్ ఆర్డర్లు"
+
+msgid "Order ID"
+msgstr "ఆర్డర్ ID"
+
+msgid "Customer Name"
+msgstr "వినియోగదారుడి పేరు"
+
+msgid "Total Amount"
+msgstr "మొత్తం"
+
+msgid "Status"
+msgstr "స్థితి"
+
+msgid "Mark as Ready for Pickup"
+msgstr "పికప్ కోసం సిద్ధంగా ఉందని గుర్తించండి"
+
+msgid "No pending orders."
+msgstr "పెండింగ్ ఆర్డర్లు లేవు."
+
+msgid "Your Products"
+msgstr "మీ ఉత్పత్తులు"
+
+msgid "Product Name"
+msgstr "ఉత్పత్తి పేరు"
+
+msgid "Price"
+msgstr "ధర"
+
+msgid "Actions"
+msgstr "చర్యలు"
+
+msgid "Edit"
+msgstr "సవరించు"
+
+msgid "No products found."
+msgstr "ఉత్పత్తులు కనుగొనబడలేదు."
+
+msgid "Your Cart"
+msgstr "మీ కార్ట్"
+
+msgid "Back to Dashboard"
+msgstr "డాష్‌బోర్డ్‌కు తిరిగి వెళ్ళు"
+
+msgid "Checkout"
+msgstr "చెక్అవుట్"
+
+msgid "Full Name"
+msgstr "పూర్తి పేరు"
+
+msgid "Phone"
+msgstr "ఫోన్"
+
+msgid "Delivery Address"
+msgstr "డెలివరీ చిరునామా"
+
+msgid "Preferred Delivery Date"
+msgstr "ఇష్టపడే డెలివరీ తేదీ"
+
+msgid "Payment Method"
+msgstr "చెల్లింపు విధానం"
+
+msgid "Cash on Delivery"
+msgstr "క్యాష్ ఆన్ డెలివరీ"
+
+msgid "Online Payment (Coming Soon)"
+msgstr "ఆన్‌లైన్ చెల్లింపు (త్వరలో వస్తుంది)"
+
+msgid "Place Order"
+msgstr "ఆర్డర్ చేయండి"
+
+msgid "Your Orders"
+msgstr "మీ ఆర్డర్లు"
+
+msgid "Order"
+msgstr "ఆర్డర్"
+
+msgid "Date"
+msgstr "తేదీ"
+
+msgid "Total"
+msgstr "మొత్తం"
+
+msgid "Items"
+msgstr "వస్తువులు"
+
+msgid "Product"
+msgstr "ఉత్పత్తి"
+
+msgid "Quantity"
+msgstr "పరిమాణం"
+
+msgid "Subtotal"
+msgstr "ఉపమొత్తం"
+
+msgid "[Deleted Product]"
+msgstr "[తొలగించబడిన ఉత్పత్తి]"
+
+msgid "Re-Order"
+msgstr "మళ్లీ ఆర్డర్ చేయండి"
+
+msgid "You have no orders."
+msgstr "మీకు ఆర్డర్లు లేవు."
+
+msgid "Edit Product"
+msgstr "ఉత్పత్తిని సవరించండి"
+
+msgid "Image"
+msgstr "చిత్రం"
+
+msgid "Leave empty to keep current image"
+msgstr "ప్రస్తుత చిత్రాన్ని ఉంచడానికి ఖాళీగా వదిలేయండి"
+
+msgid "Description"
+msgstr "వివరణ"
+
+msgid "Cancel"
+msgstr "రద్దు చేయి"
+
+msgid "Save Changes"
+msgstr "మార్పులను భద్రపరచు"
+
+msgid "View ready orders, pick up packages, and deliver to customers efficiently."
+msgstr "సిద్ధంగా ఉన్న ఆర్డర్లను వీక్షించండి, ప్యాకేజీలను తీసుకోండి మరియు వినియోగదారులకు సమర్ధవంతంగా పంపిణీ చేయండి."
+
+msgid "Login as delivery partner."
+msgstr "డెలివరీ భాగస్వామిగా లాగిన్ అవ్వండి."
+
+msgid "Don't have a shop account? Register your shop"
+msgstr "దుకాణం ఖాతా లేదా? మీ దుకాణాన్ని నమోదు చేసుకోండి"
+
+msgid "← Back to Home"
+msgstr "← హోమ్‌కి తిరిగి వెళ్ళు"
+
+msgid "Shop Address"
+msgstr "దుకాణం చిరునామా"
+
+msgid "Already have a shop account? Login here"
+msgstr "ఇప్పటికే దుకాణం ఖాతా ఉందా? ఇక్కడ లాగిన్ అవ్వండి"
+
+msgid "Email Address"
+msgstr "ఇమెయిల్ చిరునామా"
+
+msgid "Vehicle Type"
+msgstr "వాహనం రకం"
+
+msgid "Mandal"
+msgstr "మండలం"
+
+msgid "Village"
+msgstr "గ్రామం"
+
+msgid "Apply now"
+msgstr "ఇప్పుడే దరఖాస్తు చేసుకోండి"
+
+msgid "Already a delivery partner? Login here"
+msgstr "ఇప్పటికే డెలివరీ భాగస్వామిగా ఉన్నారా? ఇక్కడ లాగిన్ అవ్వండి"
+
+msgid "create an account"
+msgstr "ఒక ఖాతాను సృష్టించుకోండి"
+
+msgid "phone number"
+msgstr "ఫోను నంబరు"
+
+msgid "Search District"
+msgstr "జిల్లాను శోధించండి"
+
+msgid "Search Mandal"
+msgstr "మండలాన్ని శోధించండి"
+
+msgid "Search Village"
+msgstr "గ్రామాన్ని శోధించండి"
+
+msgid "Create Account"
+msgstr "ఖాతాను సృష్టించు"
+
+msgid "Welcome back! Please login to your account"
+msgstr "తిరిగి స్వాగతం! దయచేసి మీ ఖాతాకు లాగిన్ అవ్వండి"
+
+msgid "Delivery Partner Login"
+msgstr "డెలివరీ భాగస్వామి లాగిన్"
+
+msgid "Customer Dashboard"
+msgstr "వినియోగదారుడి డాష్‌బోర్డ్"
+
+msgid "Login successful!"
+msgstr "లాగిన్ విజయవంతమైంది!"
+
+msgid "2 Available Products"
+msgstr "2 ఉత్పత్తులు అందుబాటులో ఉన్నాయి"
+
+msgid "All Products (A–Z)"
+msgstr "అన్ని ఉత్పత్తులు (A–Z)"
+
+msgid "Shop-wise"
+msgstr "దుకాణం వారీగా"
+
+msgid "Search products by name..."
+msgstr "పేరు ద్వారా ఉత్పత్తులను శోధించండి..."
+
+msgid "Milk"
+msgstr "పాలు"
+
+msgid "Rice"
+msgstr "బియ్యం"
+
+msgid "Shop"
+msgstr "దుకాణం"
+
+msgid "Add to Cart"
+msgstr "కార్ట్‌కు జోడించు"
+
+msgid "Buy Now"
+msgstr "ఇప్పుడే కొనండి"
+
+msgid "Price History"
+msgstr "ధర చరిత్ర"
+
+msgid "Request Product"
+msgstr "ఉత్పత్తిని అభ్యర్థించండి"
+
+msgid "All rights reserved"
+msgstr "అన్ని హక్కులు ప్రత్యేకించబడ్డాయి"
+
+msgid "Your cart is empty!"
+msgstr "మీ కార్ట్ ఖాళీగా ఉంది!"
+
+msgid "Cart"
+msgstr "కార్ట్"
+
+msgid "Pending"
+msgstr "పెండింగ్‌లో ఉంది"
+
+msgid "Order Date"
+msgstr "ఆర్డర్ తేదీ"
+
+msgid "Delivered"
+msgstr "డెలివరీ చేయబడింది"
+
+msgid "Request a Product from"
+msgstr "నుండి ఒక ఉత్పత్తిని అభ్యర్థించండి"
+
+msgid "Product name"
+msgstr "వస్తువు పేరు"
+
+msgid "Details (optional)"
+msgstr "వివరాలు (ఐచ్ఛికం)"
+
+msgid "Send Request"
+msgstr "అభ్యర్థన పంపండి"
+
+msgid "Your recent requests to this shop"
+msgstr "ఈ దుకాణానికి మీ ఇటీవలి అభ్యర్థనలు"
+
+msgid "Requested"
+msgstr "అభ్యర్థించబడింది"
+
+msgid "At"
+msgstr "వద్ద"
+
+msgid "Product Details"
+msgstr "ఉత్పత్తి వివరాలు"
+
+msgid "shirt"
+msgstr "చొక్కా"
+
+msgid "M-38"
+msgstr "M-38"
+
+msgid "Open"
+msgstr "తెరవండి"
+
+msgid "Delivery Partner Dashboard"
+msgstr "డెలివరీ భాగస్వామి డాష్‌బోర్డ్"
+
+msgid "Available Orders for Delivery"
+msgstr "డెలివరీ కోసం అందుబాటులో ఉన్న ఆర్డర్లు"
+
+msgid "Your Assigned Deliveries"
+msgstr "మీకు కేటాయించిన డెలివరీలు"
+
+msgid "No orders available for delivery."
+msgstr "డెలివరీకి ఆర్డర్లు అందుబాటులో లేవు."
+
+msgid "Orders will appear here when they are ready for delivery."
+msgstr "ఆర్డర్లు డెలివరీకి సిద్ధంగా ఉన్నప్పుడు ఇక్కడ కనిపిస్తాయి."
+
+msgid "Payment"
+msgstr "చెల్లింపు"
+
+msgid "Cash_On_Delivery"
+msgstr "క్యాష్ ఆన్ డెలివరీ"
+
+msgid "Remove"
+msgstr "తొలగించు"
+
+msgid "Enter your phone"
+msgstr "మీ ఫోన్ నంబర్ ఎంటర్ చేయండి"
+
+msgid "Enter your delivery address"
+msgstr "మీ డెలివరీ చిరునామాను నమోదు చేయండి"
+
+msgid "Select payment method"
+msgstr "చెల్లింపు పద్ధతిని ఎంచుకోండి"
+
+msgid "Special Instructions (optional)"
+msgstr "ప్రత్యేక సూచనలు (ఐచ్ఛికం)"
+
+msgid "Assigned"
+msgstr "కేటాయించబడింది"
+
+msgid "Online Payment"
+msgstr "ఆన్‌లైన్ చెల్లింపు"
+
+msgid "Product Image"
+msgstr "ఉత్పత్తి చిత్రం"
+
+msgid "Recent Product Requests"
+msgstr "ఇటీవలి ఉత్పత్తి అభ్యర్థనలు"
+
+msgid "Customer Product Requests"
+msgstr "వినియోగదారు ఉత్పత్తి అభ్యర్థనలు"
+
+msgid "Requested At"
+msgstr "అభ్యర్థించిన సమయం"
+
+msgid "Add Product"
+msgstr "ఉత్పత్తిని జోడించండి"
+
+msgid "Current Price"
+msgstr "ప్రస్తుత ధర"
+
+msgid "Price Analysis"
+msgstr "ధర విశ్లేషణ"
+
+msgid "Lowest Price"
+msgstr "అతి తక్కువ ధర"
+
+msgid "Highest Price"
+msgstr "అత్యధిక ధర"
+
+msgid "Average Price"
+msgstr "సగటు ధర"
+
+msgid "Price Range"
+msgstr "ధర పరిధి"
+
+msgid "Buying Recommendation"
+msgstr "కొనుగోలు సిఫార్సు"
+
+msgid "Excellent time to buy! Current price is at or near the lowest it has ever been."
+msgstr "కొనడానికి అద్భుతమైన సమయం! ప్రస్తుత ధర ఎప్పటికన్నా అతి తక్కువ ధరకు దగ్గరగా ఉంది."
+
+msgid "Up to"
+msgstr "వరకు"
+
+msgid "saved compared to highest price"
+msgstr "అత్యధిక ధరతో పోలిస్తే ఆదా"
+
+msgid "Confidence"
+msgstr "విశ్వాసం"
+
+msgid "HIGH"
+msgstr "అధికం"
+
+msgid "MEDIUM"
+msgstr "మధ్యస్థం"
+
+msgid "LOW"
+msgstr "తక్కువ"
+
+msgid "Old Price"
+msgstr "పాత ధర"
+
+msgid "New Price"
+msgstr "కొత్త ధర"
+
+msgid "Reason"
+msgstr "కారణం"
+
+msgid "Price updated"
+msgstr "ధర నవీకరించబడింది"
+
+msgid "Price Trend"
+msgstr "ధర సరళి"
+
+msgid "Current"
+msgstr "ప్రస్తుత"
