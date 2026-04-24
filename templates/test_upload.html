@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Image Upload</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .upload-area { 
+            border: 2px dashed #007bff; 
+            padding: 20px; 
+            text-align: center; 
+            margin: 20px 0;
+            cursor: pointer;
+        }
+        .upload-area:hover { background-color: #f8f9fa; }
+        button { 
+            background: #007bff; 
+            color: white; 
+            padding: 10px 20px; 
+            border: none; 
+            border-radius: 5px; 
+            cursor: pointer; 
+            margin: 10px;
+        }
+        .result { margin-top: 20px; padding: 10px; background: #e9ecef; }
+    </style>
+</head>
+<body>
+    <h1>Test Image Upload</h1>
+    
+    <div class="upload-area" onclick="document.getElementById('file-input').click()">
+        <p>Click here to select an image</p>
+        <p id="file-info">No file selected</p>
+    </div>
+    
+    <input type="file" id="file-input" accept="image/*" style="display: none;">
+    
+    <button onclick="testUpload()">Test Upload</button>
+    <button onclick="clearFile()">Clear File</button>
+    
+    <div id="result" class="result" style="display: none;">
+        <h3>Upload Result:</h3>
+        <div id="result-content"></div>
+    </div>
+
+    <script>
+        const fileInput = document.getElementById('file-input');
+        const fileInfo = document.getElementById('file-info');
+        const result = document.getElementById('result');
+        const resultContent = document.getElementById('result-content');
+
+        fileInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                fileInfo.textContent = `Selected: ${file.name} (${formatFileSize(file.size)})`;
+                console.log('File selected:', file.name, file.size, file.type);
+            } else {
+                fileInfo.textContent = 'No file selected';
+            }
+        });
+
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        function testUpload() {
+            const file = fileInput.files[0];
+            if (!file) {
+                alert('Please select a file first');
+                return;
+            }
+
+            console.log('Testing upload...');
+            result.style.display = 'block';
+            resultContent.innerHTML = '<p>Testing upload...</p>';
+
+            const formData = new FormData();
+            formData.append('image', file);
+
+            fetch('/api/search/image/', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-CSRFToken': getCSRFToken()
+                }
+            })
+            .then(response => {
+                console.log('Response status:', response.status);
+                return response.json();
+            })
+            .then(data => {
+                console.log('Response data:', data);
+                resultContent.innerHTML = `
+                    <p><strong>Status:</strong> ${data.success ? 'Success' : 'Error'}</p>
+                    <p><strong>Message:</strong> ${data.error || 'Upload successful'}</p>
+                    <p><strong>Products found:</strong> ${data.products ? data.products.length : 0}</p>
+                `;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                resultContent.innerHTML = `<p><strong>Error:</strong> ${error.message}</p>`;
+            });
+        }
+
+        function clearFile() {
+            fileInput.value = '';
+            fileInfo.textContent = 'No file selected';
+            result.style.display = 'none';
+        }
+
+        function getCSRFToken() {
+            const token = document.querySelector('[name=csrfmiddlewaretoken]');
+            return token ? token.value : '';
+        }
+    </script>
+</body>
+</html>

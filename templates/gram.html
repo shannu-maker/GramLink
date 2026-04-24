@@ -1,0 +1,328 @@
+{% load static %}
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="{% get_current_language as LANGUAGE_CODE %}{{ LANGUAGE_CODE|default:'en' }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% trans "Gram Connect" %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/gram.css' %}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    
+    <div id="main-page">
+        {% block header %}
+        <header>
+            <div class="container">
+                <h1>{% trans "Gram Connect" %}</h1>
+                <p>{% trans "One platform for shopkeepers, customers and delivery partners" %}</p>
+                {% if request.resolver_match.url_name == 'home' %}
+                <button id="open-lang" class="btn" style="float:right;">🌐 {% trans "Language" %}</button>
+                {% endif %}
+            </div>
+        </header>
+        {% endblock %}
+        
+        {% block content %}
+        <div class="container">
+            <div class="login-options">
+                <div class="login-card shopkeeper" onclick="openModal('shopkeeper')">
+                    <div class="login-icon">🛍️</div>
+                    <h2>{% trans "Shopkeeper" %}</h2>
+                    <p>{% trans "Manage your products, inventory, and view incoming orders from customers." %}</p>
+                    <button class="btn btn-shopkeeper">{% trans "Login as Shopkeeper" %}</button>
+                </div>
+                
+                <div class="login-card customer" onclick="openModal('customer')">
+                    <div class="login-icon">👨‍💼</div>
+                    <h2>{% trans "Customer" %}</h2>
+                    <p>{% trans "Browse products, add to cart, and place orders with your preferred delivery time." %}</p>
+                    <button class="btn btn-customer">{% trans "Login as Customer" %}</button>
+                </div>
+                
+                <div class="login-card delivery" onclick="openModal('delivery')">
+                    <div class="login-icon">🚚</div>
+                    <h2>{% trans "Delivery Partner" %}</h2>
+                    <p>{% trans "View ready orders, pick up packages, and deliver to customers efficiently." %}</p>
+                    <button class="btn btn-delivery">{% trans "Login as Delivery Partner" %}</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="login-modal" id="shopkeeper-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>{% trans "Shopkeeper Login" %}</h2>
+                    <span class="close-modal" onclick="closeModal('shopkeeper-modal')">&times;</span>
+                </div>
+                <form id="shopkeeper-form">
+                    <div class="form-group">
+                        <label for="shopkeeper-email">{% trans "Shop Email" %}</label>
+                        <input type="email" id="shopkeeper-email" placeholder="{% trans "Enter your shop email" %}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="shopkeeper-password">{% trans "Password" %}</label>
+                        <input type="password" id="shopkeeper-password" placeholder="{% trans "Enter your password" %}" required>
+                    </div>
+                    <button type="submit" class="btn btn-shopkeeper submit-btn">{% trans "Login" %}</button>
+                </form>
+                <div class="register-link">
+                    {% trans "Don't have an account?" %} <a href="#" onclick="openRegisterModal('shopkeeper')">{% trans "Register your shop" %}</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="login-modal" id="customer-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>{% trans "Customer Login" %}</h2>
+                    <span class="close-modal" onclick="closeModal('customer-modal')">&times;</span>
+                </div>
+                <form id="customer-form">
+                    <div class="form-group">
+                        <label for="customer-email">{% trans "Email" %}</label>
+                        <input type="email" id="customer-email" placeholder="{% trans "Enter your email" %}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="customer-password">{% trans "Password" %}</label>
+                        <input type="password" id="customer-password" placeholder="{% trans "Enter your password" %}" required>
+                    </div>
+                    <button type="submit" class="btn btn-customer submit-btn">{% trans "Login" %}</button>
+                </form>
+                <div class="register-link">
+                    {% trans "New customer?" %} <a href="#" onclick="openRegisterModal('customer')">{% trans "Create an account" %}</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="login-modal" id="delivery-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>{% trans "Delivery Partner Login" %}</h2>
+                    <span class="close-modal" onclick="closeModal('delivery-modal')">&times;</span>
+                </div>
+                <form id="delivery-form">
+                    <div class="form-group">
+                        <label for="delivery-email">{% trans "Email" %}</label>
+                        <input type="email" id="delivery-email" placeholder="{% trans "Enter your email" %}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="delivery-password">{% trans "Password" %}</label>
+                        <input type="password" id="delivery-password" placeholder="{% trans "Enter your password" %}" required>
+                    </div>
+                    <button type="submit" class="btn btn-delivery submit-btn">{% trans "Login" %}</button>
+                </form>
+                <div class="register-link">
+                    {% trans "Want to join as delivery partner?" %} <a href="#" onclick="openRegisterModal('delivery')">{% trans "Apply now" %}</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="register-modal" id="shopkeeper-register-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>{% trans "Shopkeeper Registration" %}</h2>
+                    <span class="close-modal" onclick="closeModal('shopkeeper-register-modal')">&times;</span>
+                </div>
+                <form id="shopkeeper-register-form">
+                    <div class="form-group">
+                        <label for="shopkeeper-reg-name">{% trans "Shop Name" %}</label>
+                        <input type="text" id="shopkeeper-reg-name" placeholder="{% trans "Enter your shop name" %}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="shopkeeper-reg-email">{% trans "Shop Email" %}</label>
+                        <input type="email" id="shopkeeper-reg-email" placeholder="{% trans "Enter your email" %}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="shopkeeper-reg-password">{% trans "Password" %}</label>
+                        <input type="password" id="shopkeeper-reg-password" placeholder="{% trans "Create a password" %}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="shopkeeper-reg-address">{% trans "Shop Address" %}</label>
+                        <textarea id="shopkeeper-reg-address" placeholder="{% trans "Enter your shop address" %}" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-shopkeeper submit-btn">{% trans "Register" %}</button>
+                </form>
+            </div>
+        </div>
+        
+        <div class="register-modal" id="customer-register-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>{% trans "Customer Registration" %}</h2>
+                    <span class="close-modal" onclick="closeModal('customer-register-modal')">&times;</span>
+                </div>
+                <form id="customer-register-form">
+                    <div class="form-group">
+                        <label for="customer-reg-name">{% trans "Full Name" %}</label>
+                        <input type="text" id="customer-reg-name" placeholder="{% trans "Enter your full name" %}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="customer-reg-email">{% trans "Email" %}</label>
+                        <input type="email" id="customer-reg-email" placeholder="{% trans "Enter your email" %}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="customer-reg-password">{% trans "Password" %}</label>
+                        <input type="password" id="customer-reg-password" placeholder="{% trans "Create a password" %}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="customer-reg-phone">{% trans "Phone Number" %}</label>
+                        <input type="tel" id="customer-reg-phone" placeholder="{% trans "Enter your phone number" %}" required>
+                    </div>
+                    <button type="submit" class="btn btn-customer submit-btn">{% trans "Register" %}</button>
+                </form>
+            </div>
+        </div>
+        
+        <div class="register-modal" id="delivery-register-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>{% trans "Delivery Partner Registration" %}</h2>
+                    <span class="close-modal" onclick="closeModal('delivery-register-modal')">&times;</span>
+                </div>
+                <form id="delivery-register-form">
+                    <div class="form-group">
+                        <label for="delivery-reg-name">{% trans "Full Name" %}</label>
+                        <input type="text" id="delivery-reg-name" placeholder="{% trans "Enter your full name" %}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="delivery-reg-email">{% trans "Email" %}</label>
+                        <input type="email" id="delivery-reg-email" placeholder="{% trans "Enter your email" %}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="delivery-reg-password">{% trans "Password" %}</label>
+                        <input type="password" id="delivery-reg-password" placeholder="{% trans "Create a password" %}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="delivery-reg-vehicle">{% trans "Vehicle Type" %}</label>
+                        <select id="delivery-reg-vehicle" required>
+                            <option value="">{% trans "Select vehicle" %}</option>
+                            <option value="bike">{% trans "Bike" %}</option>
+                            <option value="scooter">{% trans "Scooter" %}</option>
+                            <option value="car">{% trans "Car" %}</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-delivery submit-btn">{% trans "Apply" %}</button>
+                </form>
+            </div>
+        </div>
+        
+        {% block footer %}
+        <footer>
+            <div class="container">
+                <p>&copy; 2023 {% trans "Gram Connect" %}. {% trans "All rights reserved." %}</p>
+                <p>{% trans "A complete e-commerce solution for local businesses." %}</p>
+            </div>
+        </footer>
+        {% endblock %}
+    </div>
+    
+    <div id="shopkeeper-dashboard" class="dashboard container" style="display: none;">
+        <div class="dashboard-header">
+            <h1 class="dashboard-title">{% trans "Shopkeeper Dashboard" %}</h1>
+            <button class="logout-btn" onclick="logout()">{% trans "Logout" %}</button>
+        </div>
+        
+        <div class="add-product-form">
+            <h2>{% trans "Add New Product" %}</h2>
+            <form id="add-product-form">
+                <div class="form-group">
+                    <label for="product-name">{% trans "Product Name" %}</label>
+                    <input type="text" id="product-name" placeholder="{% trans "Enter product name" %}" required>
+                </div>
+                <div class="form-group">
+                    <label for="product-image">{% trans "Product Image URL" %}</label>
+                    <input type="text" id="product-image" placeholder="{% trans "Enter image URL" %}" required>
+                </div>
+                <div class="form-group">
+                    <label for="product-price">{% trans "Price" %} (₹)</label>
+                    <input type="number" id="product-price" placeholder="{% trans "Enter price" %}" required min="1">
+                </div>
+                <div class="form-group">
+                    <label for="product-quantity">{% trans "Quantity" %}</label>
+                    <input type="text" id="product-quantity" placeholder="{% trans "Enter quantity (e.g., 500ml, 2kg, 10 pieces)" %}" required>
+                </div>
+                <div class="form-group">
+                    <label for="product-description">{% trans "Description" %}</label>
+                    <textarea id="product-description" placeholder="{% trans "Enter product description" %}"></textarea>
+                </div>
+                <button type="submit" class="btn btn-shopkeeper submit-btn">{% trans "Add Product" %}</button>
+            </form>
+        </div>
+        
+        <h2>{% trans "Your Products" %}</h2>
+        <div class="product-list" id="shopkeeper-product-list">
+            </div>
+        
+        <h2>{% trans "Customer Orders" %}</h2>
+        <div class="order-list" id="shopkeeper-order-list">
+            </div>
+    </div>
+    
+    <div id="customer-dashboard" class="dashboard container" style="display: none;">
+        <div class="dashboard-header">
+            <h1 class="dashboard-title">{% trans "Customer Dashboard" %}</h1>
+            <div class="header-actions">
+                <div class="cart-icon" onclick="toggleCart()">
+                    🛒 <span id="cart-count">0</span>
+                </div>
+                <button class="logout-btn" onclick="toggleOrders()">{% trans "Orders" %}</button>
+                <button class="logout-btn" onclick="logout()">{% trans "Logout" %}</button>
+            </div>
+        </div>
+        
+        <div class="search-bar">
+            <input type="text" id="product-search" placeholder="{% trans "Search for products..." %}">
+        </div>
+        
+        <h2>{% trans "Available Products" %}</h2>
+        <div class="product-list" id="customer-product-list">
+            </div>
+        
+        <div class="cart-modal" id="cart-modal" style="display:none;">
+            <h2>{% trans "Your Cart" %}</h2>
+            <div id="cart-items">
+                <p id="empty-cart-message">{% trans "Your cart is empty" %}</p>
+            </div>
+        </div>
+            
+        <div class="checkout-form">
+            <h3>{% trans "Checkout" %}</h3>
+            <form id="place-order-form">
+                <div class="form-group">
+                    <label for="delivery-address">{% trans "Delivery Address" %}</label>
+                    <textarea id="delivery-address" placeholder="{% trans "Enter your delivery address" %}" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="delivery-phone">{% trans "Phone Number" %}</label>
+                    <input type="tel" id="delivery-phone" placeholder="{% trans "Enter your phone number" %}" required>
+                </div>
+                <div class="form-group">
+                    <label for="delivery-time">{% trans "Preferred Delivery Time" %}</label>
+                    <input type="datetime-local" id="delivery-time" required>
+                </div>
+                <button type="submit" class="btn btn-customer submit-btn">{% trans "Place Order" %}</button>
+            </form>
+        </div>
+        <div id="customer-orders-section" style="display:none;">
+            <h2>{% trans "Your Orders" %}</h2>
+            <div class="order-list" id="customer-order-list">
+                </div>
+        </div>
+    </div>
+    
+    <div id="delivery-dashboard" class="dashboard container" style="display: none;">
+        <div class="dashboard-header">
+            <h1 class="dashboard-title">{% trans "Delivery Partner Dashboard" %}</h1>
+            <button class="logout-btn" onclick="logout()">{% trans "Logout" %}</button>
+        </div>
+        
+        <h2>{% trans "Orders to Deliver" %}</h2>
+        <div class="order-list" id="delivery-order-list">
+            </div>
+    </div>
+    
+    <script src="{% static 'js/gram.js' %}"></script>
+</body>
+</html>

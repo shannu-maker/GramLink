@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+{% load i18n %}  {% block title %}{% translate "Your Cart" %}{% endblock %}
+
+{% block content %}
+<div class="cart-modal container">
+    <h2>{% translate "Your Cart" %}</h2>
+    <div id="cart-items"></div>
+    <div id="cart-total" style="margin-top:12px;font-weight:700;color:#333;"></div>
+    <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap;">
+        <a href="/customer/dashboard/" class="btn btn-customer">{% translate "Back to Dashboard" %}</a>
+    </div>
+    <hr style="margin:20px 0;"/>
+    
+    <h3>{% translate "Checkout" %}</h3>
+    
+    <form id="checkout-form" method="post" action="{% url 'checkout' %}" style="display:grid;gap:10px;max-width:520px;">
+        {% csrf_token %}
+        <input type="hidden" id="cart-data" name="cart_data">
+        
+        <label>
+            <span>{% translate "Full Name" %}</span>
+            <input type="text" name="full_name" value="{{ customer.name }}" required style="width:100%;padding:10px;border:1px solid #ddd;border-radius:6px;"/>
+        </label>
+        
+        <label>
+            <span>{% translate "Phone" %}</span>
+            <input type="tel" name="phone" placeholder="{% translate 'Enter your phone' %}" required style="width:100%;padding:10px;border:1px solid #ddd;border-radius:6px;"/>
+        </label>
+        
+        <label>
+            <span>{% translate "Delivery Address" %}</span>
+            <textarea name="address" rows="3" placeholder="{% translate 'Enter your delivery address' %}" required style="width:100%;padding:10px;border:1px solid #ddd;border-radius:6px;"></textarea>
+        </label>
+        
+        <label>
+            <span>{% translate "Payment Method" %}</span>
+            <select name="payment_method" required style="width:100%;padding:10px;border:1px solid #ddd;border-radius:6px;">
+                <option value="">{% translate "Select payment method" %}</option>
+                <option value="cash_on_delivery">{% translate "Cash on Delivery" %}</option>
+                <option value="online_payment">{% translate "Online Payment" %}</option>
+            </select>
+        </label>
+        
+        <label>
+            <span>{% translate "Special Instructions (optional)" %}</span>
+            <textarea name="instructions" rows="2" style="width:100%;padding:10px;border:1px solid #ddd;border-radius:6px;"></textarea>
+        </label>
+        
+        <button type="submit" class="btn btn-customer">{% translate "Place Order" %}</button>
+    </form>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+    // Use gettext in JavaScript for dynamic strings
+    const G_CART_EMPTY = "{% translate 'Your cart is empty' %}";
+    const G_SHOP = "{% translate 'Shop' %}";
+    const G_TOTAL = "{% translate 'Total' %}";
+    const G_REMOVE = "{% translate 'Remove' %}";
+
+
+    const container = document.getElementById('cart-items');
+    const totalEl = document.getElementById('cart-total');
+    const cartDataInput = document.getElementById('cart-data');
+    let cart = [];
+    try { cart = JSON.parse(localStorage.getItem('cart') || '[]'); } catch(e) { cart = []; }
+
+    container.innerHTML = '';
+
+    if(cart.length === 0){
+        // Dynamic string from JavaScript
+        container.innerHTML = `<p>${G_CART_EMPTY}</p>`; 
+        totalEl.textContent = '';
+        return;
+    }
+
+    let total = 0;
+    cart.forEach((item, idx)=>{
+        total += (item.price * item.quantity);
+        const row = document.createElement('div');
+        row.className = 'cart-item';
+        row.style.border = '1px solid #eee';
+        row.style.borderRadius = '8px';
+        row.style.padding = '10px';
+        row.style.marginBottom = '8px';
+        row.innerHTML = `
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;">
+                <div>
+                    <h3 style="margin:0;">${item.name}</h3>
+                    <div style="color:#666;font-size:13px;">${G_SHOP}: ${item.shop||''}</div>
+                    <div style="color:#0d6efd;font-weight:700;">₹${item.price} × ${item.quantity} = ₹${(item.price*item.quantity).toFixed(2)}</div>
+                </div>
+                <div style="display:flex;gap:6px;align-items:center;">
+                    <button data-idx="${idx}" class="qty-dec" style="background:#dc3545;color:#fff;border:none;border-radius:4px;width:28px;height:28px;cursor:pointer;">-</button>
+                    <button data-idx="${idx}" class="qty-inc" style="background:#28a745;color:#fff;border:none;border-radius:4px;width:28px;height:28px;cursor:pointer;">+</button>
+                    <button data-idx="${idx}" class="remove" style="background:#6c757d;color:#fff;border:none;border-radius:4px;padding:6px 10px;cursor:pointer;">${G_REMOVE}</button>
+                </div>
+            </div>
+        `;
+        container.appendChild(row);
+    });
+
+    // Dynamic string from JavaScript
+    totalEl.textContent = `${G_TOTAL}: ₹${total.toFixed(2)}`; 
+    
+    if(cartDataInput){ cartDataInput.value = JSON.stringify(cart); }
+
+    container.querySelectorAll('.qty-dec').forEach(btn=>btn.addEventListener('click',()=>{
+        const i = parseInt(btn.getAttribute('data-idx'));
+        if(cart[i].quantity > 1) cart[i].quantity -= 1; else cart.splice(i,1);
+        localStorage.setItem('cart', JSON.stringify(cart));
+        location.reload();
+    }));
+    container.querySelectorAll('.qty-inc').forEach(btn=>btn.addEventListener('click',()=>{
+        const i = parseInt(btn.getAttribute('data-idx'));
+        cart[i].quantity += 1;
+        localStorage.setItem('cart', JSON.stringify(cart));
+        location.reload();
+    }));
+    container.querySelectorAll('.remove').forEach(btn=>btn.addEventListener('click',()=>{
+        const i = parseInt(btn.getAttribute('data-idx'));
+        cart.splice(i,1);
+        localStorage.setItem('cart', JSON.stringify(cart));
+        location.reload();
+    }));
+});
+</script>
+{% endblock %}
+

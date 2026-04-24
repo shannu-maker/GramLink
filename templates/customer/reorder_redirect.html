@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load i18n %}  {% block title %}{% trans "Re-Order" %}{% endblock %}
+
+{% block content %}
+<div class="container" style="padding:20px;">
+    <h2>{% trans "Preparing your re-order…" %}</h2>
+    <p>{% trans "Please wait, redirecting to checkout." %}</p>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    (function(){
+        try {
+            var items = {{ cart_json|safe }};
+            // Overwrite cart with last order items
+            localStorage.setItem('cart', JSON.stringify(items));
+        } catch (e) {
+            // NOTE: Console errors are typically not translated as they are for developer debugging.
+            console.error('Failed to set cart from reorder', e);
+        }
+        // Go to cart/checkout page
+        window.location.href = "{% url 'customer_cart' %}";
+    })();
+</script>
+{% endblock %}

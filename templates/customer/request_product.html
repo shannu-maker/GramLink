@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <h2>Request a Product from {{ shopkeeper.name }}</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label class="form-label">Product name</label>
+            <input type="text" name="product_name" class="form-control" required />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Details (optional)</label>
+            <textarea name="details" class="form-control" rows="4" placeholder="Brand, size, any specifics..."></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Send Request</button>
+        <a href="{% url 'customer_dashboard' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+
+    <hr class="my-4" />
+    <h4>Your recent requests to this shop</h4>
+    {% if recent_requests %}
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Requested At</th>
+                    <th>Product</th>
+                    <th>Details</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for r in recent_requests %}
+                <tr>
+                    <td>{{ r.created_at|date:"M d, Y H:i" }}</td>
+                    <td>{{ r.product_name }}</td>
+                    <td>{{ r.details|default:'-' }}</td>
+                    <td>
+                        {% if r.resolved %}
+                            <span class="badge bg-success">Resolved</span>
+                        {% else %}
+                            <span class="badge bg-warning text-dark">Open</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+        <p class="text-muted">No requests yet.</p>
+    {% endif %}
+</div>
+{% endblock %}
+

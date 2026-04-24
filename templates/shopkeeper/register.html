@@ -1,0 +1,188 @@
+{% extends "base.html" %}
+{% load i18n %}  {% block title %}{% trans "Shop Registration" %} - Gram Connect{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-card">
+        <div class="auth-header">
+            <h2>{% trans "Shop Registration" %}</h2>
+            <p>{% trans "Register your shop to start selling" %}</p>
+        </div>
+        
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        
+        <form method="post" class="auth-form" id="shopkeeper-register-form">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="shop_name">{% trans "Shop Name" %}</label>
+                <input type="text" id="shop_name" name="shop_name" placeholder="{% trans "Enter your shop name" %}" required />
+            </div>
+            <div class="form-group">
+                <label for="email">{% trans "Shop Email Address" %}</label>
+                <input type="email" id="email" name="email" placeholder="{% trans "Enter your shop email" %}" required />
+            </div>
+            <div class="form-group">
+                <label for="password">{% trans "Password" %}</label>
+                <input type="password" id="password" name="password" placeholder="{% trans "Create a password" %}" required />
+            </div>
+            <div class="form-group">
+                <label for="address">{% trans "Shop Address" %}</label>
+                <textarea id="address" name="address" rows="3" placeholder="{% trans "Enter your shop address" %}" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="state-select-reg">{% trans "State" %}</label>
+                <select id="state-select-reg" name="state" class="form-control" required>
+                    <option value="">{% trans "Select State" %}</option>
+                </select>
+                <input type="text" id="state-search-reg" class="form-control-search" placeholder="{% trans "Search State" %}">
+            </div>
+
+            <div class="form-group">
+                <label for="district-select-reg">{% trans "District" %}</label>
+                <select id="district-select-reg" name="district" class="form-control" disabled required>
+                    <option value="">{% trans "Select District" %}</option>
+                </select>
+                <input type="text" id="district-search-reg" class="form-control-search" placeholder="{% trans "Search District" %}" disabled>
+            </div>
+
+            <div class="form-group">
+                <label for="mandal-select-reg">{% trans "Mandal" %}</label>
+                <select id="mandal-select-reg" name="mandal" class="form-control" disabled required>
+                    <option value="">{% trans "Select Mandal" %}</option>
+                </select>
+                <input type="text" id="mandal-search-reg" class="form-control-search" placeholder="{% trans "Search Mandal" %}" disabled>
+            </div>
+
+            <div class="form-group">
+                <label for="village-select-reg">{% trans "Village" %}</label>
+                <select id="village-select-reg" name="village" class="form-control" disabled required>
+                    <option value="">{% trans "Select Village" %}</option>
+                </select>
+                <input type="text" id="village-search-reg" class="form-control-search" placeholder="{% trans "Search Village" %}" disabled>
+            </div>
+
+            <button type="submit" class="btn btn-shopkeeper btn-full">{% trans "Register Shop" %}</button>
+        </form>
+        
+        <div class="auth-links">
+            <p>{% trans "Already have a shop account?" %} <a href="{% url 'shopkeeper_login' %}">{% trans "Login here" %}</a></p>
+            <p><a href="{% url 'home' %}">{% trans "← Back to Home" %}</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 70vh;
+    padding: 20px;
+}
+
+.auth-card {
+    background: white;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+}
+
+.auth-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.auth-header h2 {
+    color: var(--dark);
+    margin-bottom: 10px;
+}
+
+.auth-header p {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.auth-form .form-group {
+    margin-bottom: 20px;
+}
+
+.auth-form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--dark);
+}
+
+.auth-form input, .auth-form textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #e1e5e9;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+    font-family: inherit;
+    resize: vertical;
+}
+
+.auth-form input:focus, .auth-form textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+.btn-full {
+    width: 100%;
+    padding: 15px;
+    font-size: 1.1rem;
+    margin-top: 10px;
+}
+
+.auth-links {
+    text-align: center;
+    margin-top: 25px;
+}
+
+.auth-links p {
+    margin: 10px 0;
+    color: #666;
+}
+
+.auth-links a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.auth-links a:hover {
+    text-decoration: underline;
+}
+
+.alert {
+    padding: 12px 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.alert-error {
+    background-color: #fee;
+    border: 1px solid #fcc;
+    color: #c33;
+}
+
+.alert-success {
+    background-color: #efe;
+    border: 1px solid #cfc;
+    color: #3c3;
+}
+</style>
+{% endblock %}

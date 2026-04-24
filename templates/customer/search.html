@@ -1,0 +1,572 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Search Products" %}{% endblock %}
+
+{% block content %}
+<div style="background: white; padding: 20px; margin: 20px; border-radius: 10px; min-height: 500px;">
+    <div class="search-header" style="border-bottom: 2px solid #eee; padding-bottom: 15px; margin-bottom: 20px;">
+        <h1 style="color: #333; margin-bottom: 10px;">🔍 {% trans "Search Products" %}</h1>
+        <p style="color: #666;">{% trans "Search for products using images or text from handwritten notes" %}</p>
+    </div>
+    
+    {% if messages %}
+        {% for message in messages %}
+            <div style="padding: 10px; margin-bottom: 15px; border-radius: 5px; 
+                        {% if message.tags == 'success' %}background: #d4edda; color: #155724; border: 1px solid #c3e6cb;{% endif %}
+                        {% if message.tags == 'error' %}background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb;{% endif %}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+    
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 30px;">
+        <!-- Image Similarity Search -->
+        <div style="border: 2px solid #007bff; border-radius: 10px; padding: 20px; background: #f8f9fa;">
+            <h3 style="color: #007bff; margin-bottom: 15px;">🖼️ {% trans "Search by Image Similarity" %}</h3>
+            <p style="color: #666; margin-bottom: 20px;">{% trans "Upload an image to find similar products using AI" %}</p>
+            
+            <form id="image-search-form" enctype="multipart/form-data" onsubmit="return false;">
+                {% csrf_token %}
+                <div style="margin-bottom: 15px;">
+                    <div style="position: relative;">
+                        <input type="file" id="image-file" accept="image/*" required 
+                               style="position: absolute; opacity: 0; width: 100%; height: 100%; cursor: pointer; z-index: 10;">
+                        <div id="image-file-display" class="file-upload-area" style="width: 100%; padding: 15px; border: 2px dashed #007bff; border-radius: 6px; text-align: center; background: #f8f9fa; cursor: pointer; position: relative;">
+                            <span id="image-file-text">{% trans "Click to choose image file" %}</span>
+                            <div style="margin-top: 5px; font-size: 0.8em; color: #666;">
+                                {% trans "Supported formats: JPG, PNG, GIF" %}
+                            </div>
+                        </div>
+                    </div>
+                    {% if preload_image %}
+                    <div style="margin-top: 10px; padding: 10px; background: #e9ecef; border-radius: 5px;">
+                        <p style="margin: 0; color: #666; font-size: 0.9em;">{% trans "Pre-loaded image ready for search" %}</p>
+                    </div>
+                    {% endif %}
+                </div>
+                <button type="submit" style="background: #007bff; color: white; padding: 12px 20px; border: none; border-radius: 5px; cursor: pointer; width: 100%;">
+                    🔍 {% trans "Search Similar Products" %}
+                </button>
+            </form>
+            
+            <div id="image-search-results" style="margin-top: 20px; display: none;">
+                <h4 style="color: #333; margin-bottom: 10px;">{% trans "Search Results" %}</h4>
+                <div id="image-results-list"></div>
+            </div>
+        </div>
+        
+        <!-- Text Recognition Search -->
+        <div style="border: 2px solid #28a745; border-radius: 10px; padding: 20px; background: #f8f9fa;">
+            <h3 style="color: #28a745; margin-bottom: 15px;">📝 {% trans "Search by Text Recognition" %}</h3>
+            <p style="color: #666; margin-bottom: 20px;">{% trans "Upload an image with handwritten text to search for products" %}</p>
+            
+            <form id="text-search-form" enctype="multipart/form-data" onsubmit="return false;">
+                {% csrf_token %}
+                <div style="margin-bottom: 15px;">
+                    <div style="position: relative;">
+                        <input type="file" id="text-image-file" accept="image/*" required 
+                               style="position: absolute; opacity: 0; width: 100%; height: 100%; cursor: pointer; z-index: 10;">
+                        <div id="text-file-display" class="file-upload-area" style="width: 100%; padding: 15px; border: 2px dashed #28a745; border-radius: 6px; text-align: center; background: #f8f9fa; cursor: pointer; position: relative;">
+                            <span id="text-file-text">{% trans "Click to choose image file" %}</span>
+                            <div style="margin-top: 5px; font-size: 0.8em; color: #666;">
+                                {% trans "Supported formats: JPG, PNG, GIF" %}
+                            </div>
+                        </div>
+                    </div>
+                    {% if preload_text_image %}
+                    <div style="margin-top: 10px; padding: 10px; background: #e9ecef; border-radius: 5px;">
+                        <p style="margin: 0; color: #666; font-size: 0.9em;">{% trans "Pre-loaded image ready for text extraction" %}</p>
+                    </div>
+                    {% endif %}
+                </div>
+                <button type="submit" style="background: #28a745; color: white; padding: 12px 20px; border: none; border-radius: 5px; cursor: pointer; width: 100%;">
+                    📝 {% trans "Extract Text & Search" %}
+                </button>
+            </form>
+            
+            <div id="text-search-results" style="margin-top: 20px; display: none;">
+                <h4 style="color: #333; margin-bottom: 10px;">{% trans "Search Results" %}</h4>
+                <div id="extracted-text" style="background: #e9ecef; padding: 10px; border-radius: 5px; margin-bottom: 15px; font-style: italic; color: #666;"></div>
+                <div id="text-results-list"></div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Loading Indicator -->
+    <div id="loading-indicator" style="display: none; text-align: center; padding: 40px;">
+        <div style="display: inline-block; width: 40px; height: 40px; border: 4px solid #f3f3f3; border-top: 4px solid #007bff; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+        <p style="margin-top: 20px; color: #666;">{% trans "Processing your request..." %}</p>
+    </div>
+    
+    <!-- Back to Dashboard -->
+    <div style="text-align: center; margin-top: 30px;">
+        <a href="{% url 'customer_dashboard' %}" style="background: #6c757d; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">
+            ← {% trans "Back to Dashboard" %}
+        </a>
+    </div>
+</div>
+
+<style>
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.product-card {
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 8px;
+    background: white;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.product-card h4 {
+    margin: 0 0 10px 0;
+    color: #333;
+}
+
+.product-card img {
+    width: 100%;
+    max-height: 150px;
+    object-fit: cover;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.similarity-score {
+    background: #007bff;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.8em;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+.file-upload-area {
+    transition: all 0.3s ease;
+}
+
+.file-upload-area:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+</style>
+
+<script>
+// Handle pre-loaded images and file selection display
+document.addEventListener('DOMContentLoaded', function() {
+    // Setup file input display handlers
+    setupFileInputDisplay('image-file', 'image-file-display', 'image-file-text');
+    setupFileInputDisplay('text-image-file', 'text-file-display', 'text-file-text');
+    
+    {% if preload_image %}
+    // Auto-trigger image search if image is pre-loaded
+    setTimeout(function() {
+        document.getElementById('image-search-form').dispatchEvent(new Event('submit'));
+    }, 1000);
+    {% endif %}
+    
+    {% if preload_text_image %}
+    // Auto-trigger text search if image is pre-loaded
+    setTimeout(function() {
+        document.getElementById('text-search-form').dispatchEvent(new Event('submit'));
+    }, 1000);
+    {% endif %}
+});
+
+function setupFileInputDisplay(inputId, displayId, textId) {
+    const fileInput = document.getElementById(inputId);
+    const displayDiv = document.getElementById(displayId);
+    const textSpan = document.getElementById(textId);
+    
+    console.log('Setting up file input:', inputId, displayId, textId);
+    console.log('Elements found:', fileInput, displayDiv, textSpan);
+    
+    // Make the display div clickable
+    displayDiv.addEventListener('click', function(e) {
+        console.log('Display div clicked');
+        e.preventDefault();
+        e.stopPropagation();
+        fileInput.click();
+    });
+    
+    // Handle file selection
+    fileInput.addEventListener('change', function(e) {
+        console.log('File input changed');
+        const file = this.files[0];
+        if (file) {
+            console.log('File selected:', file.name, file.size, file.type);
+            textSpan.textContent = `📁 ${file.name} (${formatFileSize(file.size)})`;
+            displayDiv.style.borderColor = '#28a745';
+            displayDiv.style.backgroundColor = '#d4edda';
+        } else {
+            console.log('No file selected');
+            textSpan.textContent = '{% trans "Click to choose image file" %}';
+            displayDiv.style.borderColor = inputId === 'image-file' ? '#007bff' : '#28a745';
+            displayDiv.style.backgroundColor = '#f8f9fa';
+        }
+    });
+    
+    // Also make the file input itself clickable
+    fileInput.addEventListener('click', function(e) {
+        console.log('File input clicked directly');
+    });
+}
+
+function formatFileSize(bytes) {
+    if (bytes === 0) return '0 Bytes';
+    const k = 1024;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+}
+
+// Function to get CSRF token
+function getCSRFToken() {
+    const token = document.querySelector('[name=csrfmiddlewaretoken]');
+    return token ? token.value : '';
+}
+
+// Image similarity search
+document.getElementById('image-search-form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    console.log('Image search form submitted - preventing default');
+    
+    const fileInput = document.getElementById('image-file');
+    const file = fileInput.files[0];
+    
+    if (!file) {
+        alert('{% trans "Please select an image file" %}');
+        return false;
+    }
+    
+    console.log('File selected:', file.name, file.size);
+    showLoading(true);
+    
+    const formData = new FormData();
+    formData.append('image', file);
+    
+    // Get CSRF token from the form
+    const csrfToken = getCSRFToken();
+    console.log('CSRF Token:', csrfToken);
+    formData.append('csrfmiddlewaretoken', csrfToken);
+    
+    try {
+        console.log('Sending request to /api/search/image/');
+        const response = await fetch('/api/search/image/', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRFToken': csrfToken
+            }
+        });
+        
+        console.log('Response status:', response.status);
+        const data = await response.json();
+        console.log('Response data:', data);
+        
+        if (data.success) {
+            displayImageResults(data.products, data.grouped_products);
+        } else {
+            alert('{% trans "Error" %}: ' + data.error);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('{% trans "Network error occurred" %}');
+    } finally {
+        showLoading(false);
+    }
+    
+    return false; // Prevent any form submission
+});
+
+// Text recognition search
+document.getElementById('text-search-form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    console.log('Text search form submitted - preventing default');
+    
+    const fileInput = document.getElementById('text-image-file');
+    const file = fileInput.files[0];
+    
+    if (!file) {
+        alert('{% trans "Please select an image file" %}');
+        return false;
+    }
+    
+    console.log('File selected:', file.name, file.size);
+    showLoading(true);
+    
+    const formData = new FormData();
+    formData.append('image', file);
+    
+    // Get CSRF token from the form
+    const csrfToken = getCSRFToken();
+    console.log('CSRF Token:', csrfToken);
+    formData.append('csrfmiddlewaretoken', csrfToken);
+    
+    try {
+        console.log('Sending request to /api/search/text-image/');
+        const response = await fetch('/api/search/text-image/', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRFToken': csrfToken
+            }
+        });
+        
+        console.log('Response status:', response.status);
+        const data = await response.json();
+        console.log('Response data:', data);
+        
+        if (data.success) {
+            displayTextResults(data.products, data.extracted_text, data.grouped_products);
+        } else {
+            alert('{% trans "Error" %}: ' + data.error);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('{% trans "Network error occurred" %}');
+    } finally {
+        showLoading(false);
+    }
+    
+    return false; // Prevent any form submission
+});
+
+function showLoading(show) {
+    document.getElementById('loading-indicator').style.display = show ? 'block' : 'none';
+}
+
+function displayImageResults(products, groupedProducts) {
+    const resultsDiv = document.getElementById('image-search-results');
+    const resultsList = document.getElementById('image-results-list');
+    
+    if (products.length === 0) {
+        resultsList.innerHTML = '<p style="text-align: center; color: #666; padding: 20px;">{% trans "No similar products found" %}</p>';
+    } else {
+        // Always display grouped by category (same structure as text search)
+        let html = '';
+        
+        if (groupedProducts && Object.keys(groupedProducts).length > 0) {
+            // Use provided grouped products
+            for (const [category, categoryProducts] of Object.entries(groupedProducts)) {
+                html += `
+                    <div style="margin-bottom: 30px;">
+                        <h3 style="font-size: 1.3em; color: #333; margin-bottom: 15px; border-bottom: 2px solid #007bff; padding-bottom: 5px;">${category}</h3>
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 10px 0;">
+                `;
+                
+                categoryProducts.forEach(product => {
+                    const similarityPercent = Math.round(product.similarity * 100);
+                    html += `
+                        <div style="border: 1px solid #ddd; padding: 15px; border-radius: 8px; background: white; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                            <div class="similarity-score">${similarityPercent}% {% trans "similar" %}</div>
+                            <h4 style="margin: 5px 0 10px 0; font-size: 1.1em;">${product.name}</h4>
+                            ${product.image_url ? `<img src="${product.image_url}" alt="${product.name}" style="width: 100%; height: 150px; object-fit: cover; border-radius: 5px; margin-bottom: 10px;">` : ''}
+                            <p style="font-size: 1.1em; font-weight: bold; color: #007bff; margin: 5px 0;">₹${product.price}</p>
+                            <p style="color: #666; font-size: 0.9em; margin: 3px 0;">{% trans "Qty" %}: ${product.quantity}</p>
+                            <p style="color: #666; font-size: 0.9em; margin: 3px 0;">{% trans "Shop" %}: ${product.shop}</p>
+                            <div style="margin-top: 10px;">
+                                <button onclick="addToCart(${product.id}, '${product.name.replace(/'/g, "\\'")}', ${product.price}, '${product.shop.replace(/'/g, "\\'")}')" 
+                                        style="background: #28a745; color: white; padding: 6px 10px; border: none; border-radius: 5px; cursor: pointer; font-size: 0.85em; width: 100%; margin-bottom: 5px;">
+                                    🛒 {% trans "Add to Cart" %}
+                                </button>
+                                <button onclick="buyNow(${product.id}, '${product.name.replace(/'/g, "\\'")}', ${product.price}, '${product.shop.replace(/'/g, "\\'")}')"
+                                        style="background: #ff5722; color: white; padding: 6px 10px; border: none; border-radius: 5px; cursor: pointer; font-size: 0.85em; width: 100%;">
+                                    ⚡ {% trans "Buy Now" %}
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                html += `
+                        </div>
+                    </div>
+                `;
+            }
+        } else {
+            // Group products by category manually if not provided
+            const categoryGroups = {};
+            products.forEach(product => {
+                const category = product.category || 'General';
+                if (!categoryGroups[category]) {
+                    categoryGroups[category] = [];
+                }
+                categoryGroups[category].push(product);
+            });
+            
+            for (const [category, categoryProducts] of Object.entries(categoryGroups)) {
+                html += `
+                    <div style="margin-bottom: 30px;">
+                        <h3 style="font-size: 1.3em; color: #333; margin-bottom: 15px; border-bottom: 2px solid #007bff; padding-bottom: 5px;">${category}</h3>
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 10px 0;">
+                `;
+                
+                categoryProducts.forEach(product => {
+                    const similarityPercent = Math.round(product.similarity * 100);
+                    html += `
+                        <div style="border: 1px solid #ddd; padding: 15px; border-radius: 8px; background: white; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                            <div class="similarity-score">${similarityPercent}% {% trans "similar" %}</div>
+                            <h4 style="margin: 5px 0 10px 0; font-size: 1.1em;">${product.name}</h4>
+                            ${product.image_url ? `<img src="${product.image_url}" alt="${product.name}" style="width: 100%; height: 150px; object-fit: cover; border-radius: 5px; margin-bottom: 10px;">` : ''}
+                            <p style="font-size: 1.1em; font-weight: bold; color: #007bff; margin: 5px 0;">₹${product.price}</p>
+                            <p style="color: #666; font-size: 0.9em; margin: 3px 0;">{% trans "Qty" %}: ${product.quantity}</p>
+                            <p style="color: #666; font-size: 0.9em; margin: 3px 0;">{% trans "Shop" %}: ${product.shop}</p>
+                            <div style="margin-top: 10px;">
+                                <button onclick="addToCart(${product.id}, '${product.name.replace(/'/g, "\\'")}', ${product.price}, '${product.shop.replace(/'/g, "\\'")}')" 
+                                        style="background: #28a745; color: white; padding: 6px 10px; border: none; border-radius: 5px; cursor: pointer; font-size: 0.85em; width: 100%; margin-bottom: 5px;">
+                                    🛒 {% trans "Add to Cart" %}
+                                </button>
+                                <button onclick="buyNow(${product.id}, '${product.name.replace(/'/g, "\\'")}', ${product.price}, '${product.shop.replace(/'/g, "\\'")}')"
+                                        style="background: #ff5722; color: white; padding: 6px 10px; border: none; border-radius: 5px; cursor: pointer; font-size: 0.85em; width: 100%;">
+                                    ⚡ {% trans "Buy Now" %}
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                html += `
+                        </div>
+                    </div>
+                `;
+            }
+        }
+        
+        resultsList.innerHTML = html;
+    }
+    
+    resultsDiv.style.display = 'block';
+}
+
+function displayTextResults(products, extractedText, groupedProducts) {
+    const resultsDiv = document.getElementById('text-search-results');
+    const resultsList = document.getElementById('text-results-list');
+    const extractedTextDiv = document.getElementById('extracted-text');
+    
+    // Show extracted text
+    extractedTextDiv.textContent = extractedText || '{% trans "No text extracted" %}';
+    
+    if (products.length === 0) {
+        resultsList.innerHTML = '<p style="text-align: center; color: #666; padding: 20px;">{% trans "No products found matching the extracted text" %}</p>';
+    } else if (groupedProducts && Object.keys(groupedProducts).length > 0) {
+        // Display grouped by category
+        let html = '';
+        for (const [category, categoryProducts] of Object.entries(groupedProducts)) {
+            html += `
+                <div style="margin-bottom: 30px;">
+                    <h3 style="font-size: 1.3em; color: #333; margin-bottom: 15px; border-bottom: 2px solid #28a745; padding-bottom: 5px;">${category}</h3>
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 10px 0;">
+            `;
+            
+            categoryProducts.forEach(product => {
+                html += `
+                    <div style="min-width: 250px; border: 1px solid #ddd; padding: 15px; border-radius: 8px; background: white; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                        <h4 style="margin: 5px 0 10px 0; font-size: 1.1em;">${product.name}</h4>
+                        ${product.image_url ? `<img src="${product.image_url}" alt="${product.name}" style="width: 100%; height: 150px; object-fit: cover; border-radius: 5px; margin-bottom: 10px;">` : ''}
+                        <p style="font-size: 1.1em; font-weight: bold; color: #28a745; margin: 5px 0;">₹${product.price}</p>
+                        <p style="color: #666; font-size: 0.9em; margin: 3px 0;">{% trans "Qty" %}: ${product.quantity}</p>
+                        <p style="color: #666; font-size: 0.9em; margin: 3px 0;">{% trans "Shop" %}: ${product.shop}</p>
+                        <div style="margin-top: 10px;">
+                            <button onclick="addToCart(${product.id}, '${product.name.replace(/'/g, "\\'")}', ${product.price}, '${product.shop.replace(/'/g, "\\'")}')" 
+                                    style="background: #28a745; color: white; padding: 6px 10px; border: none; border-radius: 5px; cursor: pointer; font-size: 0.85em; width: 100%; margin-bottom: 5px;">
+                                🛒 {% trans "Add to Cart" %}
+                            </button>
+                            <button onclick="buyNow(${product.id}, '${product.name.replace(/'/g, "\\'")}', ${product.price}, '${product.shop.replace(/'/g, "\\'")}')"
+                                    style="background: #ff5722; color: white; padding: 6px 10px; border: none; border-radius: 5px; cursor: pointer; font-size: 0.85em; width: 100%;">
+                                ⚡ {% trans "Buy Now" %}
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            html += `
+                    </div>
+                </div>
+            `;
+        }
+        resultsList.innerHTML = html;
+    } else {
+        // Fallback to flat list with 2-column grid
+        let html = '<div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 10px 0;">';
+        products.forEach(product => {
+            html += `
+                <div class="product-card">
+                    <h4>${product.name}</h4>
+                    ${product.image_url ? `<img src="${product.image_url}" alt="${product.name}">` : ''}
+                    <p style="font-size: 1.2em; font-weight: bold; color: #28a745;">₹${product.price}</p>
+                    <p style="color: #666;">{% trans "Quantity" %}: ${product.quantity}</p>
+                    <p style="color: #666;">{% trans "Shop" %}: ${product.shop}</p>
+                    <p style="color: #666;">${product.description}</p>
+                    <div style="margin-top: 10px;">
+                        <button onclick="addToCart(${product.id}, '${product.name.replace(/'/g, "\\'")}', ${product.price}, '${product.shop.replace(/'/g, "\\'")}')" 
+                                style="background: #28a745; color: white; padding: 8px 12px; border: none; border-radius: 5px; cursor: pointer; margin-right: 10px;">
+                            🛒 {% trans "Add to Cart" %}
+                        </button>
+                        <button onclick="buyNow(${product.id}, '${product.name.replace(/'/g, "\\'")}', ${product.price}, '${product.shop.replace(/'/g, "\\'")}')"
+                                style="background: #ff5722; color: white; padding: 8px 12px; border: none; border-radius: 5px; cursor: pointer;">
+                            ⚡ {% trans "Buy Now" %}
+                        </button>
+                    </div>
+                </div>
+            `;
+        });
+        html += '</div>';
+        resultsList.innerHTML = html;
+    }
+    
+    resultsDiv.style.display = 'block';
+}
+
+// Cart functionality (reuse from dashboard)
+let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+
+function addToCart(productId, productName, productPrice, shopName) {
+    const existingItem = cart.find(item => item.id === productId);
+    
+    if (existingItem) {
+        existingItem.quantity += 1;
+    } else {
+        cart.push({
+            id: productId,
+            name: productName,
+            price: productPrice,
+            shop: shopName,
+            quantity: 1
+        });
+    }
+    
+    localStorage.setItem('cart', JSON.stringify(cart));
+    showMessage(`{% trans "Added" %} "${productName}" {% trans "to cart!" %}`, 'success');
+}
+
+function buyNow(productId, productName, productPrice, shopName) {
+    cart = [{ id: productId, name: productName, price: productPrice, shop: shopName, quantity: 1 }];
+    localStorage.setItem('cart', JSON.stringify(cart));
+    window.location.href = '/customer/cart/';
+}
+
+function showMessage(message, type) {
+    const messageDiv = document.createElement('div');
+    messageDiv.style.cssText = `
+        position: fixed; top: 20px; right: 20px; z-index: 2000;
+        padding: 10px 15px; border-radius: 5px; color: white;
+        background: ${type === 'success' ? '#28a745' : type === 'error' ? '#dc3545' : '#007bff'};
+    `;
+    messageDiv.textContent = message;
+    
+    document.body.appendChild(messageDiv);
+    
+    setTimeout(() => {
+        document.body.removeChild(messageDiv);
+    }, 3000);
+}
+</script>
+{% endblock %}

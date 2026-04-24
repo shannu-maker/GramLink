@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Your Orders" %}{% endblock %}
+{% block content %}
+<div class="order-list container">
+    <h2>{% trans "Your Orders" %}</h2>
+    {% if orders %}
+        {% for order in orders %}
+        <div class="order-item">
+            <h3>{% trans "Order" %} #{{ order.id }}</h3>
+            <p><strong>{% trans "Status" %}:</strong> 
+                {% with status_tag=order.status|title %}{% trans status_tag %}{% endwith %}</p>
+            <p><strong>{% trans "Date" %}:</strong> {{ order.date|date:"M d, Y" }}</p>
+            <p><strong>{% trans "Total" %}:</strong> ₹{{ order.total_amount }}</p>
+            
+            <h4>{% trans "Items" %}:</h4>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>{% trans "Product" %}</th>
+                        <th>{% trans "Quantity" %}</th>
+                        <th>{% trans "Price" %}</th>
+                        <th>{% trans "Subtotal" %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in order.items.all %}
+                    <tr>
+                        <td>
+                            {% if item.product_name or item.product %}
+                                {{ item.product_name|default:item.product.name }}
+                            {% else %}
+                                {% trans "[Deleted Product]" %}
+                            {% endif %}
+                        </td>
+                        <td>{{ item.quantity }}</td>
+                        <td>₹{{ item.price }}</td>
+                        <td>₹{{ item.subtotal|floatformat:2 }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div style="margin-top:10px;">
+                <a href="{% url 'reorder_order' order.id %}" class="btn btn-customer" style="text-decoration:none;">
+                    🔁 {% trans "Re-Order" %}
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p>{% trans "You have no orders." %}</p>
+    {% endif %}
+</div>
+{% endblock %}

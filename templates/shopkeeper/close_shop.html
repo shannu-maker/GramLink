@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <h2>Temporarily Close Shop</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label class="form-label">Number of days to close</label>
+            <input type="number" min="1" name="days" class="form-control" placeholder="e.g., 5" required />
+        </div>
+        <button class="btn btn-warning" type="submit">Close Shop</button>
+        <a href="{% url 'shopkeeper_dashboard' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}
+

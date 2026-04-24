@@ -1,0 +1,445 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Shopkeeper Dashboard" %}{% endblock %}
+
+{% block content %}
+<div style="background: white; padding: 20px; margin: 20px; border-radius: 10px; min-height: 500px;">
+    <div class="dashboard-header" style="border-bottom: 2px solid #eee; padding-bottom: 15px; margin-bottom: 20px;">
+        <h1 style="color: #333; margin-bottom: 10px;">🛍️ {% trans "Shopkeeper Dashboard" %}</h1>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <p style="color: #666;">{% trans "Welcome" %}, {{ shopkeeper.name }}!</p>
+            <div style="display: flex; gap: 15px; align-items: center;">
+                <button onclick="showProductsModal()" style="background: #17a2b8; color: white; padding: 8px 16px; border: none; border-radius: 5px; cursor: pointer; display: flex; align-items: center; gap: 5px;">
+                    🛍️ {% trans "Products" %} <span class="badge" style="background: #fff; color: #17a2b8; padding: 2px 6px; border-radius: 10px; font-size: 12px;">{{ products|length }}</span>
+                </button>
+                <button onclick="showOrdersModal()" style="background: #007bff; color: white; padding: 8px 16px; border: none; border-radius: 5px; cursor: pointer; display: flex; align-items: center; gap: 5px;">
+                    📋 {% trans "Orders" %} <span class="badge" style="background: #fff; color: #007bff; padding: 2px 6px; border-radius: 10px; font-size: 12px;">{{ pending_orders_count }}</span>
+                </button>
+                <a href="{% url 'shopkeeper_requests' %}" style="background: #6f42c1; color: white; padding: 8px 16px; text-decoration: none; border-radius: 5px;">{% trans "Requests" %}</a>
+                {% if shopkeeper.closed_until and days_remaining != None and days_remaining >= 0 %}
+                    <a href="{% url 'open_shop' %}" style="background: #28a745; color: white; padding: 8px 16px; text-decoration: none; border-radius: 5px;">{% trans "Open Shop" %}</a>
+                {% else %}
+                    <a href="{% url 'close_shop' %}" style="background: #ffc107; color: #212529; padding: 8px 16px; text-decoration: none; border-radius: 5px;">{% trans "Close Shop" %}</a>
+                {% endif %}
+                <a href="{% url 'logout' %}" style="background: #dc3545; color: white; padding: 8px 16px; text-decoration: none; border-radius: 5px;">{% trans "Logout" %}</a>
+            </div>
+        </div>
+    </div>
+    {% if shopkeeper.closed_until and days_remaining != None and days_remaining >= 0 %}
+    <div style="padding: 12px 16px; border-radius: 6px; background: #fff3cd; color: #856404; border: 1px solid #ffeeba; margin-bottom: 16px;">
+        {% if days_remaining == 0 %}
+            {% trans "The shop will open tomorrow." %}
+        {% elif days_remaining == 1 %}
+            {% trans "The shop will open after 1 day." %}
+        {% else %}
+            {% blocktranslate with n=days_remaining %}The shop will open after {{ n }} days.{% endblocktranslate %}
+        {% endif %}
+    </div>
+    {% endif %}
+
+    {% if messages %}
+        {% for message in messages %}
+            <div style="padding: 10px; margin-bottom: 15px; border-radius: 5px; 
+                        {% if message.tags == 'success' %}background: #d4edda; color: #155724; border: 1px solid #c3e6cb;{% endif %}
+                        {% if message.tags == 'error' %}background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb;{% endif %}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <div id="products-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; overflow-y: auto;">
+        <div style="position: relative; max-width: 1000px; margin: 30px auto; background: white; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.3);">
+            <div style="position: sticky; top: 0; background: white; padding: 20px; border-bottom: 1px solid #eee; z-index: 10;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h2 style="margin: 0; color: #333;">🛍️ {% trans "Your Products" %}</h2>
+                    <button onclick="closeProductsModal()" style="background: #dc3545; color: white; border: none; border-radius: 5px; width: 30px; height: 30px; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center;">×</button>
+                </div>
+                
+                <div style="position: relative; margin-bottom: 15px;">
+                    <input type="text" id="product-search" placeholder="{% trans "Search products..." %}" 
+                            style="width: 100%; padding: 10px 15px 10px 40px; border: 1px solid #ddd; border-radius: 25px; font-size: 14px;"
+                            onkeyup="filterProducts()">
+                    <span style="position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #6c757d;">
+                        🔍
+                    </span>
+                </div>
+            </div>
+            
+            <div style="padding: 0 20px 20px 20px;">
+                {% if products %}
+                    <div id="products-container" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; margin-bottom: 20px;">
+                        {% for product in products %}
+                        <div class="product-item" data-name="{{ product.name|lower }}" data-description="{{ product.description|lower }}" 
+                             style="border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden; transition: transform 0.2s, box-shadow 0.2s; background: white;">
+                            {% if product.image %}
+                            <img src="{{ product.image.url }}" alt="{{ product.name }}" 
+                                 style="width: 100%; height: 180px; object-fit: cover; border-bottom: 1px solid #eee;">
+                            {% else %}
+                            <div style="width: 100%; height: 180px; background: #f8f9fa; display: flex; align-items: center; justify-content: center; color: #999; border-bottom: 1px solid #eee;">
+                                {% trans "No Image Available" %}
+                            </div>
+                            {% endif %}
+                            <div style="padding: 15px;">
+                                <h4 style="margin: 0 0 10px 0; color: #333; font-size: 16px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="{{ product.name }}">
+                                    {{ product.name }}
+                                </h4>
+                                <p style="margin: 5px 0; color: #28a745; font-weight: bold;">₹{{ product.price }}</p>
+                                <p style="margin: 5px 0; color: #6c757d; font-size: 14px;">{% trans "Qty" %}: {{ product.quantity }}</p>
+                                <div style="display: flex; gap: 10px; margin-top: 12px;">
+                                    <a href="{% url 'edit_product' product.id %}" 
+                                       style="flex: 1; background: #17a2b8; color: white; text-align: center; padding: 6px 0; border-radius: 4px; text-decoration: none; font-size: 14px; transition: background 0.2s;">
+                                        {% trans "Edit" %}
+                                    </a>
+                                    <form method="post" action="{% url 'delete_product' product.id %}" style="flex: 1; margin: 0;">
+                                        {% csrf_token %}
+                                        <button type="submit" 
+                                                style="width: 100%; background: #dc3545; color: white; border: none; border-radius: 4px; padding: 6px 0; font-size: 14px; cursor: pointer; transition: background 0.2s;"
+                                                onclick="return confirm('{% trans "Are you sure you want to delete this product?" %}')">
+                                            {% trans "Delete" %}
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div style="text-align: center; padding: 40px 20px;">
+                        <div style="font-size: 48px; margin-bottom: 15px;">📦</div>
+                        <h3 style="color: #6c757d; margin-bottom: 10px;">{% trans "No Products Yet" %}</h3>
+                        <p style="color: #6c757d; margin-bottom: 20px;">{% trans "You haven't added any products yet. Start by adding your first product!" %}</p>
+                    </div>
+                {% endif %}
+            </div>
+            
+            <div style="padding: 15px 20px; background: #f8f9fa; border-top: 1px solid #eee; display: flex; justify-content: flex-end;">
+                <button onclick="closeProductsModal()" style="background: #6c757d; color: white; border: none; border-radius: 4px; padding: 8px 16px; cursor: pointer;">
+                    {% trans "Close" %}
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div style="margin-top: 20px; background: #f8f9fa; padding: 20px; border-radius: 8px;">
+        <h2 style="color: #333; margin-bottom: 15px;">Recent Product Requests</h2>
+        {% if shop_requests %}
+        <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse;">
+                <thead>
+                    <tr style="background: #fff;">
+                        <th style="text-align: left; padding: 10px; border-bottom: 1px solid #ddd;">Requested At</th>
+                        <th style="text-align: left; padding: 10px; border-bottom: 1px solid #ddd;">Customer</th>
+                        <th style="text-align: left; padding: 10px; border-bottom: 1px solid #ddd;">Product</th>
+                        <th style="text-align: left; padding: 10px; border-bottom: 1px solid #ddd;">Details</th>
+                        <th style="text-align: left; padding: 10px; border-bottom: 1px solid #ddd;">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for r in shop_requests %}
+                    <tr>
+                        <td style="padding: 10px; border-bottom: 1px solid #eee;">{{ r.created_at|date:"M d, Y H:i" }}</td>
+                        <td style="padding: 10px; border-bottom: 1px solid #eee;">{{ r.customer.name }}</td>
+                        <td style="padding: 10px; border-bottom: 1px solid #eee;">{{ r.product_name }}</td>
+                        <td style="padding: 10px; border-bottom: 1px solid #eee;">{{ r.details|default:'-' }}</td>
+                        <td style="padding: 10px; border-bottom: 1px solid #eee;">
+                            {% if r.resolved %}
+                                <span style="background: #28a745; color: white; padding: 2px 6px; border-radius: 4px;">Resolved</span>
+                            {% else %}
+                                <form method="post" action="{% url 'resolve_request' r.id %}">
+                                    {% csrf_token %}
+                                    <button class="btn btn-sm btn-success">Mark Resolved</button>
+                                </form>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+            <p style="color: #666;">No product requests yet.</p>
+        {% endif %}
+    </div>
+
+    <div style="margin-bottom: 30px; background: #f8f9fa; padding: 20px; border-radius: 8px;">
+        <h2 style="color: #333; margin-bottom: 15px;">{% trans "Add New Product" %}</h2>
+        <form method="post" action="{% url 'add_product' %}" enctype="multipart/form-data" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+            {% csrf_token %}
+            <div>
+                <label style="display: block; margin-bottom: 5px; color: #333;">{% trans "Product Name" %}</label>
+                <input type="text" name="name" placeholder="{% trans "Enter product name" %}" required 
+                        style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+            </div>
+            
+            <div>
+                <label style="display: block; margin-bottom: 5px; color: #333;">{% trans "Price" %} (₹)</label>
+                <input type="number" name="price" placeholder="{% trans "Enter price" %}" min="1" step="0.01" required
+                        style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+            </div>
+            
+            <div>
+                <label style="display: block; margin-bottom: 5px; color: #333;">{% trans "Quantity" %}</label>
+                <input type="text" name="quantity" placeholder="{% trans "e.g., 1kg, 500ml, 10 pieces" %}" required
+                        style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+            </div>
+            
+            <div>
+                <label style="display: block; margin-bottom: 5px; color: #333;">{% trans "Product Image" %}</label>
+                <input type="file" name="image" accept="image/*"
+                        style="width: 100%; padding: 8px 0;">
+                <p style="font-size: 12px; color: #6c757d; margin: 5px 0 0 0;">{% trans "Upload product image (optional)" %}</p>
+            </div>
+            
+            <div style="grid-column: 1 / -1;">
+                <label style="display: block; margin-bottom: 5px; color: #333;">{% trans "Description" %}</label>
+                <textarea name="description" placeholder="{% trans "Enter product description" %}" rows="3"
+                            style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; resize: vertical;"></textarea>
+            </div>
+            
+            <div style="grid-column: 1 / -1;">
+                <button type="submit" style="background: #28a745; color: white; padding: 12px 24px; border: none; border-radius: 5px; cursor: pointer; flex: 1;">
+                    ➕ {% trans "Add Product" %}
+                </button>
+            </div>
+        </form>
+    </div>
+    
+    <button onclick="showOrdersModal()" style="background: #007bff; color: white; padding: 8px 16px; border: none; border-radius: 5px; cursor: pointer;">
+        📋 {% trans "Orders" %} 
+        <span style="background: #fff; color: #007bff; padding: 2px 6px; border-radius: 10px; font-size: 12px;">{{ pending_orders_count }}</span>
+    </button>
+
+    <div id="orders-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000;">
+        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 30px; border-radius: 10px; width: 90%; max-width: 700px; max-height: 80vh; overflow-y: auto;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h3 style="margin: 0; color: #333;">📋 {% trans "Your Orders" %}</h3>
+                <button onclick="closeOrdersModal()" style="background: #dc3545; color: white; border: none; border-radius: 50%; width: 30px; height: 30px; cursor: pointer;">×</button>
+            </div>
+
+            {% if orders %}
+                <div id="orders-container" style="display: grid; grid-template-columns: 1fr; gap: 20px;">
+                    {% for order in orders %}
+                    <div class="order-item" style="border: 1px solid #ddd; padding: 15px; border-radius: 8px; background: #f9f9f9;">
+                        <h3 style="color: #333;">{% trans "Order" %} #{{ order.id }}</h3>
+                        <p><strong>{% trans "Status" %}:</strong> 
+                            <span id="order-status-{{ order.id }}" style="padding: 4px 8px; border-radius: 4px; background: 
+                                {% if order.status == 'pending' %}#ffc107{% elif order.status == 'confirmed' %}#007bff{% elif order.status == 'ready' %}#28a745{% elif order.status == 'delivered' %}#6c757d{% else %}#dc3545{% endif %};
+                                color: {% if order.status == 'pending' %}black{% else %}white{% endif %}; font-size: 0.9em;">
+                                {% with status_tag=order.status|title %}{% trans status_tag %}{% endwith %}
+                            </span>
+                        </p>
+                        {% if order.status == 'pending' %}
+                            <button id="mark-ready-btn-{{ order.id }}" onclick="markAsReady({{ order.id }})" style="background: #28a745; color: white; border: none; border-radius: 5px; padding: 6px 12px; cursor: pointer; margin-top: 5px;">
+                                {% trans "Mark as Ready" %}
+                            </button>
+                        {% endif %}
+                        <p><strong>{% trans "Date" %}:</strong> {{ order.date|date:"M d, Y" }}</p>
+                        <p><strong>{% trans "Total" %}:</strong> ₹{{ order.total_amount }}</p>
+
+                        <h4>{% trans "Items" %}:</h4>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>{% trans "Product" %}</th>
+                                    <th>{% trans "Quantity" %}</th>
+                                    <th>{% trans "Price" %}</th>
+                                    <th>{% trans "Subtotal" %}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in order.items.all %}
+                                <tr>
+                                    <td>
+                                        {% if item.product_name or item.product %}
+                                            {{ item.product_name|default:item.product.name }}
+                                        {% else %}
+                                            {% trans "[Deleted Product]" %}
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ item.quantity }}</td>
+                                    <td>₹{{ item.price }}</td>
+                                    <td>₹{{ item.subtotal|floatformat:2 }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div style="text-align: center; padding: 40px; background: #f8f9fa; border-radius: 8px;">
+                    <p style="color: #666; font-size: 18px;">{% trans "No orders yet. When customers place orders, they will appear here." %}</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <script>
+        // --- JAVASCRIPT TRANSLATION VARIABLES ---
+        const G_ORDER_MARKED_READY = "{% trans 'Order #<orderId> marked as ready for delivery.' %}";
+        const G_FAILED_UPDATE_STATUS = "{% trans 'Failed to update order status.' %}";
+        const G_ERROR_UPDATING_STATUS = "{% trans 'Error updating order status.' %}";
+        const G_READY_FOR_DELIVERY = "{% trans 'Ready for Delivery' %}";
+        // --- END JAVASCRIPT TRANSLATION VARIABLES ---
+
+        // Products modal functions
+        function showProductsModal() {
+            document.getElementById('products-modal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+            // Focus on search input when modal opens
+            setTimeout(() => {
+                const searchInput = document.getElementById('product-search');
+                if (searchInput) searchInput.focus();
+            }, 100);
+        }
+
+        function closeProductsModal() {
+            document.getElementById('products-modal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+            // Clear search when closing
+            const searchInput = document.getElementById('product-search');
+            if (searchInput) searchInput.value = '';
+            filterProducts(); // Reset filter
+        }
+
+        // Filter products based on search input
+        function filterProducts() {
+            const searchTerm = document.getElementById('product-search').value.toLowerCase();
+            const products = document.querySelectorAll('.product-item');
+            
+            products.forEach(product => {
+                const name = product.getAttribute('data-name');
+                const description = product.getAttribute('data-description') || '';
+                const matchesSearch = name.includes(searchTerm) || description.includes(searchTerm);
+                product.style.display = matchesSearch ? 'block' : 'none';
+            });
+        }
+
+        // Close modal when clicking outside the content
+        window.onclick = function(event) {
+            const modal = document.getElementById('products-modal');
+            if (event.target === modal) {
+                closeProductsModal();
+            }
+        };
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeProductsModal();
+            }
+        });
+
+        function showOrdersModal() {
+            document.getElementById('orders-modal').style.display = 'block';
+        }
+
+        function closeOrdersModal() {
+            document.getElementById('orders-modal').style.display = 'none';
+        }
+
+        // Auto-scroll functionality for orders
+        function autoScrollOrders() {
+            const ordersContainer = document.getElementById('orders-container');
+            if (ordersContainer) {
+                ordersContainer.scrollTop = ordersContainer.scrollHeight;
+            }
+        }
+
+        // Initialize auto-scroll when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            autoScrollOrders();
+        });
+
+        // Refresh orders every 30 seconds
+        setInterval(function() {
+            // This would typically make an AJAX call to refresh orders
+            console.log('Refreshing orders...');
+        }, 30000);
+
+        // Check for bot navigation actions
+        document.addEventListener('DOMContentLoaded', function() {
+            const action = sessionStorage.getItem('shopkeeperAction');
+            if (action) {
+                sessionStorage.removeItem('shopkeeperAction'); // Clear after use
+                
+                // Small delay to ensure page is fully loaded
+                setTimeout(() => {
+                    switch(action) {
+                        case 'showProducts':
+                            showProductsModal();
+                            break;
+                        case 'showOrders':
+                            showOrdersModal();
+                            break;
+                        case 'scrollToAddProduct':
+                            // Scroll to add product form
+                            const addProductForm = document.querySelector('form[action*="add_product"]');
+                            if (addProductForm) {
+                                addProductForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            }
+                            break;
+                    }
+                }, 300);
+            }
+        });
+
+        // Function to mark order as ready (AJAX)
+        function markAsReady(orderId) {
+            const csrftoken = getCookie('csrftoken');
+            fetch(`/shopkeeper/update-order/${orderId}/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-CSRFToken': csrftoken,
+                },
+                body: new URLSearchParams({
+                    'status': 'ready'
+                })
+            })
+            .then(response => {
+                if (response.ok) {
+                    // Update status badge using translated variable
+                    const statusSpan = document.getElementById(`order-status-${orderId}`);
+                    if (statusSpan) {
+                        statusSpan.textContent = G_READY_FOR_DELIVERY;
+                        statusSpan.style.backgroundColor = '#28a745';
+                        statusSpan.style.color = 'white';
+                    }
+                    // Hide the "Mark as Ready" button after update
+                    const button = document.querySelector(`#mark-ready-btn-${orderId}`);
+                    if (button) {
+                        button.style.display = 'none';
+                    }
+                    // Show translated alert
+                    alert(G_ORDER_MARKED_READY.replace('<orderId>', orderId));
+                } else {
+                    alert(G_FAILED_UPDATE_STATUS);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert(G_ERROR_UPDATING_STATUS);
+            });
+        }
+
+        // Helper function to get CSRF token from cookies
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    </script>
+</div>
+{% endblock %}

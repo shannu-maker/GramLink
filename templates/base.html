@@ -1,0 +1,1771 @@
+{% load static %}
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="{% get_current_language as LANGUAGE_CODE %}{{ LANGUAGE_CODE|default:'en' }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Gram Connect{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'gram.css' %}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    {% block header %}
+    <header>
+        <div class="container">
+            <h1>{% trans "Gram Connect" %}</h1>
+            <p>{% trans "One platform for shopkeepers, customers and delivery partners" %}</p>
+            {% if request.resolver_match.url_name == 'home' %}
+            <button id="open-lang" class="btn" style="float:right;">🌐 {% trans "Language" %}</button>
+            {% endif %}
+        </div>
+    </header>
+    {% endblock %}
+
+    {% block content %}
+    <div id="location-selection-wrapper">
+        <div class="location-selector-container">
+            <h2>{% trans "Select Your Location" %}</h2>
+            <div class="dropdown-wrapper">
+                <label for="state-select">{% trans "State" %}:</label>
+                <select id="state-select" class="location-dropdown">
+                    <option value="">{% trans "Select State" %}</option>
+                    </select>
+                <input type="text" id="state-search" class="dropdown-search" placeholder="{% trans "Search State" %}">
+            </div>
+
+            <div class="dropdown-wrapper">
+                <label for="mandal-select">{% trans "Mandal" %}:</label>
+                <select id="mandal-select" class="location-dropdown" disabled>
+                    <option value="">{% trans "Select Mandal" %}</option>
+                    </select>
+                <input type="text" id="mandal-search" class="dropdown-search" placeholder="{% trans "Search Mandal" %}" disabled>
+            </div>
+
+            <div class="dropdown-wrapper">
+                <label for="village-select">{% trans "Village" %}:</label>
+                <select id="village-select" class="location-dropdown" disabled>
+                    <option value="">{% trans "Select Village" %}</option>
+                    </select>
+                <input type="text" id="village-search" class="dropdown-search" placeholder="{% trans "Search Village" %}" disabled>
+            </div>
+        </div>
+    </div>
+
+    <div id="main-content">
+        <div class="login-options">
+            <div class="login-card customer">
+                <span class="login-icon">🛒</span>
+                <h2>{% trans "Customer" %}</h2>
+                <p>{% trans "Shop for products, track orders, and manage your cart." %}</p>
+                <a href="#" class="btn btn-customer open-customer-login">{% trans "Login" %}</a>
+                <a href="#" class="btn btn-customer open-customer-register">{% trans "Register" %}</a>
+            </div>
+            <div class="login-card shopkeeper">
+                <span class="login-icon">🏪</span>
+                <h2>{% trans "Shopkeeper" %}</h2>
+                <p>{% trans "Manage your shop, add products, and process orders." %}</p>
+                <a href="#" class="btn btn-shopkeeper open-shopkeeper-login">{% trans "Login" %}</a>
+                <a href="#" class="btn btn-shopkeeper open-shopkeeper-register">{% trans "Register" %}</a>
+            </div>
+            <div class="login-card delivery">
+                <span class="login-icon">🚚</span>
+                <h2>{% trans "Delivery Partner" %}</h2>
+                <p>{% trans "Deliver orders and earn money." %}</p>
+                <a href="#" class="btn btn-delivery open-delivery-login">{% trans "Login" %}</a>
+                <a href="#" class="btn btn-delivery open-delivery-register">{% trans "Register" %}</a>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
+
+    {% if messages %}
+    <div class="django-messages-container">
+        {% for message in messages %}
+        <div class="django-message-item {% if message.tags == 'success' %}success{% elif message.tags == 'error' %}error{% else %}info{% endif %}">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <div id="lang-modal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:2000;">
+        <div style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); background:#fff; padding:20px; border-radius:8px; width:90%; max-width:420px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+                <h3 style="margin:0;">{% trans "Choose Language" %}</h3>
+                <button id="close-lang" style="background:#dc3545; color:#fff; border:none; border-radius:50%; width:28px; height:28px; cursor:pointer;">×</button>
+            </div>
+            <form id="lang-form" method="post" action="{% url 'set_language' %}" style="display:grid; gap:12px;">
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                <label>
+                    <span>{% trans "Language" %}</span>
+                    <select name="language" style="width:100%; padding:10px; border:1px solid #ddd; border-radius:6px;">
+                        {% get_current_language as LANGUAGE_CODE %}
+                        {% get_available_languages as LANGUAGES %}
+                        {% for lang in LANGUAGES %}
+                            <option value="{{ lang.0 }}" {% if lang.0 == LANGUAGE_CODE %}selected{% endif %}>{{ lang.1 }}</option>
+                        {% endfor %}
+                    </select>
+                </label>
+                <button type="submit" class="btn" style="background:#007bff; color:#fff; border:none; border-radius:6px; padding:10px 14px; cursor:pointer;">{% trans "Apply" %}</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Floating language button available on all pages -->
+    <button id="open-lang" title="{% trans 'Change language' %}" style="position:fixed; right:16px; bottom:16px; z-index:1999; background:#343a40; color:#fff; border:none; border-radius:24px; padding:10px 12px; cursor:pointer; box-shadow:0 2px 8px rgba(0,0,0,0.2);">🌐</button>
+
+    <script>
+        // Use a simple stub for gettext if not provided by Django's i18n js, to mark strings for extraction
+        if (typeof gettext === 'undefined') {
+            function gettext(text) { return text; }
+        }
+        
+        // Make language switch available on every page
+        document.addEventListener('DOMContentLoaded', function() {
+            var openBtn = document.getElementById('open-lang');
+            var closeBtn = document.getElementById('close-lang');
+            var modal = document.getElementById('lang-modal');
+            if (openBtn && modal) {
+                openBtn.addEventListener('click', function() { modal.style.display = 'block'; });
+            }
+            if (closeBtn && modal) {
+                closeBtn.addEventListener('click', function() { modal.style.display = 'none'; });
+            }
+            // Auto-hide success messages after ~2.5s
+            var successMsgs = document.querySelectorAll('.django-message-item.success');
+            if (successMsgs && successMsgs.length) {
+                setTimeout(function() {
+                    successMsgs.forEach(function(el){ el.style.display = 'none'; });
+                }, 2500);
+            }
+        });
+
+        // Include common user-facing strings here to be picked up by makemessages
+        // NOTE: These strings should match the original English text in the JS for makemessages to work.
+        const TRANS_STRINGS = [
+            gettext("AI Shopping Assistant"),
+            gettext("Delivery"),
+            gettext("Customer"),
+            gettext("Shopkeeper"),
+            gettext("Help"),
+            gettext("Chat"),
+            gettext("AI is typing..."),
+            gettext("Read message aloud"),
+            gettext("Please enter your email:"),
+            gettext("Let's create your customer account. What's your full name?"),
+            gettext("Let's create your shopkeeper account. What's your shop name?"),
+            gettext("Let's create your delivery partner account. What's your full name?"),
+            gettext("Enter your password:"),
+            gettext("Login failed:"),
+            gettext("Unknown error"),
+            gettext("Email address:"),
+            gettext("Phone number:"),
+            gettext("Set a password:"),
+            gettext("Register failed:"),
+            gettext("Shop address:"),
+            gettext("Vehicle type:"),
+            gettext("Customer shortcuts"),
+            gettext("Browse Products"),
+            gettext("Cart"),
+            gettext("Orders"),
+            gettext("Logout"),
+            gettext("Shopkeeper shortcuts"),
+            gettext("Dashboard"),
+            gettext("Add Product"),
+            gettext("View Products"),
+            gettext("View Orders"),
+            gettext("Delivery shortcuts"),
+            gettext("Shopkeeper options"),
+            gettext("Register"),
+            gettext("Login"),
+            gettext("Manage Products"),
+            gettext("Customer options"),
+            gettext("Delivery partner options"),
+            gettext("Delivery Dashboard"),
+            gettext("I'll help you logout from your account. This will take you back to the main page."),
+            gettext("Add Product"),
+            gettext("Open Dashboard"),
+            gettext("Edit Product"),
+            gettext("Delete Product"),
+            gettext("Orders"),
+            gettext("Customer Orders"),
+            gettext("Shopkeeper Orders"),
+            gettext("I'm here to help! What do you need assistance with?"),
+            gettext("What interests you?"),
+            gettext("Shopping"),
+            gettext("Technology"),
+            gettext("Tips & Tricks"),
+            gettext("AI & Future"),
+            gettext("Random Facts"),
+            gettext("Who do you want to login as?"),
+            gettext("🏪 Shopkeeper Login"),
+            gettext("🛒 Customer Login"),
+            gettext("🚚 Delivery Login"),
+            gettext("Create account as:"),
+            gettext("🏪 Shopkeeper Register"),
+            gettext("🛒 Customer Register"),
+            gettext("🚚 Delivery Register"),
+            gettext("Open dashboard for:"),
+            gettext("🏪 Shopkeeper"),
+            gettext("🛒 Customer"),
+            gettext("🚚 Delivery"),
+            gettext("AI Assistant activated! I'm here to help you with anything related to Gram Connect. What would you like to know or do?"),
+            gettext("How can I assist you?"),
+            gettext("🛍️ Shopping Help"),
+            gettext("📊 Price Analysis"),
+            gettext("🔍 Find Products"),
+            gettext("📱 App Features"),
+            gettext("💬 General Chat"),
+            gettext("❓ Ask Anything"),
+            gettext("Yes, I want AI help"),
+            gettext("No, I'm good"),
+            gettext("🤖 Excellent! I'm now fully activated and ready to assist you. I can help with shopping, price analysis, orders, and much more. What would you like to explore first?"),
+            gettext("AI Assistant Ready! Choose your adventure:"),
+            gettext("🛍️ Shopping Assistant"),
+            gettext("📊 Price Intelligence"),
+            gettext("🔍 Product Search"),
+            gettext("📱 App Tutorial"),
+            gettext("💬 General AI Chat"),
+            gettext("I'd love to chat! I'm here to help with anything related to shopping, orders, or just general conversation. What's on your mind?"),
+            gettext("What would you like to talk about?"),
+            gettext("🛍️ Shopping Tips"),
+            gettext("What features does this app have?"),
+            gettext("🎯 Recommendations"),
+            gettext("💡 Fun Facts"),
+            gettext("🤖 About You"),
+            gettext("Sorry, I encountered an error. Please try again."),
+            gettext("Let me help you differently:"),
+            gettext("🔄 Try Again"),
+            gettext("❓ Ask Differently"),
+            gettext("👤 Get Help"),
+            gettext("I'm here to help! I can assist you with shopping, orders, price analysis, and navigating the platform. What would you like to know?"),
+            gettext("How can I help you?"),
+            gettext("❓ Questions"),
+            gettext("💬 Chat"),
+            gettext("No problem! I'm here whenever you need help. Feel free to ask me anything about shopping, orders, or the platform anytime!"),
+            gettext("I'd love to help you with shopping! You can browse products, check prices, and add items to your cart. Would you like me to show you how to navigate the shopping features?"),
+            gettext("Great! I can help you analyze product prices and find the best deals. The price history feature shows trends and helps you make smart buying decisions. Would you like to learn more about it?"),
+            gettext("I'm here to answer any questions you have! Whether it's about shopping, orders, account management, or how to use the platform - just ask away!"),
+            gettext("I'd love to chat! I'm your AI assistant and I'm here to help with anything related to this e-commerce platform. What would you like to talk about?"),
+            gettext("🎤 Listening... Speak now!"),
+            gettext("Voice input is not supported in your browser. Please use text input."),
+            gettext("Listening... Click to stop"),
+            gettext("Voice Input"),
+            gettext("Processing your voice input..."),
+            gettext("I notice you've been quiet for a while. Is there anything I can help you with?"),
+            gettext("Quick Actions:"),
+            gettext("I'm here to make your shopping experience amazing. What can I do for you?"),
+            gettext("I'm here to help you today. What's on your mind?"),
+            gettext("That's wonderful! I love your positive energy! How can I make your day even better?"),
+            gettext("I understand you're feeling frustrated. Let me help you resolve this quickly. What's the issue?"),
+            gettext("I'm here to help you with shopping, orders, and more. What would you like to do?"),
+            gettext("How can I help you today?"),
+            gettext("📦 Track Orders"),
+            gettext("💳 Payment Help"),
+            gettext("🚚 Delivery Info"),
+            gettext("👤 Account Help"),
+            gettext("I need account help"),
+            gettext("I have general questions"),
+            gettext("What would you like to do?"),
+            gettext("🛒 Shop as Customer"),
+            gettext("🏪 Manage Shop"),
+            gettext("🚚 Delivery Partner"),
+            gettext("Tell me about price history features"),
+            gettext("❓ Need Help"),
+            gettext("I just want to chat"),
+            gettext("I notice you've been quiet for a while. Is there anything I can help you with?"),
+            gettext("Tell me about price features"),
+            gettext("👋 Welcome! I'm your AI assistant. Say 'AI' or 'bot' anytime to activate me! I can help with shopping, orders, and more."),
+            gettext("Try saying:"),
+            gettext("Show me products"),
+            gettext("Help me"),
+            gettext("Hello! I heard you call for me. Would you like to continue with AI assistance?"),
+            gettext("Continue with AI?"),
+            gettext("🤖 Yes, Continue with AI"),
+            gettext("🛍️ Shopping Help"),
+            gettext("📊 Price Analysis"),
+            gettext("❓ General Questions"),
+            gettext("💬 Just Chat"),
+            gettext("❌ No Thanks"),
+            gettext("I need human support"),
+            gettext("How can I contact support?"),
+            gettext("Let me tell you about Gram Connect! It's a comprehensive e-commerce platform that connects customers, shopkeepers, and delivery partners. Would you like to know more about any specific feature?"),
+            gettext("Learn more about:"),
+            gettext("🛒 Customer Features"),
+            gettext("🏪 Shopkeeper Tools"),
+            gettext("🚚 Delivery System"),
+            gettext("Tell me about delivery features"),
+            gettext("Tell me about AI capabilities"),
+            gettext("💡 Suggested next steps:"),
+            gettext("Need more help?"),
+            gettext("Hello! I'm your AI assistant. What's your name?"),
+            gettext("Nice to meet you, %s! I'm here to help you with shopping, orders, and more. What would you like to do?"),
+        ];
+
+        // Clear local cart after successful auth/registration so new users don't inherit old carts
+        (function(){
+            try {
+                var nodes = document.querySelectorAll('.django-message-item');
+                var shouldClear = false;
+                nodes.forEach(function(n){
+                    var t = (n.textContent || '').toLowerCase();
+                    if (t.includes('login successful') || t.includes('account created successfully')) {
+                        shouldClear = true;
+                    }
+                });
+                if (shouldClear) {
+                    localStorage.removeItem('cart');
+                }
+            } catch(e) { /* no-op */ }
+        })();
+
+        // Language modal behavior (open on first visit) - home page only
+        (function(){
+            try {
+                if ((window.location.pathname === '/' || document.body.getAttribute('data-url-name') === 'home')) {
+                    var openBtn = document.getElementById('open-lang');
+                    var modal = document.getElementById('lang-modal');
+                    var closeBtn = document.getElementById('close-lang');
+                    if(openBtn && modal){
+                        openBtn.addEventListener('click', function(){ modal.style.display = 'block'; });
+                    }
+                    if(closeBtn && modal){
+                        closeBtn.addEventListener('click', function(){ modal.style.display = 'none'; });
+                        modal.addEventListener('click', function(e){ if(e.target === modal) modal.style.display = 'none'; });
+                    }
+                    if(!localStorage.getItem('langPrompted')){
+                        modal && (modal.style.display = 'block');
+                        localStorage.setItem('langPrompted', '1');
+                    }
+                }
+            } catch(e){}
+        })();
+    </script>
+
+    {% block footer %}
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 {% trans "Gram Connect" %}. {% trans "All rights reserved." %}</p>
+        </div>
+    </footer>
+    {% endblock %}
+
+    <script src="{% static 'gram.js' %}?v=1.1"></script>
+    {% get_current_language as LANGUAGE_CODE %}
+    <script>
+        // Set the currently selected language for client-side use
+        const selectedLang = '{{ LANGUAGE_CODE }}';
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Original script content now merged here
+        (function(){
+            const bubble = document.createElement('div');
+            bubble.className = 'ai-bot-bubble';
+            bubble.title = gettext('AI Shopping Assistant'); // Translatable string
+            bubble.innerHTML = '🤖';
+
+            const panel = document.createElement('div');
+            panel.className = 'ai-bot-panel';
+            panel.innerHTML = `
+                <div class="ai-bot-header">
+                    <span style="display:flex;align-items:center;gap:8px;">
+                        <span style="font-size:18px;">🤖</span>
+                        <span>${gettext('AI Shopping Assistant')}</span>
+                    </span>
+                    <button id="ai-close" class="ai-bot-close">×</button>
+                </div>
+        
+                <div class="ai-bot-quick-tips">
+                    <div class="ai-bot-quick-tips-title">💡 ${gettext('Quick Tips')}:</div>
+                    <div class="ai-bot-quick-tips-buttons">
+                        <button class="quick-tip" data-tip="${gettext('Tell me about your delivery options')}">🚚 ${gettext('Delivery')}</button>
+                        <button class="quick-tip" data-tip="${gettext('Tell me about your customer options')}">🛒 ${gettext('Customer')}</button>
+                        <button class="quick-tip" data-tip="${gettext('Tell me about your shopkeeper options')}">🏪 ${gettext('Shopkeeper')}</button>
+                        <button class="quick-tip" data-tip="${gettext('I need help with something')}">❓ ${gettext('Help')}</button>
+                        <button class="quick-tip" data-tip="${gettext('I just want to chat')}">💬 ${gettext('Chat')}</button>
+                    </div>
+                </div>
+        
+                <div id="ai-chat-container" class="ai-bot-chat-container">
+                    <div id="ai-log" class="ai-bot-log"></div>
+                </div>
+        
+                <div class="ai-bot-input-container">
+                    <div class="ai-bot-input-wrapper">
+                        <input id="ai-input" class="ai-bot-input" placeholder="${gettext('Say \'AI\' or \'bot\' to activate, or ask me anything...')}" />
+                        <button id="ai-voice" class="ai-bot-voice" title="${gettext('Voice Input')}">🎤</button>
+                        <button id="ai-send" class="ai-bot-send">➤</button>
+                </div>
+                </div>
+            `;
+
+            document.body.appendChild(bubble);
+            document.body.appendChild(panel);
+
+            let isTyping = false;
+            let isListening = false;
+            let shouldKeepListening = false; // user-controlled flag
+            let isAutoRestarting = false;   // avoid UI flicker/log spam
+            let recognition = null;
+            let speechSynthesis = window.speechSynthesis;
+            
+            // Global voice recognition for greeting trigger (Hello/Hey/Hi)
+            let globalRecognition = null;
+            let isGlobalListening = false;
+            
+            // Initialize global voice recognition for greeting trigger
+            function initGlobalVoiceRecognition() {
+                if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+                    console.log('Global voice recognition not supported');
+                    return false;
+                }
+
+                globalRecognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+                globalRecognition.continuous = true;
+                globalRecognition.interimResults = false;
+                globalRecognition.lang = 'en-US';
+
+                globalRecognition.onstart = function() {
+                    isGlobalListening = true;
+                    console.log('Global voice recognition started - listening for "Hello AI"');
+                };
+
+                globalRecognition.onresult = function(event) {
+                    const transcript = event.results[event.results.length - 1][0].transcript;
+                    console.log('Voice detected:', transcript);
+                    
+                    const lowerTranscript = transcript.toLowerCase().trim();
+                    console.log('Checking for greeting trigger in:', lowerTranscript);
+                    
+                    // Check for greeting triggers: "hello", "hey", "hi" (optionally followed by "ai")
+                    const greetingTriggered = /^(hello|hey|hi)(\s+ai\b)?\b/.test(lowerTranscript);
+                    if (greetingTriggered) {
+                        console.log('Greeting detected:', transcript);
+                        
+                        // Stop global recognition temporarily
+                        globalRecognition.stop();
+                        
+                        // Open the bot panel
+                        panel.style.display = 'flex';
+                        panel.style.flexDirection = 'column';
+                        setTimeout(() => { document.getElementById('ai-input').focus(); }, 100);
+                        
+                        // Show user message
+                        logMsg(`🎤 ${gettext("You said:")} "${transcript}"`, 'user'); // Translatable string
+                        
+                        // Respond with voice and show interactive options
+                        setTimeout(() => {
+                            const response = gettext("Hello! I heard you call for me. Would you like to continue with AI assistance?"); // Translatable string
+                            logMsg(response, 'bot');
+                            speakText(response);
+                            
+                            // Show interactive options
+                            setTimeout(() => {
+                                appendButtons(gettext('Continue with AI?'), [ // Translatable string
+                                    {label: '🤖 ' + gettext('Yes, Continue with AI'), message: gettext('Yes, I want AI help')}, // Translatable string
+                                    {label: '🛍️ ' + gettext('Shopping Help'), message: gettext('Help me with shopping')}, // Translatable string
+                                    {label: '📊 ' + gettext('Price Analysis'), message: gettext('Tell me about price analysis')}, // Translatable string
+                                    {label: '❓ ' + gettext('General Questions'), message: gettext('I have questions')}, // Translatable string
+                                    {label: '💬 ' + gettext('Just Chat'), message: gettext('Let\'s chat')}, // Translatable string
+                                    {label: '❌ ' + gettext('No Thanks'), message: gettext('No, I\'m good')} // Translatable string
+                                ]);
+                            }, 1500);
+                        }, 500);
+                        
+                        // Restart global recognition after a delay
+                        setTimeout(() => {
+                            if (!isGlobalListening) {
+                                globalRecognition.start();
+                            }
+                        }, 5000);
+                    }
+                };
+
+                globalRecognition.onerror = function(event) {
+                    console.log('Global voice recognition error:', event.error);
+                    if (event.error === 'not-allowed') {
+                        console.log('Microphone permission denied. Please allow microphone access.');
+                    } else if (event.error === 'no-speech') {
+                        console.log('No speech detected, continuing to listen...');
+                    }
+                };
+
+                globalRecognition.onend = function() {
+                    console.log('Global voice recognition ended');
+                    isGlobalListening = false;
+                        // Restart if it wasn\'t manually stopped
+                    setTimeout(() => {
+                        if (!isGlobalListening) {
+                            console.log('Restarting global voice recognition...');
+                            globalRecognition.start();
+                        }
+                    }, 1000);
+                };
+
+                return true;
+            }
+
+            // Interactive features
+            let userProfile = {
+                name: null,
+                role: null,
+                preferences: {},
+                conversationHistory: [],
+                lastInteraction: null
+            };
+            
+            let conversationContext = {
+                currentTopic: null,
+                pendingAction: null,
+                userMood: 'neutral'
+            };
+
+            function logMsg(text, who, isTypingIndicator = false) {
+                const log = document.getElementById('ai-log');
+                
+                if (isTypingIndicator) {
+                    // Remove existing typing indicator
+                    const existingTyping = log.querySelector('.typing-indicator');
+                    if (existingTyping) existingTyping.remove();
+                    
+                    const row = document.createElement('div');
+                    row.className = 'ai-bot-message typing-indicator';
+                    
+                    const bubble = document.createElement('div');
+                    bubble.className = 'ai-bot-typing';
+                    bubble.innerHTML = `🤖 ${gettext('AI is typing...')}`; // Translatable string
+                    
+                    row.appendChild(bubble);
+                    log.appendChild(row);
+                    log.scrollTop = log.scrollHeight;
+                    return;
+                }
+                
+                // Remove typing indicator if it exists
+                const existingTyping = log.querySelector('.typing-indicator');
+                if (existingTyping) existingTyping.remove();
+                
+                const row = document.createElement('div');
+                row.className = 'ai-bot-message';
+                
+                const bubble = document.createElement('div');
+                bubble.className = who === 'bot' ? 'ai-bot-message-bubble ai-bot-message-bot' : 'ai-bot-message-bubble ai-bot-message-user';
+                
+                if (who === 'bot' && text.trim()) {
+                    // Create text span for bot messages
+                    const textSpan = document.createElement('span');
+                    textSpan.textContent = text;
+                    textSpan.style.flex = '1';
+                    textSpan.style.minWidth = '0';
+                    
+                    // Create voice button
+                    const voiceBtn = document.createElement('button');
+                    voiceBtn.className = 'ai-bot-voice-btn';
+                    voiceBtn.innerHTML = '🔊';
+                    voiceBtn.title = gettext('Read message aloud'); // Translatable string
+                    voiceBtn.onclick = () => speakText(text);
+                    
+                    bubble.appendChild(textSpan);
+                    bubble.appendChild(voiceBtn);
+                } else {
+                bubble.textContent = text;
+                }
+                
+                row.appendChild(bubble);
+                log.appendChild(row);
+                log.scrollTop = log.scrollHeight;
+            }
+
+            function appendButtons(title, buttons){
+                const log = document.getElementById('ai-log');
+                const wrap = document.createElement('div');
+                wrap.className = 'ai-bot-message';
+                const container = document.createElement('div');
+                container.className = 'ai-bot-message-bubble ai-bot-message-bot';
+                container.style.padding = '10px';
+                const heading = document.createElement('div');
+                heading.style.fontWeight = '600';
+                heading.style.marginBottom = '8px';
+                heading.textContent = title;
+                const btnRow = document.createElement('div');
+                btnRow.style.display = 'flex';
+                btnRow.style.flexWrap = 'wrap';
+                btnRow.style.gap = '8px';
+                buttons.forEach(b => {
+                    const btn = document.createElement('button');
+                    btn.textContent = b.label;
+                    btn.className = 'quick-tip';
+                    btn.style.borderRadius = '18px';
+                    btn.style.background = '#e8f0fe';
+                    btn.style.color = '#1a73e8';
+                    btn.setAttribute('data-action', b.action || 'link');
+                    if (b.href) btn.setAttribute('data-href', b.href);
+                    if (b.message) btn.setAttribute('data-message', b.message);
+                    btnRow.appendChild(btn);
+                });
+                container.appendChild(heading);
+                container.appendChild(btnRow);
+                wrap.appendChild(container);
+                log.appendChild(wrap);
+                log.scrollTop = log.scrollHeight;
+            }
+
+            // Conversational flows for step-by-step Login/Register
+            const convo = { state: null, role: null, buffer: {}, lastRole: null };
+
+            function startConvo(flow){
+                convo.state = flow; // e.g., 'customer_register', 'shopkeeper_login', 'delivery_register'
+                convo.buffer = {};
+                if(flow.endsWith('_login')){
+                    logMsg(gettext('Please enter your email:'), 'bot'); // Translatable string
+                } else if(flow.endsWith('_register')){
+                    if(flow.startsWith('customer')) logMsg(gettext('Let\'s create your customer account. What\'s your full name?'), 'bot'); // Translatable string
+                    if(flow.startsWith('shopkeeper')) logMsg(gettext('Let\'s create your shopkeeper account. What\'s your shop name?'), 'bot'); // Translatable string
+                    if(flow.startsWith('delivery')) logMsg(gettext('Let\'s create your delivery partner account. What\'s your full name?'), 'bot'); // Translatable string
+                }
+            }
+            
+            // Text command navigation like "open dashboard", "customer orders"
+            function navigateShortcut(inputText){
+                const t = inputText.trim().toLowerCase();
+                const has = (w) => t.includes(w);
+
+                let role = null;
+                if(has('shopkeeper')) role = 'shopkeeper';
+                else if(has('customer')) role = 'customer';
+                else if(has('delivery')) role = 'delivery';
+                else if(convo.lastRole) role = convo.lastRole;
+
+                const wantsDashboard = has('dashboard') || has('open dashboard') || (has('open') && has('home'));
+                const wantsOrders = has('orders') || has('my orders') || has('view orders');
+                const wantsCart = has('cart') || has('my cart');
+                const wantsProducts = has('products') || has('browse') || has('shop') || has('view products');
+                const wantsAddProduct = has('add product') || (has('add') && has('product'));
+                const wantsLogin = has('login') || has('log in');
+                const wantsRegister = has('register') || has('sign up');
+
+                if(role === 'shopkeeper'){
+                    if(wantsDashboard) return '/shopkeeper/dashboard/';
+                    if(wantsAddProduct) return '/shopkeeper/dashboard/';
+                    if(wantsProducts) return '/shopkeeper/dashboard/';
+                    if(wantsOrders) return '/shopkeeper/dashboard/';
+                    if(wantsLogin) return '/shopkeeper/login/';
+                    if(wantsRegister) return '/shopkeeper/register/';
+                }
+                if(role === 'customer'){
+                    if(wantsDashboard || wantsProducts) return '/customer/dashboard/';
+                    if(wantsOrders) return '/customer/orders/';
+                    if(wantsCart) return '/customer/cart/';
+                    if(wantsLogin) return '/customer/login/';
+                    if(wantsRegister) return '/customer/register/';
+                }
+                if(role === 'delivery'){
+                    if(wantsDashboard) return '/delivery/dashboard/';
+                    if(wantsLogin) return '/delivery/login/';
+                    if(wantsRegister) return '/delivery/register/';
+                }
+
+                if(wantsDashboard){ return '/'; }
+                return null;
+            }
+
+            function handleNavigation(url, inputText){
+                if(!url) return false;
+                
+                const t = inputText.trim().toLowerCase();
+                const has = (w) => t.includes(w);
+                
+                // Check if we need to open specific sections after navigation
+                if(url.includes('/shopkeeper/dashboard/')) {
+                    // Store the intended action to trigger after page load
+                    sessionStorage.setItem('shopkeeperAction', 
+                        has('products') ? 'showProducts' : 
+                        has('orders') ? 'showOrders' : 
+                        has('add product') ? 'scrollToAddProduct' : 'none'
+                    );
+                }
+                
+                window.location.href = url;
+                return true;
+            }
+
+            async function handleConvoInput(text){
+                const t = text.trim();
+                if(!convo.state) return false;
+
+                // CUSTOMER FLOWS
+                if(convo.state === 'customer_login'){
+                    if(!convo.buffer.email){ convo.buffer.email = t; logMsg(gettext('Enter your password:'), 'bot'); return true; } // Translatable string
+                    if(!convo.buffer.password){ convo.buffer.password = t; }
+                    const res = await fetch('/api/customer/login/', {method:'POST', headers:{'Content-Type':'application/json','X-CSRFToken':getCookie('csrftoken')}, body: JSON.stringify(convo.buffer)});
+                    const data = await res.json();
+                    logMsg(data.success ? `Logged in as ${data.customer.name}` : `${gettext('Login failed:')} ${data.error||gettext('Unknown error')}`,'bot'); // Translatable string
+                    if(data.success){ showPostAuthMenu('customer'); }
+                    convo.state = null; return true;
+                }
+                if(convo.state === 'customer_register'){
+                    if(!convo.buffer.name){ convo.buffer.name = t; logMsg(gettext('Email address:'), 'bot'); return true; } // Translatable string
+                    if(!convo.buffer.email){ convo.buffer.email = t; logMsg(gettext('Phone number:'), 'bot'); return true; } // Translatable string
+                    if(!convo.buffer.phone){ convo.buffer.phone = t; logMsg(gettext('Set a password:'), 'bot'); return true; } // Translatable string
+                    if(!convo.buffer.password){ convo.buffer.password = t; }
+                    const res = await fetch('/api/customer/register/', {method:'POST', headers:{'Content-Type':'application/json','X-CSRFToken':getCookie('csrftoken')}, body: JSON.stringify(convo.buffer)});
+                    const data = await res.json();
+                    logMsg(data.success ? `Registered and logged in as ${data.customer.name}` : `${gettext('Register failed:')} ${data.error||gettext('Unknown error')}`,'bot'); // Translatable string
+                    if(data.success){ showPostAuthMenu('customer'); }
+                    convo.state = null; return true;
+                }
+
+                // SHOPKEEPER FLOWS
+                if(convo.state === 'shopkeeper_login'){
+                    if(!convo.buffer.email){ convo.buffer.email = t; logMsg(gettext('Enter your password:'), 'bot'); return true; } // Translatable string
+                    if(!convo.buffer.password){ convo.buffer.password = t; }
+                    const res = await fetch('/api/shopkeeper/login/', {method:'POST', headers:{'Content-Type':'application/json','X-CSRFToken':getCookie('csrftoken')}, body: JSON.stringify(convo.buffer)});
+                    const data = await res.json();
+                    logMsg(data.success ? `Logged in as ${data.shopkeeper.name}` : `${gettext('Login failed:')} ${data.error||gettext('Unknown error')}`,'bot'); // Translatable string
+                    if(data.success){ showPostAuthMenu('shopkeeper'); }
+                    convo.state = null; return true;
+                }
+                if(convo.state === 'shopkeeper_register'){
+                    if(!convo.buffer.name){ convo.buffer.name = t; logMsg(gettext('Email address:'), 'bot'); return true; } // Translatable string
+                    if(!convo.buffer.email){ convo.buffer.email = t; logMsg(gettext('Shop address:'), 'bot'); return true; } // Translatable string
+                    if(!convo.buffer.address){ convo.buffer.address = t; logMsg(gettext('Set a password:'), 'bot'); return true; } // Translatable string
+                    if(!convo.buffer.password){ convo.buffer.password = t; }
+                    const res = await fetch('/api/shopkeeper/register/', {method:'POST', headers:{'Content-Type':'application/json','X-CSRFToken':getCookie('csrftoken')}, body: JSON.stringify(convo.buffer)});
+                    const data = await res.json();
+                    logMsg(data.success ? `Registered shopkeeper ${data.shopkeeper.name}` : `${gettext('Register failed:')} ${data.error||gettext('Unknown error')}`,'bot'); // Translatable string
+                    if(data.success){ showPostAuthMenu('shopkeeper'); }
+                    convo.state = null; return true;
+                }
+
+                // DELIVERY FLOWS
+                if(convo.state === 'delivery_login'){
+                    if(!convo.buffer.email){ convo.buffer.email = t; logMsg(gettext('Enter your password:'), 'bot'); return true; } // Translatable string
+                    if(!convo.buffer.password){ convo.buffer.password = t; }
+                    const res = await fetch('/api/delivery/login/', {method:'POST', headers:{'Content-Type':'application/json','X-CSRFToken':getCookie('csrftoken')}, body: JSON.stringify(convo.buffer)});
+                    const data = await res.json();
+                    logMsg(data.success ? `Logged in as ${data.delivery.name}` : `${gettext('Login failed:')} ${data.error||gettext('Unknown error')}`,'bot'); // Translatable string
+                    if(data.success){ showPostAuthMenu('delivery'); }
+                    convo.state = null; return true;
+                }
+                if(convo.state === 'delivery_register'){
+                    if(!convo.buffer.name){ convo.buffer.name = t; logMsg(gettext('Email address:'), 'bot'); return true; } // Translatable string
+                    if(!convo.buffer.email){ convo.buffer.email = t; logMsg(gettext('Vehicle type:'), 'bot'); return true; } // Translatable string
+                    if(!convo.buffer.vehicle){ convo.buffer.vehicle = t; logMsg(gettext('Set a password:'), 'bot'); return true; } // Translatable string
+                    if(!convo.buffer.password){ convo.buffer.password = t; }
+                    const res = await fetch('/api/delivery/register/', {method:'POST', headers:{'Content-Type':'application/json','X-CSRFToken':getCookie('csrftoken')}, body: JSON.stringify(convo.buffer)});
+                    const data = await res.json();
+                    logMsg(data.success ? `Registered delivery partner ${data.delivery.name}` : `${gettext('Register failed:')} ${data.error||gettext('Unknown error')}`,'bot'); // Translatable string
+                    if(data.success){ showPostAuthMenu('delivery'); }
+                    convo.state = null; return true;
+                }
+
+                return false;
+            }
+
+            // Show role-specific buttons after successful auth
+            function showPostAuthMenu(role){
+                const r = role.toLowerCase();
+                if(r==='customer'){
+                    appendButtons(gettext('Customer shortcuts'), [ // Translatable string
+                        {label:gettext('Browse Products'), href:'/customer/dashboard/'}, // Translatable string
+                        {label:gettext('Cart'), href:'/customer/cart/'}, // Translatable string
+                        {label:gettext('Orders'), href:'/customer/orders/'}, // Translatable string
+                        {label:gettext('Logout'), href:'/logout/'} // Translatable string
+                    ]);
+                    return;
+                }
+                if(r==='shopkeeper'){
+                    appendButtons(gettext('Shopkeeper shortcuts'), [ // Translatable string
+                        {label:gettext('Dashboard'), href:'/shopkeeper/dashboard/'}, // Translatable string
+                        {label:gettext('Add Product'), href:'/shopkeeper/dashboard/#add-product'}, // Translatable string
+                        {label:gettext('View Products'), href:'/shopkeeper/dashboard/#products'}, // Translatable string
+                        {label:gettext('View Orders'), href:'/shopkeeper/dashboard/#orders'}, // Translatable string
+                        {label:gettext('Logout'), href:'/logout/'} // Translatable string
+                    ]);
+                    return;
+                }
+                if(r==='delivery'){
+                    appendButtons(gettext('Delivery shortcuts'), [ // Translatable string
+                        {label:gettext('Dashboard'), href:'/delivery/dashboard/'}, // Translatable string
+                        {label:gettext('Logout'), href:'/logout/'} // Translatable string
+                    ]);
+                    return;
+                }
+            }
+            
+            // Hook buttons to start flows
+            function showRoleMenu(role){
+                const r = role.toLowerCase();
+                if(r.includes('shopkeeper')){
+                    appendButtons(gettext('Shopkeeper options'), [ // Translatable string
+                        {label:gettext('Register'), message:'__FLOW__:shopkeeper_register'}, // Translatable string
+                        {label:gettext('Login'), message:'__FLOW__:shopkeeper_login'}, // Translatable string
+                        {label:gettext('Dashboard'), href:'/shopkeeper/dashboard/'}, // Translatable string
+                        {label:gettext('Manage Products'), href:'/shopkeeper/dashboard/'}, // Translatable string
+                        {label:gettext('View Orders'), href:'/shopkeeper/dashboard/'} // Translatable string
+                    ]);
+                    return true;
+                }
+                if(r.includes('customer')){
+                    appendButtons(gettext('Customer options'), [ // Translatable string
+                        {label:gettext('Register'), message:'__FLOW__:customer_register'}, // Translatable string
+                        {label:gettext('Login'), message:'__FLOW__:customer_login'}, // Translatable string
+                        {label:gettext('Browse Products'), href:'/customer/dashboard/'}, // Translatable string
+                        {label:gettext('Cart'), href:'/customer/cart/'}, // Translatable string
+                        {label:gettext('Orders'), href:'/customer/orders/'} // Translatable string
+                    ]);
+                    return true;
+                }
+                if(r.includes('delivery')){
+                    appendButtons(gettext('Delivery partner options'), [ // Translatable string
+                        {label:gettext('Register'), message:'__FLOW__:delivery_register'}, // Translatable string
+                        {label:gettext('Login'), message:'__FLOW__:delivery_login'}, // Translatable string
+                        {label:gettext('Dashboard'), href:'/delivery/dashboard/'} // Translatable string
+                    ]);
+                    return true;
+                }
+                return false;
+            }
+
+            function handleQuickCommands(text){
+                const t = text.toLowerCase();
+                // Logout command
+                if(t.includes('logout') || t.includes('log out') || t.includes('sign out')){
+                    setTimeout(() => {
+                        logMsg(gettext("I'll help you logout from your account. This will take you back to the main page."), 'bot'); // Translatable string
+                        setTimeout(() => {
+                            // Clear any stored user data
+                            userProfile = {
+                                name: '',
+                                role: '',
+                                preferences: {},
+                                conversationHistory: [],
+                                lastInteraction: new Date().toISOString()
+                            };
+                            conversationContext = {
+                                currentTopic: '',
+                                pendingAction: null,
+                                userMood: 'neutral'
+                            };
+                            
+                            // Navigate to logout
+                            window.location.href = '/logout/';
+                        }, 1500);
+                    }, 500);
+                    return true;
+                }
+                // Shopkeeper actions
+                if(t.includes('add product')){ appendButtons(gettext('Add Product'), [{label:gettext('Open Dashboard'), href:'/shopkeeper/dashboard/'}]); return true; } // Translatable string
+                if(t.includes('edit product')){ appendButtons(gettext('Edit Product'), [{label:gettext('Open Dashboard'), href:'/shopkeeper/dashboard/'}]); return true; } // Translatable string
+                if(t.includes('delete product')){ appendButtons(gettext('Delete Product'), [{label:gettext('Open Dashboard'), href:'/shopkeeper/dashboard/'}]); return true; } // Translatable string
+                if(t.includes('orders')){
+                    appendButtons(gettext('Orders'), [ // Translatable string
+                        {label:gettext('Customer Orders'), href:'/customer/orders/'}, // Translatable string
+                        {label:gettext('Shopkeeper Orders'), href:'/shopkeeper/dashboard/'}, // Translatable string
+                        {label:gettext('Delivery Dashboard'), href:'/delivery/dashboard/'} // Translatable string
+                    ]);
+                    return true;
+                }
+                return false;
+            }
+
+            function handleGenericIntents(text){
+                const t = text.toLowerCase();
+                const mentionsLogin = t.includes('login') || t.includes('log in') || t.includes('sign in');
+                const mentionsRegister = t.includes('register') || t.includes('sign up') || t.includes('create account');
+                const mentionsDashboard = t.includes('dashboard') || t.includes('open my dashboard') || (t.includes('open') && t.includes('dashboard'));
+                const mentionsLogout = t.includes('logout') || t.includes('log out') || t.includes('sign out');
+                const mentionsHelp = t.includes('help') || t.includes('assistance') || t.includes('support');
+                const mentionsChat = t.includes('chat') || t.includes('talk') || t.includes('conversation');
+
+                if(!(mentionsLogin || mentionsRegister || mentionsDashboard || mentionsLogout || mentionsHelp || mentionsChat)) return false;
+
+                const inferRole = () => {
+                    if(t.includes('shopkeeper')) return 'shopkeeper';
+                    if(t.includes('customer')) return 'customer';
+                    if(t.includes('delivery')) return 'delivery';
+                    return convo.lastRole || null;
+                };
+
+                const role = inferRole();
+
+                if(mentionsHelp){
+                    setTimeout(() => {
+                        logMsg(gettext("I'm here to help! What do you need assistance with?"), 'bot'); // Translatable string
+                        setTimeout(() => showInteractiveHelp(), 1000);
+                    }, 500);
+                    return true;
+                }
+                
+                if(mentionsChat){
+                    setTimeout(() => {
+                        logMsg(gettext("I'd love to chat! What would you like to talk about?"), 'bot'); // Translatable string
+                        setTimeout(() => {
+                            appendButtons(gettext('What interests you?'), [ // Translatable string
+                                {label: '🛍️ ' + gettext('Shopping'), message: gettext('Tell me about shopping')}, // Translatable string
+                                {label: '📱 ' + gettext('Technology'), message: gettext('Tell me about technology')}, // Translatable string
+                                {label: '🎯 ' + gettext('Tips & Tricks'), message: gettext('Give me some tips')}, // Translatable string
+                                {label: '🤖 ' + gettext('AI & Future'), message: gettext('Tell me about AI')}, // Translatable string
+                                {label: '💡 ' + gettext('Random Facts'), message: gettext('Tell me something interesting')} // Translatable string
+                            ]);
+                        }, 1000);
+                    }, 500);
+                    return true;
+                }
+
+                if(mentionsLogin){
+                    if(role){ startConvo(`${role}_login`); return true; }
+                    appendButtons(gettext('Who do you want to login as?'), [ // Translatable string
+                        {label:gettext('🏪 Shopkeeper Login'), message:'__FLOW__:shopkeeper_login'}, // Translatable string
+                        {label:gettext('🛒 Customer Login'), message:'__FLOW__:customer_login'}, // Translatable string
+                        {label:gettext('🚚 Delivery Login'), message:'__FLOW__:delivery_login'} // Translatable string
+                    ]);
+                    return true;
+                }
+                if(mentionsRegister){
+                    if(role){ startConvo(`${role}_register`); return true; }
+                    appendButtons(gettext('Create account as:'), [ // Translatable string
+                        {label:gettext('🏪 Shopkeeper Register'), message:'__FLOW__:shopkeeper_register'}, // Translatable string
+                        {label:gettext('🛒 Customer Register'), message:'__FLOW__:customer_register'}, // Translatable string
+                        {label:gettext('🚚 Delivery Register'), message:'__FLOW__:delivery_register'} // Translatable string
+                    ]);
+                    return true;
+                }
+                if(mentionsDashboard){
+                    const targetRole = role;
+                    if(targetRole === 'shopkeeper'){ handleNavigation('/shopkeeper/dashboard/', text); return true; }
+                    if(targetRole === 'customer'){ handleNavigation('/customer/dashboard/', text); return true; }
+                    if(targetRole === 'delivery'){ handleNavigation('/delivery/dashboard/', text); return true; }
+                    appendButtons(gettext('Open dashboard for:'), [ // Translatable string
+                        {label:gettext('🏪 Shopkeeper'), href:'/shopkeeper/dashboard/'}, // Translatable string
+                        {label:gettext('🛒 Customer'), href:'/customer/dashboard/'}, // Translatable string
+                        {label:gettext('🚚 Delivery'), href:'/delivery/dashboard/'} // Translatable string
+                    ]);
+                    return true;
+                }
+                if(mentionsLogout){
+                    setTimeout(() => {
+                        logMsg(gettext("I'll help you logout from your account. This will take you back to the main page."), 'bot'); // Translatable string
+                        setTimeout(() => {
+                            // Clear any stored user data
+                            userProfile = {
+                                name: '',
+                                role: '',
+                                preferences: {},
+                                conversationHistory: [],
+                                lastInteraction: new Date().toISOString()
+                            };
+                            conversationContext = {
+                                currentTopic: '',
+                                pendingAction: null,
+                                userMood: 'neutral'
+                            };
+                            
+                            // Navigate to logout
+                            window.location.href = '/logout/';
+                        }, 1500);
+                    }, 500);
+                    return true;
+                }
+                return false;
+            }
+
+            async function sendMessage(message) {
+                if (!message.trim() || isTyping) return;
+                
+            // Check for specific AI trigger phrases (not just any word containing these)
+            const triggerPhrases = ['hello', 'hey', 'hi', 'hello ai', 'hey ai', 'hi ai', 'activate ai', 'wake up ai', 'ai', 'bot'];
+                const isTriggerWord = triggerPhrases.some(phrase => {
+                    const lowerMessage = message.toLowerCase().trim();
+                    // Only trigger for exact matches or when it's the only word
+                    return lowerMessage === phrase.toLowerCase() || 
+                               (phrase === 'ai' && lowerMessage === 'ai') ||
+                               (phrase === 'bot' && lowerMessage === 'bot');
+                });
+                
+                if (isTriggerWord) {
+                    // Add user message
+                    logMsg(message, 'user');
+                    
+                    setTimeout(() => {
+                        logMsg("🤖 " + gettext("AI Assistant activated! I'm here to help you with anything related to Gram Connect. What would you like to know or do?"), 'bot'); // Translatable string
+                        setTimeout(() => {
+                            appendButtons(gettext('How can I assist you?'), [ // Translatable string
+                                {label: gettext('🛍️ Shopping Help'), message: gettext('Help me with shopping')}, // Translatable string
+                                {label: gettext('📊 Price Analysis'), message: gettext('Analyze product prices')}, // Translatable string
+                                {label: gettext('🔍 Find Products'), message: gettext('Help me find products')}, // Translatable string
+                                {label: gettext('📱 App Features'), message: gettext('Tell me about app features')}, // Translatable string
+                                {label: gettext('💬 General Chat'), message: gettext('Just want to chat')}, // Translatable string
+                                {label: gettext('❓ Ask Anything'), message: gettext('I have a question')} // Translatable string
+                            ]);
+                        }, 1500);
+                    }, 500);
+                    return;
+                }
+                
+                // Add user message
+                logMsg(message, 'user');
+                
+                // Update user profile with interaction
+                updateUserProfile({
+                    type: 'user_message',
+                    content: message,
+                    response: null
+                });
+
+                // Check for contextual responses first (basic greetings, name collection)
+                const contextualResponse = getContextualResponse(message);
+                if (contextualResponse) {
+                    setTimeout(() => {
+                        logMsg(translateForLang(contextualResponse.text), 'bot'); // Translation map only contains fallback strings now
+                        
+                        // Handle actions
+                        if (contextualResponse.action === 'ask_name') {
+                            conversationContext.pendingAction = 'ask_name';
+                        } else if (contextualResponse.action === 'show_options') {
+                            conversationContext.pendingAction = null;
+                            setTimeout(() => showInteractiveHelp(), 1000);
+                        } else if (contextualResponse.action === 'help_mode') {
+                            setTimeout(() => showInteractiveHelp(), 1000);
+                        }
+                    }, 500);
+                    return;
+                }
+
+                // Handle specific navigation commands (login/register/dashboard)
+                if (handleGenericIntents(message)){
+                    return;
+                }
+
+                // Handle role menus and quick commands locally
+                if (showRoleMenu(message) || handleQuickCommands(message)){
+                    return;
+                }
+
+                // Handle AI continuation request
+                if (message.toLowerCase().includes(gettext('yes, i want ai help').toLowerCase()) || message.toLowerCase().includes(gettext('continue with ai').toLowerCase())) {
+                    setTimeout(() => {
+                        logMsg("🤖 " + gettext("Excellent! I'm now fully activated and ready to assist you. I can help with shopping, price analysis, orders, and much more. What would you like to explore first?"), 'bot'); // Translatable string
+                        setTimeout(() => {
+                            appendButtons(gettext('AI Assistant Ready! Choose your adventure:'), [ // Translatable string
+                                {label: gettext('🛍️ Shopping Assistant'), message: gettext('Help me shop smart')}, // Translatable string
+                                {label: gettext('📊 Price Intelligence'), message: gettext('Analyze prices for me')}, // Translatable string
+                                {label: gettext('🔍 Product Search'), message: gettext('Find specific products')}, // Translatable string
+                                {label: gettext('📱 App Tutorial'), message: gettext('Teach me the app features')}, // Translatable string
+                                {label: gettext('💬 General AI Chat'), message: gettext('Let\'s have a conversation')}, // Translatable string
+                                {label: gettext('❓ Ask Anything'), message: gettext('I have a question')} // Translatable string
+                            ]);
+                        }, 1500);
+                    }, 500);
+                    return;
+                }
+
+                // Handle interactive conversation starters
+                if (message.toLowerCase().includes(gettext('just want to chat').toLowerCase()) || message.toLowerCase().includes(gettext('just chat').toLowerCase())) {
+                    setTimeout(() => {
+                        logMsg(gettext("I'd love to chat! I'm here to help with anything related to shopping, orders, or just general conversation. What's on your mind?"), 'bot'); // Translatable string
+                        setTimeout(() => {
+                            appendButtons(gettext('What would you like to talk about?'), [ // Translatable string
+                                {label: gettext('🛍️ Shopping Tips'), message: gettext('Tell me about shopping tips')}, // Translatable string
+                                {label: gettext('📱 App Features'), message: gettext('What features does this app have?')}, // Translatable string
+                                {label: gettext('🎯 Recommendations'), message: gettext('Give me some recommendations')}, // Translatable string
+                                {label: gettext('💡 Fun Facts'), message: gettext('Tell me something interesting')}, // Translatable string
+                                {label: gettext('🤖 About You'), message: gettext('Tell me about yourself')} // Translatable string
+                            ]);
+                        }, 1000);
+                    }, 500);
+                    return;
+                }
+                
+                // Show typing indicator
+                isTyping = true;
+                logMsg('', 'bot', true);
+                
+                try {
+                    console.log('Sending message to AI:', message);
+                    console.log('User Profile:', userProfile);
+                    console.log('Context:', conversationContext);
+                    
+                    const response = await fetch('/api/ai/chat/', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': getCookie('csrftoken')
+                        },
+                        body: JSON.stringify({ 
+                            message: message,
+                            userProfile: userProfile,
+                            context: conversationContext,
+                            history: userProfile.conversationHistory || [],
+                            
+                        })
+                    });
+                    
+                    console.log('Response status:', response.status);
+                    console.log('Response ok:', response.ok);
+                    
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    
+                    const data = await response.json();
+                    
+                    // Debug logging
+                    console.log('AI Response Data:', data);
+                    console.log('Response Status:', response.status);
+                    
+                    if (data.success) {
+                        // Remove typing indicator and add AI response
+                        setTimeout(() => {
+                            logMsg(translateForLang(data.response), 'bot');
+                            
+                            // Update user profile with AI response
+                            updateUserProfile({
+                                type: 'ai_response',
+                                content: message,
+                                response: data.response
+                            });
+                            
+                            // Add interactive follow-up suggestions
+                            if (data.suggestions && data.suggestions.length > 0) {
+                                setTimeout(() => {
+                                    const suggestionButtons = data.suggestions.map(suggestion => ({
+                                        label: suggestion,
+                                        message: suggestion
+                                    }));
+                                    appendButtons('💡 ' + gettext('Suggested next steps:'), suggestionButtons); // Translatable string
+                                }, 1500);
+                            } else if (data.response.toLowerCase().includes('help') || data.response.toLowerCase().includes('assist')) {
+                                setTimeout(() => {
+                                    appendButtons(gettext('Need more help?'), [ // Translatable string
+                                        {label: gettext('🔄 Try Again'), message: gettext('I need to try that again')}, // Translatable string
+                                        {label: gettext('❓ Different Question'), message: gettext('I have a different question')}, // Translatable string
+                                        {label: gettext('👤 Human Support'), message: gettext('I need human support')}, // Translatable string
+                                        {label: gettext('📞 Contact Us'), message: gettext('How can I contact support?')} // Translatable string
+                                    ]);
+                                }, 2000);
+                            }
+                        }, 500);
+                    } else {
+                        logMsg(gettext('Sorry, I encountered an error. Please try again.'), 'bot'); // Translatable string
+                        setTimeout(() => {
+                            appendButtons(gettext('Let me help you differently:'), [ // Translatable string
+                                {label: gettext('🔄 Try Again'), message: gettext('Try again')}, // Translatable string
+                                {label: gettext('❓ Ask Differently'), message: gettext('Ask differently')}, // Translatable string
+                                {label: gettext('👤 Get Help'), message: gettext('I need help')} // Translatable string
+                            ]);
+                        }, 1000);
+                    }
+                } catch (error) {
+                    console.error('AI Chat Error:', error);
+                    
+                    // Provide a fallback response based on the message
+                    let fallbackResponse = '';
+                    const lowerMessage = message.toLowerCase();
+                    
+                        if (lowerMessage.includes(gettext('no thanks').toLowerCase()) || lowerMessage.includes(gettext('no, I\'m good').toLowerCase())) { // Translatable string check
+                        fallbackResponse = gettext("No problem! I'm here whenever you need help. Feel free to ask me anything about shopping, orders, or the platform anytime!"); // Translatable string
+                    } else if (lowerMessage.includes(gettext('help me with shopping').toLowerCase()) || lowerMessage.includes(gettext('shopping help').toLowerCase())) { // Translatable string check
+                        fallbackResponse = gettext("I'd love to help you with shopping! You can browse products, check prices, and add items to your cart. Would you like me to show you how to navigate the shopping features?"); // Translatable string
+                    } else if (lowerMessage.includes(gettext('price analysis').toLowerCase()) || lowerMessage.includes(gettext('analyze prices').toLowerCase())) { // Translatable string check
+                        fallbackResponse = gettext("Great! I can help you analyze product prices and find the best deals. The price history feature shows trends and helps you make smart buying decisions. Would you like to learn more about it?"); // Translatable string
+                    } else if (lowerMessage.includes(gettext('questions').toLowerCase()) || lowerMessage.includes(gettext('ask anything').toLowerCase())) { // Translatable string check
+                        fallbackResponse = gettext("I'm here to answer any questions you have! Whether it's about shopping, orders, account management, or how to use the platform - just ask away!"); // Translatable string
+                    } else if (lowerMessage.includes(gettext('chat').toLowerCase()) || lowerMessage.includes(gettext('conversation').toLowerCase())) { // Translatable string check
+                        fallbackResponse = gettext("I'd love to chat! I'm your AI assistant and I'm here to help with anything related to this e-commerce platform. What would you like to talk about?"); // Translatable string
+                    } else {
+                        fallbackResponse = gettext("I'm here to help! I can assist you with shopping, orders, price analysis, and navigating the platform. What would you like to know?"); // Translatable string
+                    }
+                    
+                    logMsg(translateForLang(fallbackResponse), 'bot'); // Translation map only contains fallback strings now
+                    setTimeout(() => {
+                        appendButtons(gettext('How can I help you?'), [ // Translatable string
+                            {label: gettext('🛍️ Shopping'), message: gettext('Help me with shopping')}, // Translatable string
+                            {label: gettext('📊 Price Analysis'), message: gettext('Tell me about price analysis')}, // Translatable string
+                            {label: gettext('❓ Questions'), message: gettext('I have questions')}, // Translatable string
+                            {label: gettext('💬 Chat'), message: gettext('Let\'s chat')}, // Translatable string
+                            {label: gettext('🔄 Try Again'), message: gettext('Try again')} // Translatable string
+                        ]);
+                    }, 1000);
+                } finally {
+                    isTyping = false;
+                }
+            }
+            
+            function getCookie(name) {
+                let cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    const cookies = document.cookie.split(';');
+                    for (let i = 0; i < cookies.length; i++) {
+                        const cookie = cookies[i].trim();
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+
+            // Simple translation helper for selected language (currently Telugu te-IN)
+            function translateForLang(text) {
+                try {
+                    // Only translate the specific strings that are part of the fallback/contextual responses and do not use gettext
+                    const map = new Map([
+                        [gettext("No problem! I'm here whenever you need help. Feel free to ask me anything about shopping, orders, or the platform anytime!"), "పరవాలేదు! మీకు అవసరం ఉన్నప్పుడు నేను ఇక్కడే ఉంటాను. షాపింగ్, ఆర్డర్లు లేదా ప్లాట్‌ఫాం గురించి ఏదైనా అడగండి!"],
+                        [gettext("I'd love to help you with shopping! You can browse products, check prices, and add items to your cart. Would you like me to show you how to navigate the shopping features?"), "షాపింగ్‌లో మీకు సహాయం చేయడానికి ఆనందంగా ఉంది! మీరు ఉత్పత్తులను బ్రౌజ్ చేయవచ్చు, ధరలను చూడవచ్చు, కార్ట్‌లో జోడించవచ్చు. షాపింగ్ ఫీచర్లను ఎలా ఉపయోగించాలో చూపాలా?"],
+                        [gettext("Great! I can help you analyze product prices and find the best deals. The price history feature shows trends and helps you make smart buying decisions. Would you like to learn more about it?"), "బాగుంది! ఉత్పత్తుల ధరలను విశ్లేషించడంలో మరియు ఉత్తమ డీల్స్ కనుగొనడంలో నేను సహాయం చేస్తాను. ధరల చరిత్ర ఫీచర్ ట్రెండ్‌లను చూపిస్తుంది మరియు మంచి కొనుగోలు నిర్ణయాలకు ఉపయోగపడుతుంది. దీని గురించి మరింత తెలుసుకోవాలా?"],
+                        [gettext("I'm here to answer any questions you have! Whether it's about shopping, orders, account management, or how to use the platform - just ask away!"), "మీరు అడిగే ఏ ప్రశ్నకైనా సమాధానం చెప్పేందుకు నేను ఇక్కడ ఉన్నాను! షాపింగ్, ఆర్డర్లు, అకౌంట్ మేనేజ్‌మెంట్ లేదా ప్లాట్‌ఫామ్ వాడకం గురించైనా – అడగండి!"],
+                        [gettext("I'd love to chat! I'm your AI assistant and I'm here to help with anything related to this e-commerce platform. What would you like to talk about?"), "మాట్లాడేందుకు సిద్ధంగా ఉన్నాను! నేను మీ AI అసిస్టెంట్‌ని, ఈ ఇ-కామర్స్ ప్లాట్‌ఫాం‌కు సంబంధించిన ఏ విషయంలోనైనా మీకు సహాయం చేయడానికి ఇక్కడ ఉన్నాను. ఏ విషయంపై మాట్లాడాలనుకుంటున్నారు?"],
+                        [gettext("I'm here to help! I can assist you with shopping, orders, price analysis, and navigating the platform. What would you like to know?"), "నేను సహాయం చేయడానికి ఇక్కడ ఉన్నాను! షాపింగ్, ఆర్డర్లు, ధర విశ్లేషణ మరియు ప్లాట్‌ఫామ్ ను నావిగేట్ చేయడంలో మీకు సహాయం చేస్తాను. మీకు ఏమి తెలుసుకోవాలి?"],
+                        [gettext("Hi! I'm ready. Ask me anything about the platform."), "హాయ్! నేను సిద్ధంగా ఉన్నాను. ప్లాట్‌ఫాం గురించి ఏదైనా అడగండి."],
+                        [gettext("Hello! I'm your AI assistant. What's your name?"), "హలో! నేను మీ AI అసిస్టెంట్‌ని. మీ పేరేమిటి?"],
+                        [gettext("I understand you're feeling frustrated. Let me help you resolve this quickly. What's the issue?"), "మీరు కలత చెందినట్లు నాకు అర్థమైంది. నేను దీన్ని త్వరగా పరిష్కరించడానికి సహాయం చేస్తాను. సమస్య ఏమిటి?"],
+                        [gettext("That's wonderful! I love your positive energy! How can I make your day even better?"), "అద్భుతం! మీ సానుకూల శక్తి నాకు నచ్చింది! మీ రోజును మరింత మెరుగ్గా ఎలా చేయగలను?"],
+                        [gettext("Let me tell you about Gram Connect! It's a comprehensive e-commerce platform that connects customers, shopkeepers, and delivery partners. Would you like to know more about any specific feature?"), "గ్రామ్ కనెక్ట్ గురించి చెప్పనివ్వండి! ఇది కస్టమర్‌లు, షాప్‌కీపర్‌లు మరియు డెలివరీ భాగస్వాములను కనెక్ట్ చేసే సమగ్ర ఇ-కామర్స్ ప్లాట్‌ఫామ్. ఏదైనా ప్రత్యేక ఫీచర్ గురించి మరింత తెలుసుకోవాలనుకుంటున్నారా?"],
+                        [gettext("Nice to meet you, %s! I'm here to help you with shopping, orders, and more. What would you like to do?").replace('%s', userProfile.name), `మిమ్మల్ని కలవడం ఆనందంగా ఉంది, ${userProfile.name}! షాపింగ్, ఆర్డర్లు మరియు మరిన్నింటికి నేను సహాయం చేయడానికి ఇక్కడ ఉన్నాను. మీరు ఏమి చేయాలనుకుంటున్నారు?`]
+                    ]);
+
+                    if (!selectedLang || !selectedLang.toLowerCase().startsWith('te')) return text;
+                    
+                    // Prioritize getting the translation from the Django i18n system via gettext()
+                    // If the text is not in the hardcoded map, assume it's a dynamic response from the API or a string already marked with gettext
+                    const translatedText = map.get(text) || gettext(text);
+                    
+                    return translatedText;
+
+                } catch (e) { return text; }
+            }
+
+            // Voice intent shortcuts (client-side navigation)
+            function handleVoiceCommand(transcript) {
+                const t = (transcript || '').toLowerCase().trim();
+                // Open Customer Login
+                if (
+                    (t.includes(gettext('customer').toLowerCase()) && (t.includes(gettext('login').toLowerCase()) || t.includes(gettext('log in').toLowerCase()) || t.includes(gettext('sign in').toLowerCase()))) || // Translatable string check
+                    t.includes(gettext('open customer login').toLowerCase()) || // Translatable string check
+                    t.includes(gettext('go to customer login').toLowerCase()) || // Translatable string check
+                    t.includes(gettext('customer login page').toLowerCase()) // Translatable string check
+                ) {
+                    logMsg(gettext('Opening Customer Login…'), 'bot'); // Translatable string
+                    window.location.href = '/customer/login/';
+                    return true;
+                }
+                return false;
+            }
+
+            // Voice functionality
+            function initSpeechRecognition() {
+                if ('webkitSpeechRecognition' in window) {
+                    recognition = new webkitSpeechRecognition();
+                } else if ('SpeechRecognition' in window) {
+                    recognition = new SpeechRecognition();
+                } else {
+                    console.log('Speech recognition not supported');
+                    return false;
+                }
+
+                recognition.continuous = true;
+                recognition.interimResults = false;
+                recognition.lang = 'en-US';
+
+                recognition.onstart = function() {
+                    isListening = true;
+                    document.getElementById('ai-voice').textContent = '🔴';
+                    document.getElementById('ai-voice').title = gettext('Listening... Click to stop'); // Translatable string
+                    if (!isAutoRestarting) {
+                        logMsg('🎤 ' + gettext('Listening... Speak now!'), 'bot'); // Translatable string
+                    }
+                    isAutoRestarting = false;
+                };
+
+                recognition.onresult = function(event) {
+                    const transcript = event.results[0][0].transcript;
+                    document.getElementById('ai-input').value = transcript;
+                    
+                    // Show that we're processing the voice input
+                    logMsg(`🎤 ${gettext("You said:")} "${transcript}"`, 'user'); // Translatable string
+                    
+                    // Automatically send the message after speech recognition
+                    setTimeout(() => {
+                        // If a voice shortcut is recognized, navigate and skip sending to AI
+                        if (handleVoiceCommand(transcript)) {
+                            return;
+                        }
+                        sendMessage(transcript);
+                        document.getElementById('ai-input').value = '';
+                    }, 500);
+                };
+
+                recognition.onerror = function(event) {
+                    console.log('Speech recognition error:', event.error);
+                    // Auto-recover from common transient errors only if user wants to keep listening
+                    if (shouldKeepListening && (event.error === 'no-speech' || event.error === 'network' || event.error === 'aborted')) {
+                        try { isAutoRestarting = true; recognition.start(); } catch (e) { console.log('Retry start failed:', e); }
+                        return;
+                    }
+                    stopListening();
+                };
+
+                recognition.onend = function() {
+                    if (shouldKeepListening) {
+                        try { isAutoRestarting = true; recognition.start(); } catch (e) { console.log('Auto-restart failed:', e); }
+                        return;
+                    }
+                    stopListening();
+                    if (document.getElementById('ai-input').value.trim()) {
+                        logMsg('🔄 ' + gettext('Processing your voice input...'), 'bot'); // Translatable string
+                    }
+                };
+
+                return true;
+            }
+
+            function startListening() {
+                if (!recognition) {
+                    if (!initSpeechRecognition()) {
+                        logMsg(gettext('Voice input is not supported in your browser. Please use text input.'), 'bot'); // Translatable string
+                        return;
+                    }
+                }
+
+                if (isListening) {
+                    stopListening();
+                    return;
+                }
+
+                try {
+                    shouldKeepListening = true;
+                    isAutoRestarting = false;
+                    // Ensure recognizer uses current language
+                try { recognition.lang = 'en-US'; } catch (e) {}
+                    recognition.start();
+                } catch (error) {
+                    console.log('Error starting speech recognition:', error);
+                    stopListening();
+                }
+            }
+
+            function stopListening() {
+                shouldKeepListening = false;
+                if (recognition && isListening) {
+                    try { recognition.stop(); } catch (e) {}
+                }
+                isListening = false;
+                document.getElementById('ai-voice').textContent = '🎤';
+                document.getElementById('ai-voice').title = gettext('Voice Input'); // Translatable string
+            }
+
+            function speakText(text) {
+                if (!speechSynthesis) {
+                    console.log('Speech synthesis not supported');
+                    return;
+                }
+
+                // Cancel any ongoing speech
+                speechSynthesis.cancel();
+
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.rate = 0.9;
+                utterance.pitch = 1;
+                utterance.volume = 0.8;
+                try { utterance.lang = 'en-US'; } catch (e) {}
+
+                // Try to use a female voice if available
+                const voices = speechSynthesis.getVoices();
+                const femaleVoice = voices.find(voice => 
+                    (voice.lang || '').toLowerCase() === 'en-us' &&
+                    ['female','samantha','karen','victoria','zira','heera','leela'].some(p => (voice.name || '').toLowerCase().includes(p))
+                ) || voices.find(voice => (voice.lang || '').toLowerCase() === 'en-us') || voices[0];
+                
+                if (femaleVoice) {
+                    utterance.voice = femaleVoice;
+                }
+
+                speechSynthesis.speak(utterance);
+            }
+
+            // Interactive greeting system
+            function getInteractiveGreeting() {
+                const hour = new Date().getHours();
+                const timeOfDay = hour < 12 ? gettext('morning') : hour < 18 ? gettext('afternoon') : gettext('evening'); // Translatable strings
+                
+                const greetings = [
+                    gettext(`Good ${timeOfDay}! I'm your AI shopping assistant. How can I help you today?`), // Translatable string
+                    gettext("Hello there! Welcome to Gram Connect. What brings you here today?"), // Translatable string
+                    gettext("Hi! I'm here to make your shopping experience amazing. What can I do for you?"), // Translatable string
+                    gettext("Hey! Ready to explore our platform? I can help you with anything you need!"), // Translatable string
+                    gettext(`Good ${timeOfDay}! I'm excited to help you today. What's on your mind?`) // Translatable string
+                ];
+                
+                return greetings[Math.floor(Math.random() * greetings.length)];
+            }
+
+            // Enhanced conversation tracking
+            function updateUserProfile(interaction) {
+                userProfile.conversationHistory.push({
+                    timestamp: new Date(),
+                    type: interaction.type,
+                    content: interaction.content,
+                    response: interaction.response
+                });
+                
+                // Keep only last 10 interactions
+                if (userProfile.conversationHistory.length > 10) {
+                    userProfile.conversationHistory.shift();
+                }
+                
+                userProfile.lastInteraction = new Date();
+            }
+
+            // Smart response based on context
+            function getContextualResponse(userMessage) {
+                const message = userMessage.toLowerCase();
+                
+                // Check for greetings
+                if (message.includes('hello') || message.includes('hi') || message.includes('hey')) {
+                    return {
+                        text: userProfile.name ? 
+                            gettext(`Hello ${userProfile.name}! Great to see you again! How can I help you today?`) : // Translatable string
+                            gettext("Hello! I'm your AI assistant. What's your name?"), // Translatable string
+                        action: userProfile.name ? null : 'ask_name'
+                    };
+                }
+                
+                // Check for name responses
+                if (conversationContext.pendingAction === 'ask_name' && !message.includes('login') && !message.includes('register')) {
+                    userProfile.name = userMessage.trim();
+                    return {
+                        text: interpolate(gettext("Nice to meet you, %s! I'm here to help you with shopping, orders, and more. What would you like to do?"), [userProfile.name]), // Translatable string with interpolation
+                        action: 'show_options'
+                    };
+                }
+                
+                // Check for mood indicators
+                if (message.includes('frustrated') || message.includes('angry') || message.includes('annoyed')) {
+                    conversationContext.userMood = 'frustrated';
+                    return {
+                        text: gettext("I understand you're feeling frustrated. Let me help you resolve this quickly. What's the issue?"), // Translatable string
+                        action: 'help_mode'
+                    };
+                }
+                
+                if (message.includes('excited') || message.includes('happy') || message.includes('great')) {
+                    conversationContext.userMood = 'happy';
+                    return {
+                        text: gettext("That's wonderful! I love your positive energy! How can I make your day even better?"), // Translatable string
+                        action: null
+                    };
+                }
+                
+                return null;
+            }
+            
+            // Helper function for string interpolation (used in getContextualResponse)
+            function interpolate(format, values, named) {
+                if (named) {
+                    return format.replace(/%\(\w+\)s/g, function(match){return values[match.slice(2,-2)];});
+                }
+                return format.replace(/%s/g, function(){return values.shift();});
+            }
+
+            // Interactive help system
+            function showInteractiveHelp() {
+                appendButtons(gettext('How can I help you today?'), [ // Translatable string
+                    {label: gettext('🛍️ Browse Products'), message: gettext('I want to browse products')}, // Translatable string
+                    {label: gettext('📦 Track Orders'), message: gettext('I want to track my orders')}, // Translatable string
+                    {label: gettext('💳 Payment Help'), message: gettext('I need help with payments')}, // Translatable string
+                    {label: gettext('🚚 Delivery Info'), message: gettext('Tell me about delivery')}, // Translatable string
+                    {label: gettext('👤 Account Help'), message: gettext('I need account help')}, // Translatable string
+                    {label: gettext('❓ General Questions'), message: gettext('I have general questions')} // Translatable string
+                ]);
+            }
+
+            // Enhanced conversation starter
+            function startInteractiveConversation() {
+                const greeting = getInteractiveGreeting();
+                logMsg(greeting, 'bot');
+                
+                setTimeout(() => {
+                    appendButtons(gettext('What would you like to do?'), [ // Translatable string
+                        {label: gettext('🛒 Shop as Customer'), message: gettext('I want to shop as a customer')}, // Translatable string
+                        {label: gettext('🏪 Manage Shop'), message: gettext('I want to manage my shop')}, // Translatable string
+                        {label: gettext('🚚 Delivery Partner'), message: gettext('I want to work as delivery partner')}, // Translatable string
+                        {label: gettext('📊 Price Analysis'), message: gettext('Tell me about price history features')}, // Translatable string
+                        {label: gettext('❓ Need Help'), message: gettext('I need help with something')}, // Translatable string
+                        {label: gettext('💬 Just Chat'), message: gettext('I just want to chat')} // Translatable string
+                    ]);
+                }, 1000);
+            }
+
+            // Enhanced contextual responses for project-specific queries
+            function handleProjectSpecificQueries(message) {
+                const lower = message.toLowerCase();
+                
+                // Only handle very specific local queries that need immediate response
+                // Most project-specific queries should go to the enhanced AI system
+                
+                // Platform information queries
+                if (lower.includes('what is gram connect') || lower.includes('about this platform')) {
+                    setTimeout(() => {
+                        logMsg(gettext("Let me tell you about Gram Connect! It's a comprehensive e-commerce platform that connects customers, shopkeepers, and delivery partners. Would you like to know more about any specific feature?"), 'bot'); // Translatable string
+                        setTimeout(() => {
+                            appendButtons(gettext('Learn more about:'), [ // Translatable string
+                                {label: gettext('🛒 Customer Features'), message: gettext('Tell me about customer features')}, // Translatable string
+                                {label: gettext('🏪 Shopkeeper Tools'), message: gettext('Tell me about shopkeeper tools')}, // Translatable string
+                                {label: gettext('🚚 Delivery System'), message: gettext('Tell me about delivery features')}, // Translatable string
+                                {label: gettext('📊 Price History'), message: gettext('Tell me about price analysis')}, // Translatable string
+                                {label: gettext('🤖 AI Features'), message: gettext('Tell me about AI capabilities')} // Translatable string
+                            ]);
+                        }, 1500);
+                    }, 500);
+                    return true;
+                }
+                
+                return false;
+            }
+        
+            bubble.addEventListener('click', () => {
+                const show = panel.style.display !== 'flex';
+                panel.style.display = show ? 'flex' : 'none';
+                if (show) {
+                    panel.style.flexDirection = 'column';
+                    setTimeout(() => { document.getElementById('ai-input').focus(); }, 100);
+                    
+                    // Show welcome message if this is the first time opening
+                    if (!window.botOpened) {
+                        window.botOpened = true;
+                        setTimeout(() => {
+                            logMsg(gettext("👋 Welcome! I'm your AI assistant. Say 'AI' or 'bot' anytime to activate me! I can help with shopping, orders, and more."), 'bot'); // Translatable string
+                            setTimeout(() => {
+                                appendButtons(gettext('Try saying:'), [ // Translatable string
+                                    {label: '🤖 AI', message: 'AI'},
+                                    {label: gettext('🛒 Show Products'), message: gettext('Show me products')}, // Translatable string
+                                    {label: gettext('📊 Price Analysis'), message: gettext('Tell me about price analysis')}, // Translatable string
+                                    {label: gettext('❓ Help'), message: gettext('Help me')} // Translatable string
+                                ]);
+                            }, 1500);
+                        }, 500);
+                    }
+                }
+            });
+            panel.querySelector('#ai-close').addEventListener('click', () => { panel.style.display = 'none'; });
+            
+            // Voice button event listener
+            document.getElementById('ai-voice').addEventListener('click', startListening);
+        
+            // Enhance quick-tip handler to start flows when message starts with __FLOW__
+            document.addEventListener('click', (e) => {
+                if (e.target.classList.contains('quick-tip')) {
+                    const href = e.target.getAttribute('data-href');
+                    const message = e.target.getAttribute('data-message');
+                    const tip = e.target.getAttribute('data-tip');
+                    if (href) { window.location.href = href; return; }
+                    const m = message || tip;
+                    if(m){
+                            if(m.startsWith('__FLOW__')){
+                            const flow = m.replace('__FLOW__:', '');
+                            startConvo(flow);
+                        } else {
+                            sendMessage(m);
+                        }
+                    }
+                }
+            });
+
+            // Intercept user input to feed into conversation or open shortcuts
+            document.getElementById('ai-send').addEventListener('click', async () => {
+                const input = document.getElementById('ai-input');
+                const text = input.value.trim();
+                if (!text) return;
+                // Check for navigation shortcuts first
+                const nav = navigateShortcut(text);
+                if(nav){ logMsg(text,'user'); if(handleNavigation(nav, text)) { input.value = ''; return; } }
+                if (await handleConvoInput(text)) { input.value = ''; return; }
+                sendMessage(text);
+                input.value = '';
+            });
+            document.getElementById('ai-input').addEventListener('keydown', async (e) => {
+                if (e.key === 'Enter') {
+                const input = document.getElementById('ai-input');
+                const text = input.value.trim();
+                    if (!text) return;
+                    const nav = navigateShortcut(text);
+                    if(nav){ logMsg(text,'user'); if(handleNavigation(nav, text)) { input.value = ''; return; } }
+                    if (await handleConvoInput(text)) { input.value = ''; return; }
+                    sendMessage(text);
+                    input.value = '';
+                }
+            });
+        
+            panel.style.display = 'none';
+            
+            // Start with interactive conversation
+            setTimeout(() => {
+                startInteractiveConversation();
+            }, 500);
+
+            // Add proactive suggestions based on user behavior
+            function addProactiveSuggestions() {
+                // Check if user has been inactive for a while
+                const lastInteraction = userProfile.lastInteraction;
+                if (lastInteraction) {
+                    const timeSinceLastInteraction = new Date() - new Date(lastInteraction);
+                    const minutesSinceLastInteraction = timeSinceLastInteraction / (1000 * 60);
+                    
+                    if (minutesSinceLastInteraction > 5 && minutesSinceLastInteraction < 10) {
+                        setTimeout(() => {
+                            logMsg(gettext("I notice you've been quiet for a while. Is there anything I can help you with?"), 'bot'); // Translatable string
+                            setTimeout(() => {
+                                appendButtons(gettext('Quick Actions:'), [ // Translatable string
+                                    {label: gettext('🛒 Browse Products'), message: gettext('Show me products')}, // Translatable string
+                                    {label: gettext('📊 Price Analysis'), message: gettext('Tell me about price features')}, // Translatable string
+                                    {label: gettext('❓ Get Help'), message: gettext('I need help')}, // Translatable string
+                                    {label: gettext('💬 Chat'), message: gettext('Let\'s chat')} // Translatable string
+                                ]);
+                            }, 1000);
+                        }, 2000);
+                    }
+                }
+            }
+
+            // Add periodic proactive suggestions
+            setInterval(addProactiveSuggestions, 300000); // Every 5 minutes
+            
+            // Initialize global voice recognition for greeting trigger (disabled)
+            setTimeout(() => {
+                console.log('Attempting to initialize global voice recognition...');
+                
+                    // Check if we\'re on HTTPS or localhost
+                const isSecure = window.location.protocol === 'https:' || 
+                                window.location.hostname === 'localhost' || 
+                                window.location.hostname === '127.0.0.1';
+                
+                if (!isSecure) {
+                    console.log('Voice recognition requires HTTPS or localhost. Current protocol:', window.location.protocol);
+                }
+                
+                // Disabled global voice recognition and its popup indicator
+                if (false) {
+                    console.log('Global voice recognition initialized successfully');
+                    
+                    // Try to start voice recognition
+                    try {
+                        initGlobalVoiceRecognition();
+                        if (globalRecognition) {
+                            globalRecognition.start();
+                            console.log('Global voice recognition started - say "Hello", "Hey" or "Hi" to activate');
+                            
+                            // Add visual indicator
+                            const voiceIndicator = document.createElement('div');
+                            voiceIndicator.id = 'voice-indicator';
+                            voiceIndicator.style.cssText = `
+                                position: fixed;
+                                top: 20px;
+                                right: 20px;
+                                background: #4CAF50;
+                                color: white;
+                                padding: 10px 15px;
+                                border-radius: 25px;
+                                font-size: 12px;
+                                z-index: 10000;
+                                box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+                                display: none;
+                            `;
+                            voiceIndicator.textContent = gettext('🎤 Listening for "Hello", "Hey" or "Hi"'); // Translatable string
+                            document.body.appendChild(voiceIndicator);
+                            
+                            // Add a fallback text input for testing
+                            const fallbackInput = document.createElement('input');
+                            fallbackInput.id = 'hello-ai-input';
+                            fallbackInput.placeholder = gettext('Type "Hello/Hey/Hi" here if voice doesn\'t work'); // Translatable string
+                            fallbackInput.style.cssText = `
+                                position: fixed;
+                                top: 60px;
+                                right: 20px;
+                                padding: 8px 12px;
+                                border: 2px solid #4CAF50;
+                                border-radius: 20px;
+                                font-size: 12px;
+                                width: 200px;
+                                z-index: 10000;
+                                display: none;
+                            `;
+                            document.body.appendChild(fallbackInput);
+                            
+                            // Handle fallback input
+                            fallbackInput.addEventListener('keypress', function(e) {
+                                if (e.key === 'Enter') {
+                                    const value = this.value.toLowerCase().trim();
+                                    if (value === 'hello' || value === 'hey' || value === 'hi') {
+                                        // Trigger the same response as voice
+                                        const event = { results: [[[{ transcript: this.value }]]] };
+                                        globalRecognition.onresult(event);
+                                        this.value = '';
+                                    }
+                                }
+                            });
+                            
+                            // Show fallback input if voice fails
+                            setTimeout(() => {
+                                if (!isGlobalListening && fallbackInput) {
+                                    fallbackInput.style.display = 'block';
+                                    console.log('Voice recognition failed, showing fallback input');
+                                }
+                            }, 5000);
+                            
+                            // Show indicator when listening
+                            globalRecognition.onstart = function() {
+                                isGlobalListening = true;
+                                console.log('Global voice recognition started - listening for "Hello AI"');
+                                if (voiceIndicator) voiceIndicator.style.display = 'block';
+                            };
+                            
+                            globalRecognition.onend = function() {
+                                console.log('Global voice recognition ended');
+                                isGlobalListening = false;
+                                if (voiceIndicator) voiceIndicator.style.display = 'none';
+                                    // Restart if it wasn\'t manually stopped
+                                setTimeout(() => {
+                                    if (!isGlobalListening) {
+                                        console.log('Restarting global voice recognition...');
+                                        try {
+                                            globalRecognition.start();
+                                        } catch (e) {
+                                            console.log('Failed to restart voice recognition:', e);
+                                        }
+                                    }
+                                }, 1000);
+                            };
+                        }
+                    } catch (error) {
+                        console.log('Failed to start voice recognition:', error);
+                        console.log('Voice recognition may not work on HTTP. Try HTTPS or use the microphone button in the chat.');
+                    }
+                    
+                    // Add a test function to window for debugging
+                    window.testVoiceRecognition = function() {
+                        console.log('Testing voice recognition...');
+                        console.log('isGlobalListening:', isGlobalListening);
+                        console.log('globalRecognition:', globalRecognition);
+                        if (globalRecognition) {
+                            try {
+                                globalRecognition.start();
+                            } catch (e) {
+                                console.log('Error starting voice recognition:', e);
+                            }
+                        }
+                    };
+                } else {
+                    console.log('Failed to initialize global voice recognition - not supported in this browser or intentionally disabled.');
+                    console.log('You can still use the microphone button in the chat panel');
+                }
+            }, 2000); // Start after 2 seconds to allow page to load
+        })();
+        });
+    </script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

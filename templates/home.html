@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Gram Connect - Home" %}{% endblock %}
+
+{% block content %}
+<div id="main-page">
+    <div class="container">
+        <div class="login-options">
+            <div class="login-card shopkeeper">
+                <div class="login-icon">🛍️</div>
+                <h2>{% trans "Shopkeeper" %}</h2>
+                <p>{% trans "Manage your products, inventory, and view incoming orders from customers." %}</p>
+                <a href="{% url 'shopkeeper_login' %}" class="btn btn-shopkeeper">{% trans "Login as Shopkeeper" %}</a>
+                <a href="{% url 'shopkeeper_register' %}" class="btn btn-shopkeeper-outline">{% trans "Register Shop" %}</a>
+            </div>
+            
+            <div class="login-card customer">
+                <div class="login-icon">👨‍💼</div>
+                <h2>{% trans "Customer" %}</h2>
+                <p>{% trans "Browse products, add to cart, and place orders with your preferred delivery time." %}</p>
+                <a href="{% url 'customer_login' %}" class="btn btn-customer">{% trans "Login as Customer" %}</a>
+                <a href="{% url 'customer_register' %}" class="btn btn-customer-outline">{% trans "Register Account" %}</a>
+            </div>
+            
+            <div class="login-card delivery">
+                <div class="login-icon">🚚</div>
+                <h2>{% trans "Delivery Partner" %}</h2>
+                <p>{% trans "View ready orders, pick up packages, and deliver to customers efficiently." %}</p>
+                <a href="{% url 'delivery_login' %}" class="btn btn-delivery">{% trans "Login as Delivery Partner" %}</a>
+                <a href="{% url 'delivery_register' %}" class="btn btn-delivery-outline">{% trans "Apply as Partner" %}</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block extra_css %}
+<style>
+/* Additional styles for navigation buttons */
+.login-card {
+    text-align: center;
+    padding: 30px;
+    margin: 20px;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.login-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+}
+
+.login-card .btn {
+    display: inline-block;
+    margin: 10px 5px;
+    padding: 12px 24px;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+/* Ensure the outline buttons correctly use the translated labels and styles */
+.btn-shopkeeper-outline, .btn-customer-outline, .btn-delivery-outline {
+    background: transparent;
+    border: 2px solid;
+    color: inherit;
+}
+
+.btn-shopkeeper-outline:hover {
+    /* Assuming --primary is defined in base.html or a linked CSS */
+    background: var(--primary);
+    color: white;
+}
+
+.btn-customer-outline:hover {
+    /* Assuming --secondary is defined in base.html or a linked CSS */
+    background: var(--secondary);
+    color: white;
+}
+
+.btn-delivery-outline:hover {
+    /* Assuming --accent is defined in base.html or a linked CSS */
+    background: var(--accent);
+    color: white;
+}
+</style>
+{% endblock %}
+{% endblock %}

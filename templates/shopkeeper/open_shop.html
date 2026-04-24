@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <h2>Reopen Shop</h2>
+    <form method="post">
+        {% csrf_token %}
+        <p>This will reopen your shop immediately.</p>
+        <button class="btn btn-success" type="submit">Open Shop</button>
+        <a href="{% url 'shopkeeper_dashboard' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}
+
