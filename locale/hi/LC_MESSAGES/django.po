@@ -1,0 +1,567 @@
+# Hindi translations for Gram Connect project.
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Gram Connect\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-10-13 18:00+0530\n"
+"PO-Revision-Date: 2025-10-13 19:15+0530\n"
+"Last-Translator: Gemini Assistant\n"
+"Language-Team: Hindi <hi@example.com>\n"
+"Language: hi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Gram Connect"
+msgstr "ग्राम कनेक्ट"
+
+msgid "One platform for shopkeepers, customers and delivery partners"
+msgstr "दुकानदारों, ग्राहकों और डिलीवरी भागीदारों के लिए एक मंच"
+
+msgid "Language"
+msgstr "भाषा"
+
+msgid "Select Your Location"
+msgstr "अपना स्थान चुनें"
+
+msgid "State"
+msgstr "राज्य"
+
+msgid "Select State"
+msgstr "राज्य चुनें"
+
+msgid "District"
+msgstr "जिला"
+
+msgid "Select District"
+msgstr "जिला चुनें"
+
+msgid "City/Town"
+msgstr "शहर/कस्बा"
+
+msgid "Select City/Town"
+msgstr "शहर/कस्बा चुनें"
+
+msgid "Pincode"
+msgstr "पिन कोड"
+
+msgid "Select Pincode"
+msgstr "पिन कोड चुनें"
+
+msgid "Confirm Location"
+msgstr "स्थान की पुष्टि करें"
+
+msgid "Shopkeeper"
+msgstr "दुकानदार"
+
+msgid "Manage your products, inventory, and view incoming orders from customers."
+msgstr "अपने उत्पादों, इन्वेंट्री का प्रबंधन करें और ग्राहकों से आने वाले ऑर्डर देखें।"
+
+msgid "Login as Shopkeeper"
+msgstr "दुकानदार के रूप में लॉगिन करें"
+
+msgid "Register Shop"
+msgstr "दुकान पंजीकृत करें"
+
+msgid "Customer"
+msgstr "ग्राहक"
+
+msgid "Browse products, add to cart, and place orders with your preferred delivery time."
+msgstr "उत्पादों को ब्राउज़ करें, कार्ट में जोड़ें, और अपने पसंदीदा डिलीवरी समय के साथ ऑर्डर दें।"
+
+msgid "Login as Customer"
+msgstr "ग्राहक के रूप में लॉगिन करें"
+
+msgid "Register Account"
+msgstr "खाता पंजीकृत करें"
+
+msgid "Delivery Partner"
+msgstr "डिलीवरी पार्टनर"
+
+msgid "View assigned orders, customer details, and update delivery status."
+msgstr "निर्धारित ऑर्डर, ग्राहक विवरण देखें और डिलीवरी स्थिति अपडेट करें।"
+
+msgid "Login as Partner"
+msgstr "पार्टनर के रूप में लॉगिन करें"
+
+msgid "Apply as Partner"
+msgstr "पार्टनर के रूप में आवेदन करें"
+
+msgid "Shopkeeper Login"
+msgstr "दुकानदार लॉगिन"
+
+msgid "Welcome back! Access your shop dashboard"
+msgstr "वापसी पर स्वागत है! अपने दुकान डैशबोर्ड तक पहुँचें"
+
+msgid "Shop Email Address"
+msgstr "दुकान का ईमेल पता"
+
+msgid "Enter your shop email"
+msgstr "अपनी दुकान का ईमेल दर्ज करें"
+
+msgid "Password"
+msgstr "पासवर्ड"
+
+msgid "Enter your password"
+msgstr "अपना पासवर्ड डालें"
+
+msgid "Login"
+msgstr "लॉग इन करें"
+
+msgid "Don't have an account?"
+msgstr "खाता नहीं है?"
+
+msgid "Register here"
+msgstr "यहां रजिस्टर करें"
+
+msgid "Shop Registration"
+msgstr "दुकान पंजीकरण"
+
+msgid "Register your shop to start selling"
+msgstr "बेचना शुरू करने के लिए अपनी दुकान पंजीकृत करें"
+
+msgid "Shop Name"
+msgstr "दुकान का नाम"
+
+msgid "Enter your shop name"
+msgstr "अपनी दुकान का नाम दर्ज करें"
+
+msgid "Confirm Password"
+msgstr "पासवर्ड की पुष्टि कीजिये"
+
+msgid "Re-enter your password"
+msgstr "अपना पासवर्ड फिर से दर्ज करें"
+
+msgid "Address"
+msgstr "पता"
+
+msgid "Enter shop address"
+msgstr "दुकान का पता दर्ज करें"
+
+msgid "Register"
+msgstr "रजिस्टर करें"
+
+msgid "Already have an account?"
+msgstr "पहले से ही एक खाता है?"
+
+msgid "Login here"
+msgstr "यहां लॉगिन करें"
+
+msgid "Shopkeeper Dashboard"
+msgstr "दुकانदार डैशबोर्ड"
+
+msgid "Welcome"
+msgstr "स्वागत है"
+
+msgid "Products"
+msgstr "उत्पाद"
+
+msgid "Orders"
+msgstr "आर्डर"
+
+msgid "Requests"
+msgstr "अनुरोध"
+
+msgid "Shop Status"
+msgstr "दुकान की स्थिति"
+
+msgid "Close Shop"
+msgstr "दुकान बंद करें"
+
+msgid "Reopen Shop"
+msgstr "दुकान फिर से खोलें"
+
+msgid "Logout"
+msgstr "लॉग आउट"
+
+msgid "Pending Orders"
+msgstr "लंबित आर्डर"
+
+msgid "Order ID"
+msgstr "आर्डर आईडी"
+
+msgid "Customer Name"
+msgstr "ग्राहक का नाम"
+
+msgid "Total Amount"
+msgstr "कुल राशि"
+
+msgid "Status"
+msgstr "स्थिति"
+
+msgid "Mark as Ready for Pickup"
+msgstr "पिकअप के लिए तैयार के रूप में चिह्नित करें"
+
+msgid "No pending orders."
+msgstr "कोई लंबित आर्डर नहीं है।"
+
+msgid "Your Products"
+msgstr "आपके उत्पाद"
+
+msgid "Product Name"
+msgstr "उत्पाद का नाम"
+
+msgid "Price"
+msgstr "कीमत"
+
+msgid "Actions"
+msgstr "कार्रवाई"
+
+msgid "Edit"
+msgstr "संपादन"
+
+msgid "No products found."
+msgstr "कोई उत्पाद नहीं मिला।"
+
+msgid "Your Cart"
+msgstr "आपकी कार्ट"
+
+msgid "Back to Dashboard"
+msgstr "डैशबोर्ड पर वापस जाएं"
+
+msgid "Checkout"
+msgstr "चेकआउट"
+
+msgid "Full Name"
+msgstr "पूरा नाम"
+
+msgid "Phone"
+msgstr "फ़ोन"
+
+msgid "Delivery Address"
+msgstr "वितरण का पता"
+
+msgid "Preferred Delivery Date"
+msgstr "पसंदीदा डिलीवरी तिथि"
+
+msgid "Payment Method"
+msgstr "भुगतान का तरीका"
+
+msgid "Cash on Delivery"
+msgstr "कैश ऑन डिलीवरी"
+
+msgid "Online Payment (Coming Soon)"
+msgstr "ऑनलाइन भुगतान (जल्द आ रहा है)"
+
+msgid "Place Order"
+msgstr "आर्डर करें"
+
+msgid "Your Orders"
+msgstr "आपके आर्डर"
+
+msgid "Order"
+msgstr "आर्डर"
+
+msgid "Date"
+msgstr "तारीख"
+
+msgid "Total"
+msgstr "कुल"
+
+msgid "Items"
+msgstr "आइटम"
+
+msgid "Product"
+msgstr "उत्पाद"
+
+msgid "Quantity"
+msgstr "मात्रा"
+
+msgid "Subtotal"
+msgstr "उप-योग"
+
+msgid "[Deleted Product]"
+msgstr "[हटाया गया उत्पाद]"
+
+msgid "Re-Order"
+msgstr "पुनः आर्डर करें"
+
+msgid "You have no orders."
+msgstr "आपके पास कोई आर्डर नहीं है।"
+
+msgid "Edit Product"
+msgstr "उत्पाद संपादित करें"
+
+msgid "Image"
+msgstr "छवि"
+
+msgid "Leave empty to keep current image"
+msgstr "वर्तमान छवि रखने के लिए खाली छोड़ दें"
+
+msgid "Description"
+msgstr "विवरण"
+
+msgid "Cancel"
+msgstr "रद्द करें"
+
+msgid "Save Changes"
+msgstr "बदलाव सहेजें"
+
+msgid "View ready orders, pick up packages, and deliver to customers efficiently."
+msgstr "तैयार ऑर्डर देखें, पैकेज उठाएं और ग्राहकों को कुशलतापूर्वक वितरित करें।"
+
+msgid "Login as delivery partner."
+msgstr "डिलीवरी पार्टनर के रूप में लॉगिन करें।"
+
+msgid "Don't have a shop account? Register your shop"
+msgstr "दुकान का खाता नहीं है? अपनी दुकान पंजीकृत करें"
+
+msgid "← Back to Home"
+msgstr "← होम पर वापस जाएं"
+
+msgid "Shop Address"
+msgstr "दुकान का पता"
+
+msgid "Already have a shop account? Login here"
+msgstr "पहले से ही एक दुकान खाता है? यहां लॉगिन करें"
+
+msgid "Email Address"
+msgstr "ईमेल पता"
+
+msgid "Vehicle Type"
+msgstr "वाहन का प्रकार"
+
+msgid "Mandal"
+msgstr "मंडल"
+
+msgid "Village"
+msgstr "गाँव"
+
+msgid "Apply now"
+msgstr "अभी आवेदन करें"
+
+msgid "Already a delivery partner? Login here"
+msgstr "पहले से ही एक डिलीवरी पार्टनर हैं? यहां लॉगिन करें"
+
+msgid "create an account"
+msgstr "खाता बनाएं"
+
+msgid "phone number"
+msgstr "फ़ोन नंबर"
+
+msgid "Search District"
+msgstr "जिला खोजें"
+
+msgid "Search Mandal"
+msgstr "मंडल खोजें"
+
+msgid "Search Village"
+msgstr "गाँव खोजें"
+
+msgid "Create Account"
+msgstr "खाता बनाएं"
+
+msgid "Welcome back! Please login to your account"
+msgstr "वापसी पर स्वागत है! कृपया अपने खाते में लॉगिन करें"
+
+msgid "Delivery Partner Login"
+msgstr "डिलीवरी पार्टनर लॉगिन"
+
+msgid "Customer Dashboard"
+msgstr "ग्राहक डैशबोर्ड"
+
+msgid "Login successful!"
+msgstr "लॉगिन सफल!"
+
+msgid "2 Available Products"
+msgstr "2 उपलब्ध उत्पाद"
+
+msgid "All Products (A–Z)"
+msgstr "सभी उत्पाद (A-Z)"
+
+msgid "Shop-wise"
+msgstr "दुकान-वार"
+
+msgid "Search products by name..."
+msgstr "नाम से उत्पाद खोजें..."
+
+msgid "Milk"
+msgstr "दूध"
+
+msgid "Rice"
+msgstr "चावल"
+
+msgid "Shop"
+msgstr "दुकान"
+
+msgid "Add to Cart"
+msgstr "कार्ट में डालें"
+
+msgid "Buy Now"
+msgstr "अभी खरीदें"
+
+msgid "Price History"
+msgstr "मूल्य इतिहास"
+
+msgid "Request Product"
+msgstr "उत्पाद का अनुरोध करें"
+
+msgid "All rights reserved"
+msgstr "सर्वाधिकार सुरक्षित"
+
+msgid "Your cart is empty!"
+msgstr "आपकी कार्ट खाली है!"
+
+msgid "Cart"
+msgstr "कार्ट"
+
+msgid "Pending"
+msgstr "अपूर्ण"
+
+msgid "Order Date"
+msgstr "आदेश की तिथि"
+
+msgid "Delivered"
+msgstr "पहुंचा दिया"
+
+msgid "Request a Product from"
+msgstr "से एक उत्पाद का अनुरोध करें"
+
+msgid "Product name"
+msgstr "उत्पाद का नाम"
+
+msgid "Details (optional)"
+msgstr "विवरण (वैकल्पिक)"
+
+msgid "Send Request"
+msgstr "अनुरोध भेजें"
+
+msgid "Your recent requests to this shop"
+msgstr "इस दुकान पर आपके हाल के अनुरोध"
+
+msgid "Requested"
+msgstr "अनुरोध किया"
+
+msgid "At"
+msgstr "पर"
+
+msgid "Product Details"
+msgstr "उत्पाद विवरण"
+
+msgid "shirt"
+msgstr "शर्ट"
+
+msgid "M-38"
+msgstr "M-38"
+
+msgid "Open"
+msgstr "खुला"
+
+msgid "Delivery Partner Dashboard"
+msgstr "डिलीवरी पार्टनर डैशबोर्ड"
+
+msgid "Available Orders for Delivery"
+msgstr "डिलीवरी के लिए उपलब्ध ऑर्डर"
+
+msgid "Your Assigned Deliveries"
+msgstr "आपके नियत वितरण"
+
+msgid "No orders available for delivery."
+msgstr "डिलीवरी के लिए कोई ऑर्डर उपलब्ध नहीं है।"
+
+msgid "Orders will appear here when they are ready for delivery."
+msgstr "डिलीवरी के लिए तैयार होने पर ऑर्डर यहां दिखाई देंगे।"
+
+msgid "Payment"
+msgstr "भुगतान"
+
+msgid "Cash_On_Delivery"
+msgstr "कैश ऑन डिलीवरी"
+
+msgid "Remove"
+msgstr "हटाएं"
+
+msgid "Enter your phone"
+msgstr "अपना फ़ोन नंबर दर्ज करें"
+
+msgid "Enter your delivery address"
+msgstr "अपना डिलीवरी पता दर्ज करें"
+
+msgid "Select payment method"
+msgstr "भुगतान विधि चुनें"
+
+msgid "Special Instructions (optional)"
+msgstr "विशेष निर्देश (वैकल्पिक)"
+
+msgid "Assigned"
+msgstr "सौंपा गया"
+
+msgid "Online Payment"
+msgstr "ऑनलाइन भुगतान"
+
+msgid "Product Image"
+msgstr "उत्पाद की छवि"
+
+msgid "Recent Product Requests"
+msgstr "हाल के उत्पाद अनुरोध"
+
+msgid "Customer Product Requests"
+msgstr "ग्राहक उत्पाद अनुरोध"
+
+msgid "Requested At"
+msgstr "अनुरोध किया गया"
+
+msgid "Add Product"
+msgstr "उत्पाद जोड़ें"
+
+msgid "Current Price"
+msgstr "वर्तमान मूल्य"
+
+msgid "Price Analysis"
+msgstr "मूल्य विश्लेषण"
+
+msgid "Lowest Price"
+msgstr "सबसे कम कीमत"
+
+msgid "Highest Price"
+msgstr "उच्चतम मूल्य"
+
+msgid "Average Price"
+msgstr "औसत मूल्य"
+
+msgid "Price Range"
+msgstr "मूल्य सीमा"
+
+msgid "Buying Recommendation"
+msgstr "खरीदने की सिफारिश"
+
+msgid "Excellent time to buy! Current price is at or near the lowest it has ever been."
+msgstr "खरीदने का शानदार समय! वर्तमान मूल्य अब तक के सबसे निचले स्तर पर या उसके करीब है।"
+
+msgid "Up to"
+msgstr "तक"
+
+msgid "saved compared to highest price"
+msgstr "उच्चतम मूल्य की तुलना में बचत"
+
+msgid "Confidence"
+msgstr "आत्मविश्वास"
+
+msgid "HIGH"
+msgstr "उच्च"
+
+msgid "MEDIUM"
+msgstr "मध्यम"
+
+msgid "LOW"
+msgstr "कम"
+
+msgid "Old Price"
+msgstr "पुरानी कीमत"
+
+msgid "New Price"
+msgstr "नई कीमत"
+
+msgid "Reason"
+msgstr "कारण"
+
+msgid "Price updated"
+msgstr "कीमत अपडेट की गई"
+
+msgid "Price Trend"
+msgstr "मूल्य की प्रवृत्ति"
+
+msgid "Current"
+msgstr "वर्तमान"
