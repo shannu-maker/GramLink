@@ -1,0 +1,567 @@
+# Tamil translations for Gram Connect project.
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Gram Connect\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-10-13 18:00+0530\n"
+"PO-Revision-Date: 2025-10-13 19:15+0530\n"
+"Last-Translator: Gemini Assistant\n"
+"Language-Team: Tamil <ta@example.com>\n"
+"Language: ta\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Gram Connect"
+msgstr "கிராம் கனெக்ட்"
+
+msgid "One platform for shopkeepers, customers and delivery partners"
+msgstr "கடைக்காரர்கள், வாடிக்கையாளர்கள் மற்றும் டெலிவரி பார்ட்னர்களுக்கான ஒரே தளம்"
+
+msgid "Language"
+msgstr "மொழி"
+
+msgid "Select Your Location"
+msgstr "உங்கள் இருப்பிடத்தைத் தேர்ந்தெடுக்கவும்"
+
+msgid "State"
+msgstr "மாநிலம்"
+
+msgid "Select State"
+msgstr "மாநிலத்தைத் தேர்ந்தெடுக்கவும்"
+
+msgid "District"
+msgstr "மாவட்டம்"
+
+msgid "Select District"
+msgstr "மாவட்டத்தைத் தேர்ந்தெடுக்கவும்"
+
+msgid "City/Town"
+msgstr "நகரம்/டவுன்"
+
+msgid "Select City/Town"
+msgstr "நகரம்/டவுனைத் தேர்ந்தெடுக்கவும்"
+
+msgid "Pincode"
+msgstr "பின்கோடு"
+
+msgid "Select Pincode"
+msgstr "பின்கோடைத் தேர்ந்தெடுக்கவும்"
+
+msgid "Confirm Location"
+msgstr "இருப்பிடத்தை உறுதிப்படுத்தவும்"
+
+msgid "Shopkeeper"
+msgstr "கடைக்காரர்"
+
+msgid "Manage your products, inventory, and view incoming orders from customers."
+msgstr "உங்கள் தயாரிப்புகள், இருப்பு ஆகியவற்றை நிர்வகிக்கவும், வாடிக்கையாளர்களிடமிருந்து வரும் ஆர்டர்களைப் பார்க்கவும்."
+
+msgid "Login as Shopkeeper"
+msgstr "கடைக்காரராக உள்நுழைக"
+
+msgid "Register Shop"
+msgstr "கடையைப் பதிவு செய்யவும்"
+
+msgid "Customer"
+msgstr "வாடிக்கையாளர்"
+
+msgid "Browse products, add to cart, and place orders with your preferred delivery time."
+msgstr "தயாரிப்புகளை உலாவவும், கார்ட்டில் சேர்க்கவும், உங்களுக்கு விருப்பமான டெலிவரி நேரத்தில் ஆர்டர்களைச் செய்யவும்."
+
+msgid "Login as Customer"
+msgstr "வாடிக்கையாளராக உள்நுழைக"
+
+msgid "Register Account"
+msgstr "கணக்கைப் பதிவு செய்யவும்"
+
+msgid "Delivery Partner"
+msgstr "டெலிவரி பார்ட்னர்"
+
+msgid "View assigned orders, customer details, and update delivery status."
+msgstr "ஒதுக்கப்பட்ட ஆர்டர்கள், வாடிக்கையாளர் விவரங்களைப் பார்க்கவும், டெலிவரி நிலையை புதுப்பிக்கவும்."
+
+msgid "Login as Partner"
+msgstr "பார்ட்னராக உள்நுழைக"
+
+msgid "Apply as Partner"
+msgstr "பார்ட்னராக விண்ணப்பிக்கவும்"
+
+msgid "Shopkeeper Login"
+msgstr "கடைக்காரர் உள்நுழைவு"
+
+msgid "Welcome back! Access your shop dashboard"
+msgstr "மீண்டும் வருக! உங்கள் கடை டாஷ்போர்டை அணுகவும்"
+
+msgid "Shop Email Address"
+msgstr "கடை மின்னஞ்சல் முகவரி"
+
+msgid "Enter your shop email"
+msgstr "உங்கள் கடை மின்னஞ்சலை உள்ளிடவும்"
+
+msgid "Password"
+msgstr "கடவுச்சொல்"
+
+msgid "Enter your password"
+msgstr "உங்கள் கடவுச்சொல்லை உள்ளிடவும்"
+
+msgid "Login"
+msgstr "உள்நுழைக"
+
+msgid "Don't have an account?"
+msgstr "கணக்கு இல்லையா?"
+
+msgid "Register here"
+msgstr "இங்கே பதிவு செய்யுங்கள்"
+
+msgid "Shop Registration"
+msgstr "கடைப் பதிவு"
+
+msgid "Register your shop to start selling"
+msgstr "விற்பனையைத் தொடங்க உங்கள் கடையைப் பதிவு செய்யவும்"
+
+msgid "Shop Name"
+msgstr "கடையின் பெயர்"
+
+msgid "Enter your shop name"
+msgstr "உங்கள் கடையின் பெயரை உள்ளிடவும்"
+
+msgid "Confirm Password"
+msgstr "கடவுச்சொல்லை உறுதிப்படுத்தவும்"
+
+msgid "Re-enter your password"
+msgstr "உங்கள் கடவுச்சொல்லை மீண்டும் உள்ளிடவும்"
+
+msgid "Address"
+msgstr "முகவரி"
+
+msgid "Enter shop address"
+msgstr "கடை முகவரியை உள்ளிடவும்"
+
+msgid "Register"
+msgstr "பதிவு செய்"
+
+msgid "Already have an account?"
+msgstr "ஏற்கனவே கணக்கு உள்ளதா?"
+
+msgid "Login here"
+msgstr "இங்கே உள்நுழையவும்"
+
+msgid "Shopkeeper Dashboard"
+msgstr "கடைக்காரர் டாஷ்போர்டு"
+
+msgid "Welcome"
+msgstr "வரவேற்பு"
+
+msgid "Products"
+msgstr "தயாரிப்புகள்"
+
+msgid "Orders"
+msgstr "ஆர்டர்கள்"
+
+msgid "Requests"
+msgstr "கோரிக்கைகள்"
+
+msgid "Shop Status"
+msgstr "கடையின் நிலை"
+
+msgid "Close Shop"
+msgstr "கடையை மூடு"
+
+msgid "Reopen Shop"
+msgstr "கடையை மீண்டும் திறக்கவும்"
+
+msgid "Logout"
+msgstr "வெளியேறு"
+
+msgid "Pending Orders"
+msgstr "நிலுவையில் உள்ள ஆர்டர்கள்"
+
+msgid "Order ID"
+msgstr "ஆர்டர் ஐடி"
+
+msgid "Customer Name"
+msgstr "வாடிக்கையாளர் பெயர்"
+
+msgid "Total Amount"
+msgstr "மொத்த தொகை"
+
+msgid "Status"
+msgstr "நிலை"
+
+msgid "Mark as Ready for Pickup"
+msgstr "பிக்கப்பிற்குத் தயார் எனக் குறிக்கவும்"
+
+msgid "No pending orders."
+msgstr "நிலுவையில் ஆர்டர்கள் எதுவும் இல்லை."
+
+msgid "Your Products"
+msgstr "உங்கள் தயாரிப்புகள்"
+
+msgid "Product Name"
+msgstr "பொருளின் பெயர்"
+
+msgid "Price"
+msgstr "விலை"
+
+msgid "Actions"
+msgstr "செயல்கள்"
+
+msgid "Edit"
+msgstr "திருத்து"
+
+msgid "No products found."
+msgstr "தயாரிப்புகள் எதுவும் கிடைக்கவில்லை."
+
+msgid "Your Cart"
+msgstr "உங்கள் கார்ட்"
+
+msgid "Back to Dashboard"
+msgstr "டாஷ்போர்டுக்குத் திரும்பு"
+
+msgid "Checkout"
+msgstr "செக் அவுட்"
+
+msgid "Full Name"
+msgstr "முழு பெயர்"
+
+msgid "Phone"
+msgstr "தொலைபேசி"
+
+msgid "Delivery Address"
+msgstr "டெலிவரி முகவரி"
+
+msgid "Preferred Delivery Date"
+msgstr "விருப்பமான டெலிவரி தேதி"
+
+msgid "Payment Method"
+msgstr "பணம் செலுத்தும் முறை"
+
+msgid "Cash on Delivery"
+msgstr "கேஷ் ஆன் டெலிவரி"
+
+msgid "Online Payment (Coming Soon)"
+msgstr "ஆன்லைன் கட்டணம் (விரைவில்)"
+
+msgid "Place Order"
+msgstr "ஆர்டர் செய்யவும்"
+
+msgid "Your Orders"
+msgstr "உங்கள் ஆர்டர்கள்"
+
+msgid "Order"
+msgstr "ஆர்டர்"
+
+msgid "Date"
+msgstr "தேதி"
+
+msgid "Total"
+msgstr "மொத்தம்"
+
+msgid "Items"
+msgstr "பொருட்கள்"
+
+msgid "Product"
+msgstr "தயாரிப்பு"
+
+msgid "Quantity"
+msgstr "அளவு"
+
+msgid "Subtotal"
+msgstr "துணை మొత్తం"
+
+msgid "[Deleted Product]"
+msgstr "[நீக்கப்பட்ட தயாரிப்பு]"
+
+msgid "Re-Order"
+msgstr "மீண்டும் ஆர்டர் செய்யவும்"
+
+msgid "You have no orders."
+msgstr "உங்களிடம் ஆர்டர்கள் எதுவும் இல்லை."
+
+msgid "Edit Product"
+msgstr "தயாரிப்பைத் திருத்து"
+
+msgid "Image"
+msgstr "படம்"
+
+msgid "Leave empty to keep current image"
+msgstr "தற்போதைய படத்தைத் தக்கவைக்க காலியாக விடவும்"
+
+msgid "Description"
+msgstr "விளக்கம்"
+
+msgid "Cancel"
+msgstr "ரத்துசெய்"
+
+msgid "Save Changes"
+msgstr "மாற்றங்களைச் சேமிக்கவும்"
+
+msgid "View ready orders, pick up packages, and deliver to customers efficiently."
+msgstr "தயாரான ஆர்டர்களைப் பார்க்கவும், பேக்கேஜ்களை எடுக்கவும், வாடிக்கையாளர்களுக்கு திறமையாக வழங்கவும்."
+
+msgid "Login as delivery partner."
+msgstr "டெலிவரி பார்ட்னராக உள்நுழைக."
+
+msgid "Don't have a shop account? Register your shop"
+msgstr "கடை கணக்கு இல்லையா? உங்கள் கடையைப் பதிவு செய்யுங்கள்"
+
+msgid "← Back to Home"
+msgstr "← முகப்புக்குத் திரும்பு"
+
+msgid "Shop Address"
+msgstr "கடை முகவரி"
+
+msgid "Already have a shop account? Login here"
+msgstr "ஏற்கனவே கடை கணக்கு உள்ளதா? இங்கே உள்நுழையவும்"
+
+msgid "Email Address"
+msgstr "மின்னஞ்சல் முகவரி"
+
+msgid "Vehicle Type"
+msgstr "வாகன வகை"
+
+msgid "Mandal"
+msgstr "மண்டலம்"
+
+msgid "Village"
+msgstr "கிராமம்"
+
+msgid "Apply now"
+msgstr "இப்போது விண்ணப்பிக்கவும்"
+
+msgid "Already a delivery partner? Login here"
+msgstr "ஏற்கனவே டெலிவரி பார்ட்னரா? இங்கே உள்நுழையவும்"
+
+msgid "create an account"
+msgstr "ஒரு கணக்கை உருவாக்க"
+
+msgid "phone number"
+msgstr "தொலைபேசி எண்"
+
+msgid "Search District"
+msgstr "மாவட்டத்தைத் தேடுங்கள்"
+
+msgid "Search Mandal"
+msgstr "மண்டலத்தைத் தேடுங்கள்"
+
+msgid "Search Village"
+msgstr "கிராமத்தைத் தேடுங்கள்"
+
+msgid "Create Account"
+msgstr "கணக்கை உருவாக்கு"
+
+msgid "Welcome back! Please login to your account"
+msgstr "மீண்டும் வருக! உங்கள் கணக்கில் உள்நுழையவும்"
+
+msgid "Delivery Partner Login"
+msgstr "டெலிவரி பார்ட்னர் உள்நுழைவு"
+
+msgid "Customer Dashboard"
+msgstr "வாடிக்கையாளர் டாஷ்போர்டு"
+
+msgid "Login successful!"
+msgstr "வெற்றிகரமாக உள்நுழைந்துள்ளீர்கள்!"
+
+msgid "2 Available Products"
+msgstr "2 தயாரிப்புகள் உள்ளன"
+
+msgid "All Products (A–Z)"
+msgstr "அனைத்து தயாரிப்புகள் (A–Z)"
+
+msgid "Shop-wise"
+msgstr "கடை வாரியாக"
+
+msgid "Search products by name..."
+msgstr "பெயரின் அடிப்படையில் தயாரிப்புகளைத் தேடுங்கள்..."
+
+msgid "Milk"
+msgstr "பால்"
+
+msgid "Rice"
+msgstr "அரிசி"
+
+msgid "Shop"
+msgstr "கடை"
+
+msgid "Add to Cart"
+msgstr "வண்டியில் சேர்"
+
+msgid "Buy Now"
+msgstr "இப்பொழுது வாங்கு"
+
+msgid "Price History"
+msgstr "விலை வரலாறு"
+
+msgid "Request Product"
+msgstr "தயாரிப்பு கோரிக்கை"
+
+msgid "All rights reserved"
+msgstr "அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை"
+
+msgid "Your cart is empty!"
+msgstr "உங்கள் வண்டி காலியாக உள்ளது!"
+
+msgid "Cart"
+msgstr "வண்டி"
+
+msgid "Pending"
+msgstr "நிலுவையில்"
+
+msgid "Order Date"
+msgstr "ஆர்டர் தேதி"
+
+msgid "Delivered"
+msgstr "வழங்கப்பட்டது"
+
+msgid "Request a Product from"
+msgstr "இருந்து ஒரு தயாரிப்பு கோரிக்கை"
+
+msgid "Product name"
+msgstr "பொருளின் பெயர்"
+
+msgid "Details (optional)"
+msgstr "விவரங்கள் (விருப்பத்தேர்வு)"
+
+msgid "Send Request"
+msgstr "கோரிக்கையை அனுப்பு"
+
+msgid "Your recent requests to this shop"
+msgstr "இந்த கடைக்கு உங்கள் சமீபத்திய கோரிக்கைகள்"
+
+msgid "Requested"
+msgstr "கோரப்பட்டது"
+
+msgid "At"
+msgstr "இல்"
+
+msgid "Product Details"
+msgstr "தயாரிப்பு விவரங்கள்"
+
+msgid "shirt"
+msgstr "சட்டை"
+
+msgid "M-38"
+msgstr "M-38"
+
+msgid "Open"
+msgstr "திற"
+
+msgid "Delivery Partner Dashboard"
+msgstr "டெலிவரி பார்ட்னர் டாஷ்போர்டு"
+
+msgid "Available Orders for Delivery"
+msgstr "டெலிவரிக்கான ஆர்டர்கள்"
+
+msgid "Your Assigned Deliveries"
+msgstr "உங்களுக்கு ஒதுக்கப்பட்ட டெலிவரிகள்"
+
+msgid "No orders available for delivery."
+msgstr "டெலிவரிக்கு ஆர்டர்கள் எதுவும் இல்லை."
+
+msgid "Orders will appear here when they are ready for delivery."
+msgstr "ஆர்டர்கள் டெலிவரிக்கு தயாரானதும் இங்கே தோன்றும்."
+
+msgid "Payment"
+msgstr "கட்டணம்"
+
+msgid "Cash_On_Delivery"
+msgstr "கேஷ் ஆன் டெலிவரி"
+
+msgid "Remove"
+msgstr "அகற்று"
+
+msgid "Enter your phone"
+msgstr "உங்கள் தொலைபேசி எண்ணை உள்ளிடவும்"
+
+msgid "Enter your delivery address"
+msgstr "உங்கள் டெலிவரி முகவரியை உள்ளிடவும்"
+
+msgid "Select payment method"
+msgstr "பணம் செலுத்தும் முறையைத் தேர்ந்தெடுக்கவும்"
+
+msgid "Special Instructions (optional)"
+msgstr "சிறப்பு வழிமுறைகள் (விருப்பத்தேர்வு)"
+
+msgid "Assigned"
+msgstr "ஒதுக்கப்பட்டது"
+
+msgid "Online Payment"
+msgstr "ஆன்லைன் கட்டணம்"
+
+msgid "Product Image"
+msgstr "தயாரிப்பு படம்"
+
+msgid "Recent Product Requests"
+msgstr "சமீபத்திய தயாரிப்பு கோரிக்கைகள்"
+
+msgid "Customer Product Requests"
+msgstr "வாடிக்கையாளர் தயாரிப்பு கோரிக்கைகள்"
+
+msgid "Requested At"
+msgstr "கோரிய நேரம்"
+
+msgid "Add Product"
+msgstr "தயாரிப்பைச் சேர்"
+
+msgid "Current Price"
+msgstr "தற்போதைய விலை"
+
+msgid "Price Analysis"
+msgstr "விலை பகுப்பாய்வு"
+
+msgid "Lowest Price"
+msgstr "குறைந்த விலை"
+
+msgid "Highest Price"
+msgstr "அதிக விலை"
+
+msgid "Average Price"
+msgstr "சராசரி விலை"
+
+msgid "Price Range"
+msgstr "விலை வரம்பு"
+
+msgid "Buying Recommendation"
+msgstr "வாங்குவதற்கான பரிந்துரை"
+
+msgid "Excellent time to buy! Current price is at or near the lowest it has ever been."
+msgstr "வாங்க சிறந்த நேரம்! தற்போதைய விலை எப்போதும் இல்லாத குறைந்த விலையில் அல்லது அருகில் உள்ளது."
+
+msgid "Up to"
+msgstr "വരെ"
+
+msgid "saved compared to highest price"
+msgstr "அதிக விலையுடன் ஒப்பிடும்போது சேமிக்கப்பட்டது"
+
+msgid "Confidence"
+msgstr "நம்பிக்கை"
+
+msgid "HIGH"
+msgstr "உயர்"
+
+msgid "MEDIUM"
+msgstr "நடுத்தர"
+
+msgid "LOW"
+msgstr "குறைந்த"
+
+msgid "Old Price"
+msgstr "பழைய விலை"
+
+msgid "New Price"
+msgstr "புதிய விலை"
+
+msgid "Reason"
+msgstr "காரணம்"
+
+msgid "Price updated"
+msgstr "விலை புதுப்பிக்கப்பட்டது"
+
+msgid "Price Trend"
+msgstr "விலைப்போக்கு"
+
+msgid "Current"
+msgstr "தற்போதைய"
