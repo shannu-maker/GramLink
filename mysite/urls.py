@@ -27,7 +27,7 @@ urlpatterns = [
 urlpatterns += i18n_patterns(
     path('admin/', admin.site.urls),
     path('', include('members.urls')),
-    prefix_default_language=False,
+    prefix_default_language=True,
 )
 
 # Serve media files during development
