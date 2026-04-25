@@ -1,0 +1,25 @@
+-r requirements.txt
+
+# Optional AI/image-search dependencies.
+# Install these only if you need the visual search/OCR features.
+numpy==1.24.3; python_version < "3.12"
+opencv-python==4.8.1.78; python_version < "3.12"
+torch==2.1.0; python_version < "3.12"
+torchvision==0.16.0; python_version < "3.12"
+transformers>=4.39.0,<5; python_version < "3.12"
+easyocr==1.7.2; python_version < "3.12"
+accelerate==0.24.0; python_version < "3.12"
+ftfy>=6.1.1; python_version < "3.12"
+open-clip-torch>=2.24.0; python_version < "3.12"
+
+# Python 3.14 needs newer wheels. These are CPU-friendly defaults.
+# For GPU/CUDA installs, follow the PyTorch selector at https://pytorch.org/get-started/locally/.
+numpy>=2.2.0; python_version >= "3.14"
+opencv-python>=4.12.0.88; python_version >= "3.14"
+torch>=2.9.0; python_version >= "3.14"
+torchvision>=0.24.0; python_version >= "3.14"
+transformers>=4.57.0; python_version >= "3.14"
+easyocr==1.7.2; python_version >= "3.14"
+accelerate>=1.10.0; python_version >= "3.14"
+ftfy>=6.3.0; python_version >= "3.14"
+open-clip-torch>=3.3.0; python_version >= "3.14"
